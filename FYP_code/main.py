@@ -5,5 +5,9 @@ app = Flask(__name__)
 def home():
     return render_template("index.html")
 
+@app.route("/comment generation")
+def comment():
+    return render_template("comments.html")
+
 if __name__ == "__main__":
-    app.run()
+    app.run(debug = True)
