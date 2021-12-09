@@ -1,0 +1,138 @@
+#div1 {
+  background-color: grey;
+  height: 50px;
+  width: 100%; 
+}
+
+body{
+  font-family: 'Georgia', sans-serif !important;
+  margin:0;
+}
+
+#h2_1 {
+  margin:0;
+  padding:10px;
+  text-align: center;
+  color:white;
+}
+
+/*--------------------------------------------------------------
+css for nav bar
+--------------------------------------------------------------*/
+
+ul.topnav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: rgb(85,85,85)
+}
+
+ul.topnav li {
+    float: left;
+}
+
+ul.topnav li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+ul.topnav li a:hover:not(.active) {background-color: #111;}
+
+/* Active colours */
+#l1 a.active {
+  background-color:rgb(17, 173, 17);
+}
+#l2 a.active {
+  background-color:rgb(24, 159, 221);
+}
+#l3 a.active {
+  background-color:rgb(218, 122, 13);
+}
+#l4 a.active {
+  background-color:rgb(65, 66, 65);
+}
+#l5 a.active {
+  background-color:rgb(210, 19, 228);
+}
+
+ul.topnav li.right {
+  float: right;
+}
+
+@media screen and (max-width: 600px) {
+  ul.topnav li.right, 
+  ul.topnav li {float: none;}
+}
+
+/*--------------------------------------------------------------
+css for form
+--------------------------------------------------------------*/
+
+#content {
+    margin-left: 60px;
+    margin-top: 30px;
+}
+/*Display labels as blocks and adjust its width*/
+.label_details {
+	width: 200px;
+	display: inline-block;
+}
+
+/* Create a spacing before every label */
+.label_details:before {
+	content: "\A";
+	white-space: pre-line;
+}
+
+/* Adjust width of all input */
+input {
+	width: 300px;
+}
+
+
+/* Hides the step in input number */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+input[type="number"] {
+	-moz-appearance: textfield;
+}
+
+
+.submit_button {
+  border: none;
+  color: rgb(210, 19, 228);
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-top: 20px;
+  width: auto;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.submit_button:hover {
+  background-color: white; 
+  color: black; 
+  border: 2px solid rgb(210, 19, 228);
+}
+
+.submit_button {
+  background-color: rgb(210, 19, 228);
+  color: white;
+  border: 2px solid rgb(210, 19, 228);
+}
+
+#output{
+  width: 700px;
+  resize: none;
+}
