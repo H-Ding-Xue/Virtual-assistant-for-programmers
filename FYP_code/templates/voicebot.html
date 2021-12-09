@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="{{url_for('static', filename = 'styles/voicebot.css')}}">
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://kit.fontawesome.com/944f3cb790.js" crossorigin="anonymous"></script>
+    <title>Voice Bot Assistant</title>
+</head>
+
+<body>
+    <div id="div1">
+        <h2 id = h2_1>Virtual Assistant</h2>
+    </div>
+    
+    <!-- Navigation bar -->
+    <ul class="topnav">
+      <li><a href="/"><i class="fas fa-home"></i>&nbsp;Home</a></li>
+      <li id="l1"><a href="#"><i class="far fa-file-alt"></i>&nbsp;Comment Generator</a></li>
+      <li id="l2"><a href="#"><i class="fas fa-laptop-code"></i>&nbsp;Code Generator(E/I E/O)</a></li>
+      <li id="l3"><a href="#"><i class="far fa-file-code"></i>&nbsp;Code Generator(Text)</a></li>
+      <li id="l4"><a href="/voicebot"><i class="fas fa-microphone-alt"></i>&nbsp;Voice Assistant</a></li>
+      <li id="l5"><a href="/invalid_input" class="active"><i class="far fa-window-close"></i>&nbsp;Invalid Input Generator</a></li>
+    </ul>
+    
+    
+    <!-- recording button -->
+    <div id="button">
+      <button id="recButton"><i id="icon" class="fas fa-microphone-alt fa-5x"></i></button>
+    </div>
+    
+    <p id="rectext">Click on the red button above to start the voice assistant and allow microphone access.</p>
+
+  <script type=text/javascript src="{{url_for('static', filename='js/voicebot.js') }}"></script>
+</body>
+</html>
