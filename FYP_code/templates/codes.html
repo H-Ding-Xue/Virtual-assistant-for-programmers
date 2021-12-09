@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Code Block Generation{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{{url_for('static', filename = 'styles/codestyle.css')}}">
+    
+    <form>
+        <div id = textdiv>
+            <label id="textlabel">Pseudocode Input</label><br>
+            <textarea id="pseudoinput"></textarea>
+        </div>
+
+        
+        <div id = codediv>
+            <label id = codelabel>Code Block Output</label><br>
+            <textarea id="codeoutput" disabled></textarea>
+        </div>
+        <input type="submit" id = generatecodebutton value="Generate">
+    </form>
+    
+    
+{% endblock %}

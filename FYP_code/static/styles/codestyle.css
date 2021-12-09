@@ -1,0 +1,46 @@
+#textdiv{
+    float: left;
+    margin-left: 400px;
+    margin-top: 100px;
+    
+}
+
+#codediv{
+    float: right;
+    margin-right: 400px;
+    margin-top: 100px;
+    
+}
+
+#pseudoinput{
+    width: 450px;
+    height: 400px;
+    resize: none;
+}
+
+#codeoutput{
+    width: 450px;
+    height: 400px;
+    resize: none;
+}
+
+#textlabel{
+    font-size: large;
+    margin-left: 30%;
+}
+
+#codelabel{
+    font-size: large;
+    margin-left: 32%;
+}
+
+#generatecodebutton{
+    margin-top: 100px;
+    margin-left: 46%;
+    height: 80px;
+    width: 150px;
+    font-size: large;
+    font-family: Sans-serif;
+    border-radius: 12px;
+}
+
