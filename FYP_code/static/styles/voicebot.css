@@ -11,14 +11,12 @@
     
 }
 
-button {
-	width: 150px;
+#recButton {
 	height: 150px;
-	font-size: 0;
+	width: 150px;
 	background-color: red;
-	border: 0;
 	border-radius: 300px;
-	margin: 18px;
+	display: inline-block;
 	outline: none;
 }
 
