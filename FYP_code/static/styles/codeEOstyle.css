@@ -1,40 +1,61 @@
-#codediv{
+
+#exINdiv{
     float: left;
     margin-left: 400px;
     margin-top: 100px;
 }
 
-#commentdiv{
-    float: right;
-    margin-right: 400px;
-    margin-top: 100px;
+#exOUTdiv{
+    position: absolute;
+    float: left;
+    clear: left;
+    margin-left: 400px;
+    margin-top: 400px;
     
 }
 
-#codeinput{
+#codeoutdiv{
+    float: right;
+    margin-right: 400px;
+    margin-top: 150px;
+    
+}
+
+#EIinput{
+    width: 450px;
+    height: 200px;
+    resize: none;
+}
+
+#EOinput{
+    width: 450px;
+    height: 200px;
+    resize: none;
+}
+
+#codeoutput{
     width: 450px;
     height: 400px;
     resize: none;
 }
 
-#commentoutput{
-    width: 450px;
-    height: 400px;
-    resize: none;
+#EIlabel{
+    font-size: large;
+    margin-left: 35%;
+}
+
+#EOlabel{
+    font-size: large;
+    margin-left: 35%;
 }
 
 #codelabel{
     font-size: large;
-    margin-left: 40%;
+    margin-left: 35%;
 }
 
-#commentlabel{
-    font-size: large;
-    margin-left: 30%;
-}
-
-#generatecommentbutton{
-    margin-top: 100px;
+#generatecodebutton{
+    margin-top: 420px;
     margin-left: 46%;
     height: 80px;
     width: 150px;
@@ -43,7 +64,7 @@
     border-radius: 12px;
 }
 
-#commentfor{
+#codeEOform{
     margin: 0 auto; 
     min-width: 1920px;
     max-width: 1920px;

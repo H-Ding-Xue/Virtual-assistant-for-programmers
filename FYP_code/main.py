@@ -13,6 +13,10 @@ def comment():
 def code():
     return render_template("codes.html")
 
+@app.route("/code generation(EIEO)")
+def codeEIEO():
+    return render_template("codesEO.html")
+
 @app.route("/voicebot")
 def voicebot():
     return render_template("voicebot.html")

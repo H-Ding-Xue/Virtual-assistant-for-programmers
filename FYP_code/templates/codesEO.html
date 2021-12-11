@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Comment Generation{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{{url_for('static', filename = 'styles/codeEOstyle.css')}}">
+    
+    <form id = codeEOform>
+        <div id = exINdiv>
+            <label for="EIinput" id="EIlabel">Expected Input</label><br>
+            <textarea id="EIinput"></textarea>
+        </div>
+        
+        <div id = exOUTdiv>
+            <label for="EOinput" id="EOlabel">Expected Output</label><br>
+            <textarea id="EOinput"></textarea>
+        </div>
+
+        <div id = codeoutdiv>
+            <label for="codeoutput" id = codelabel>Codes Output</label><br>
+            <textarea id="codeoutput" disabled></textarea>
+        </div>
+        
+        <input type="submit" id = generatecodebutton value="Generate">
+    </form>
+    
+    
+{% endblock %}
