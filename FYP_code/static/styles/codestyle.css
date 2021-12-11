@@ -85,3 +85,8 @@
 		box-shadow: 0px 0px 5px 13px rgba(173,0,0,0);
 	}
 }
+
+#codesform{
+    min-width: 1920px;
+    max-width: 1920px;
+}
