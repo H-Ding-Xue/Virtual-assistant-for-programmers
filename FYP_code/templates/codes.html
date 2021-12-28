@@ -2,11 +2,16 @@
 {% block title %}Code Block Generation{% endblock %}
 {% block content %}
 <link rel="stylesheet" href="{{url_for('static', filename = 'styles/codestyle.css')}}">
-    
-    <form>
+    {% if error %}  
+    <div class="alert alert-danger">
+        <strong>Unable to process voice input </strong>
+    </div>
+    {% endif %} 
+
+    <form id = codesform method="POST" >
         <div id = textdiv>
             <label id="textlabel">Pseudocode Input</label><br>
-            <textarea id="pseudoinput"></textarea>
+            <textarea id="pseudoinput" name="pseudoinput">{{transcribed_text}}</textarea>
         </div>
 
         
@@ -15,14 +20,19 @@
             <textarea id="codeoutput" disabled></textarea>
         </div>
         
-        <div class="center">
-            <button id="recbutton" class="btn"><i id= "icn" class="fas fa-microphone-alt fa-3x"></i></button>
+        <div id = record>
+            <!-- <a href="/get_voice"><button class="btn"><i id= "icn" class="fas fa-microphone-alt fa-3x"></i></button></a> -->
+            <button name="btn" value="get_voice" id="recbutton" title="Click on this button to use voice as input">
+                <i id= "icn" class="fas fa-microphone-alt fa-3x"></i><br>
+                Voice input
+            </button> 
         </div>
+
+        <input type="submit" name ="btn" id = "generatecodebutton" value="Generate">
+      
         
-        <input type="submit" id = generatecodebutton value="Generate">
-    </form>
+
+    </form> 
     
-    
-    
-<script type=text/javascript src="{{url_for('static', filename='js/codes.js') }}"></script>    
+<script type=text/javascript src="{{url_for('static', filename='js/codes.js') }}"></script> 
 {% endblock %}
