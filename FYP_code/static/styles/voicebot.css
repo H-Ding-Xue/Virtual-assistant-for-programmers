@@ -1,28 +1,25 @@
 #button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 250px;
-}
+	margin-top: 150px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 250px;
+  }
+  
+  #rectext{
+	  text-align: center;
+	  font-size: 18px;  
+  }
+  
+  #recButton {
+	  height: 200px;
+	  width: 200px;
+	  background-color: red;
+	  border-radius: 100px;
+	  display: block;
+	  outline: none;
+  }
 
-#rectext{
-    text-align: center;
-    font-size: 18px;
-    
-}
-
-#recButton {
-	height: 150px;
-	width: 150px;
-	background-color: red;
-	border-radius: 300px;
-	display: inline-block;
-	outline: none;
-}
-
-.notRec{
-	background-color: red;
-}
 
 .Rec{
 	animation-name: pulse;
@@ -42,3 +39,31 @@
 		box-shadow: 0px 0px 5px 13px rgba(173,0,0,0);
 	}
 }
+
+#overlay {
+	margin: auto;
+	position: absolute;
+	top: 250px; 
+	left: 50px;
+	bottom: 50px; 
+	right: 50px;
+	z-index:5;
+}
+
+.text {
+	font-size: 18px; 
+}
+
+.modal-content{
+	background: rgb(240, 240, 240)
+}
+
+.close {
+	
+    color: rgb(220, 53, 69); 
+	opacity: 1;
+}
+
+div.alert {
+    text-align: center;
+}    

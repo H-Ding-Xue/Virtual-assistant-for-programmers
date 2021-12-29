@@ -35,8 +35,10 @@
 }
 
 #generatecodebutton{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     margin-top: 100px;
-    margin-left: 46%;
     height: 80px;
     width: 150px;
     font-size: large;
@@ -44,28 +46,30 @@
     border-radius: 12px;
 }
 
-.center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 250px;
-  }
+#record{
+    display: inline-block;
+    margin-left: 575px;
+}
 
 #recbutton {
-    margin-top: 500px;
-    margin-left: auto;
-    margin-right: auto;
 	height: 100px;
 	width: 100px;
 	background-color: red;
-	border-radius: 100px;
+	border-radius: 200px;
 	display: inline-block;
 	outline: none;
 }
 
-.notRec{
-	background-color: red;
+div.alert {
+    text-align: center;
+}    
+
+#codesform{
+    min-width: 1920px;
+    max-width: 1920px;
+    margin: 0 auto; 
 }
+
 
 .Rec{
 	animation-name: pulse;
@@ -84,10 +88,4 @@
 	90%{
 		box-shadow: 0px 0px 5px 13px rgba(173,0,0,0);
 	}
-}
-
-#codesform{
-    min-width: 1920px;
-    max-width: 1920px;
-    margin: 0 auto; 
 }

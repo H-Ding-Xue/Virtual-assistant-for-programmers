@@ -3,12 +3,43 @@
 {% block content %}
   <link rel="stylesheet" href="{{url_for('static', filename = 'styles/voicebot.css')}}">
 
-    <!-- recording button -->
-    <div id="button">
-      <button id="recButton" class="btn"><i id= "icon" class="fas fa-microphone-alt fa-5x"></i></button>
-    </div>
+  {% for error in get_flashed_messages() %}
+  <div class="alert alert-danger">
+    <strong>{{error}}</strong>
+  </div>
+  {% endfor %}
 
-    <p id="rectext">Click on the red button above to start the voice assistant and allow microphone access.</p>
+  <form method="POST" >
+    <div id="button">
+      <button name="btn" id="recButton" value="startvoice" title="Click on this button to use voice assistant" >
+        <i id= "icon" class="fas fa-microphone-alt fa-7x"></i>
+      </button>
+    </div>
+    <p id="rectext">Allow microphone access to use voice bot and click on the red button above to start the voice assistant.</p>
+  </form>
+
+  {% if command %}  
+  <div id="overlay">
+      <!-- Modal content-->
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <a href="/voicebot"><button type="button" class="close close-danger" data-dismiss="modal">&times;</button></a>
+            <h2>Processing Voice</h2>
+          </div>
+          <div class="modal-body">
+            <p class="text">
+              You said: {{transcribed_text}} <br/>
+              Redirecting you to {{place}}
+            </p>
+          </div>
+          <div class="modal-footer">
+            <a href="/voicebot"><button type="button" class="btn btn-danger" data-dismiss="modal">Close</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %} 
 
   <script type=text/javascript src="{{url_for('static', filename='js/voicebot.js') }}"></script>
 {% endblock %}
