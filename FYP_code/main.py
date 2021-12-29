@@ -10,9 +10,60 @@ app.secret_key = "fyp"
 def home():
     return render_template("index.html")
 
-@app.route("/comment generation")
+@app.route("/comment generation", methods=["POST","GET"])
 def comment():
-    return render_template("comments.html")
+    code_to_english = {
+  "+=": " assign add ",
+  "/=": " assign divide ",
+  "*=": " assign multiply ",
+  "-=": " assign minus ",
+  "==": " same ",
+  "!=": " not same ",
+  "<=": " smaller or equal ",
+  ">=": " bigger or equal ",
+  "<": " lesser ",
+  ">": " greater ",
+  "elif": " else if ",
+  "=": " assign ",
+  "+": " add ",
+  "-": " minus ",
+  "*": " multiply ",
+  "/": " divide ",
+  "range": " range ",
+  "while": " while ",
+  "if": " if ",
+  "else": " else ",
+  "print": " print ",
+  "try": " try ",
+  "except": " except ",
+  "NameError": " name error ",
+  "TypeError": " type error ",
+  "ValueError": " value error ",
+  "KeyError": " lookup error ",
+  "IndexError": " lookup error ",
+  "input": " input ",
+}
+    if request.method=='POST':
+        codeblock = request.form["codeinput"]
+        linebyline = codeblock.split('\n')
+        commentlist = []
+        loaded_vectorizer = pickle.load(open('saved_comgen_vectorizer', 'rb'))
+        loaded_model = pickle.load(open('saved_comgen_model', 'rb'))
+        for i in range(len(linebyline)):
+            linebyline[i] = linebyline[i].replace('\r','')
+
+        for i in range(len(linebyline)):
+            Comment = linebyline[i]
+            for key, value in code_to_english.items():
+                if key in Comment:
+                    Comment = Comment.replace(key,value)
+            commentlist.append(loaded_model.predict(loaded_vectorizer.transform([Comment]))[0])
+        finalstring = ''
+        for i in range(len(linebyline)):
+            finalstring = finalstring + linebyline[i] +' # '+ commentlist[i] + '\n'
+        return render_template("comments.html", finalstring=finalstring) 
+    else:
+        return render_template("comments.html") 
 
 @app.route("/code generation", methods=["POST","GET"])
 def code():
