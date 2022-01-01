@@ -99,20 +99,26 @@ def codeEIEO():
     if request.method == "POST" and request.form["EIinput"].strip() != '' and request.form["EOinput"].strip() != '':
         inputList = re.split(",", request.form["EIinput"].replace(" ", ""))
         if len(inputList) == 3:
-            inputList.append(request.form["EOinput"])
-        else:
+            pass
+        elif len(inputList) == 2:
             inputList.append(0.0)
-            inputList.append(request.form["EOinput"])
-        
+        else:
+            flash("Expected Input only accept two or three values; separate each value with ','")
+            return redirect('/code generation(EIEO)')
+        try:
+            output = float(request.form["EOinput"])
+            inputList.append(output)
+        except ValueError:
+            flash("Expected Output only accept one numeric value")
+            return redirect('/code generation(EIEO)')
         try:
             inputList = [float(i) for i in inputList]
-        except:
-            flash("Input/Output only accept numerical values; seperate each value with ,")
+        except ValueError:
+            flash("Expected Input/Output only accept numeric values; separate each value with ','")
             return redirect('/code generation(EIEO)')
 
         model = pickle.load(open('saved_codeEO_model', 'rb'))
         prediction = model.predict([inputList])
-        
         with open('saved_codeEO_method', 'rb') as f:
             df = pickle.load(f)
         
