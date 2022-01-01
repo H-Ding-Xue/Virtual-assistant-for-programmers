@@ -2,6 +2,7 @@ from flask import Flask,redirect,url_for,render_template, request, flash
 import pickle
 import speech_recognition as sr
 import webbrowser
+import re
 
 app = Flask(__name__)
 app.secret_key = "fyp"  
@@ -13,36 +14,36 @@ def home():
 @app.route("/comment generation", methods=["POST","GET"])
 def comment():
     code_to_english = {
-  "+=": " assign add ",
-  "/=": " assign divide ",
-  "*=": " assign multiply ",
-  "-=": " assign minus ",
-  "==": " same ",
-  "!=": " not same ",
-  "<=": " smaller or equal ",
-  ">=": " bigger or equal ",
-  "<": " lesser ",
-  ">": " greater ",
-  "elif": " else if ",
-  "=": " assign ",
-  "+": " add ",
-  "-": " minus ",
-  "*": " multiply ",
-  "/": " divide ",
-  "range": " range ",
-  "while": " while ",
-  "if": " if ",
-  "else": " else ",
-  "print": " print ",
-  "try": " try ",
-  "except": " except ",
-  "NameError": " name error ",
-  "TypeError": " type error ",
-  "ValueError": " value error ",
-  "KeyError": " lookup error ",
-  "IndexError": " lookup error ",
-  "input": " input ",
-}
+        "+=": " assign add ",
+        "/=": " assign divide ",
+        "*=": " assign multiply ",
+        "-=": " assign minus ",
+        "==": " same ",
+        "!=": " not same ",
+        "<=": " smaller or equal ",
+        ">=": " bigger or equal ",
+        "<": " lesser ",
+        ">": " greater ",
+        "elif": " else if ",
+        "=": " assign ",
+        "+": " add ",
+        "-": " minus ",
+        "*": " multiply ",
+        "/": " divide ",
+        "range": " range ",
+        "while": " while ",
+        "if": " if ",
+        "else": " else ",
+        "print": " print ",
+        "try": " try ",
+        "except": " except ",
+        "NameError": " name error ",
+        "TypeError": " type error ",
+        "ValueError": " value error ",
+        "KeyError": " lookup error ",
+        "IndexError": " lookup error ",
+        "input": " input ",
+    }
     if request.method=='POST':
         codeblock = request.form["codeinput"]
         linebyline = codeblock.split('\n')
@@ -93,9 +94,49 @@ def code():
     else:
         return render_template("codes.html")
 
-@app.route("/code generation(EIEO)")
+@app.route("/code generation(EIEO)", methods=["POST","GET"])
 def codeEIEO():
-    return render_template("codesEO.html")
+    if request.method == "POST" and request.form["EIinput"].strip() != '' and request.form["EOinput"].strip() != '':
+        inputList = re.split(",", request.form["EIinput"].replace(" ", ""))
+        if len(inputList) == 3:
+            pass
+        elif len(inputList) == 2:
+            inputList.append(0.0)
+        else:
+            flash("Expected Input only accept two or three values; separate each value with ','")
+            return redirect('/code generation(EIEO)')
+        
+        try:
+            inputList = [float(i) for i in inputList]
+        except ValueError:
+            flash("Expected Input only accept numeric values; separate each value with ','")
+            return redirect('/code generation(EIEO)')
+        try:
+            output = float(request.form["EOinput"])
+            inputList.append(output)
+        except ValueError:
+            flash("Expected Output only accept one numeric value")
+            return redirect('/code generation(EIEO)')
+
+        model = pickle.load(open('saved_codeEO_model', 'rb'))
+        prediction = model.predict([inputList])
+        with open('saved_codeEO_method', 'rb') as f:
+            df = pickle.load(f)
+        
+        for i in range(len(df)):
+            if prediction[0] == df['Method'][i]:
+                predicted_output = df['Result'][i]
+                predicted_output = predicted_output.replace(r'\n', '\n')
+        
+        if predicted_output == "":
+            predicted_output = "Unable to obtain the result"
+
+        return render_template("codesEO.html", predicted_output=predicted_output)
+    elif request.method == "POST" and (request.form["EIinput"].strip() == '' or request.form["EOinput"].strip() == ''):
+        flash("Expected Input/Output cannot be empty")
+        return redirect('/code generation(EIEO)')
+    else:
+        return render_template("codesEO.html")
 
 @app.route("/voicebot", methods=["POST","GET"])
 def voicebot():
