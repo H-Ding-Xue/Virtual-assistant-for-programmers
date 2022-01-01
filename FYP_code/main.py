@@ -105,16 +105,17 @@ def codeEIEO():
         else:
             flash("Expected Input only accept two or three values; separate each value with ','")
             return redirect('/code generation(EIEO)')
+        
+        try:
+            inputList = [float(i) for i in inputList]
+        except ValueError:
+            flash("Expected Input only accept numeric values; separate each value with ','")
+            return redirect('/code generation(EIEO)')
         try:
             output = float(request.form["EOinput"])
             inputList.append(output)
         except ValueError:
             flash("Expected Output only accept one numeric value")
-            return redirect('/code generation(EIEO)')
-        try:
-            inputList = [float(i) for i in inputList]
-        except ValueError:
-            flash("Expected Input/Output only accept numeric values; separate each value with ','")
             return redirect('/code generation(EIEO)')
 
         model = pickle.load(open('saved_codeEO_model', 'rb'))
