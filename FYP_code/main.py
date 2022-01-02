@@ -43,7 +43,7 @@ def comment():
         "IndexError": " lookup error ",
         "input": " input ",
     }
-    if request.method=='POST':
+    if request.method=='POST' and request.form['generatecommentbutton'] == 'Generate' and request.form["codeinput"].strip() != '':
         codeblock = request.form["codeinput"]
         linebyline = codeblock.split('\n')
         commentlist = []
@@ -62,6 +62,9 @@ def comment():
         for i in range(len(linebyline)):
             finalstring = finalstring + linebyline[i] +' # '+ commentlist[i] + '\n'
         return render_template("comments.html", finalstring=finalstring) 
+    elif request.method=='POST' and request.form['generatecommentbutton'] == 'Generate' and request.form["codeinput"].strip() == '': 
+        flash("Code Input cannot be empty")
+        return redirect('/comment generation')
     else:
         return render_template("comments.html") 
 

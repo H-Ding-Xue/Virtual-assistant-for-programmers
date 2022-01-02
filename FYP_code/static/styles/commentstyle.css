@@ -15,12 +15,16 @@
     width: 450px;
     height: 400px;
     resize: none;
+    font-size: 15px;
+    font-family: Consolas,Menlo,"courier new",monospace;
 }
 
 #commentoutput{
     width: 450px;
     height: 400px;
     resize: none;
+    font-size: 15px;
+    font-family: Consolas,Menlo,"courier new",monospace;
 }
 
 #codelabel{
@@ -31,7 +35,7 @@
 #commentlabel{
     font-size: large;
     margin-left: 30%;
-}
+} 
 
 #generatecommentbutton{
     margin-top: 100px;
@@ -48,3 +52,7 @@
     min-width: 1920px;
     max-width: 1920px;
 }
+
+.alert {
+    text-align: center;
+} 

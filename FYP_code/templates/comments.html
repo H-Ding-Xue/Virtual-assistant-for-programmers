@@ -2,11 +2,17 @@
 {% block title %}Comment Generation{% endblock %}
 {% block content %}
 <link rel="stylesheet" href="{{url_for('static', filename = 'styles/commentstyle.css')}}">
-    
+
+    {% for error in get_flashed_messages() %}
+    <div class="alert alert-danger">
+    <strong>{{error}}</strong>
+    </div>
+    {% endfor %}
+
     <form id = commentfor method="POST">
         <div id = codediv>
             <label for="codeinput" id="codelabel">Code Input</label><br>
-            <textarea id="codeinput" name="codeinput"></textarea>
+            <textarea id="codeinput" name="codeinput" placeholder="if a > b:&#10;  #do something"></textarea>
         </div>
 
         
@@ -14,7 +20,7 @@
             <label for="commentoutput" id = commentlabel>Comments Output</label><br>
             <textarea id="commentoutput" disabled>{{finalstring}}</textarea>
         </div>
-        <input type="submit" id = generatecommentbutton value="Generate">
+        <input type="submit" id = generatecommentbutton name = generatecommentbutton value="Generate">
     </form>
     
     
