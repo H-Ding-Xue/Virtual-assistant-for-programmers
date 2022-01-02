@@ -2,7 +2,6 @@ from flask import Flask,redirect,url_for,render_template, request, flash
 import pickle
 import speech_recognition as sr
 import webbrowser
-import re
 
 app = Flask(__name__)
 app.secret_key = "fyp"  
@@ -97,24 +96,27 @@ def code():
 @app.route("/code generation(EIEO)", methods=["POST","GET"])
 def codeEIEO():
     if request.method == "POST" and request.form["EIinput"].strip() != '' and request.form["EOinput"].strip() != '':
-        inputList = re.split(",", request.form["EIinput"].replace(" ", ""))
+        try:
+            inputList = [float(i) for i in request.form["EIinput"].replace(' ', '').split(',')]
+        except ValueError as e:
+            flash("Expected Input only accept numeric values; separate each value with ','")
+            return redirect('/code generation(EIEO)')
+
         if len(inputList) == 3:
             pass
         elif len(inputList) == 2:
-            inputList.append(0.0)
+            inputList.append(-0.0)
+        elif len(inputList) == 1:
+            inputList.append(-0.0)
+            inputList.append(-0.0)
         else:
-            flash("Expected Input only accept two or three values; separate each value with ','")
+            flash("Expected Input only accept up to three values; separate each value with ','")
             return redirect('/code generation(EIEO)')
         
         try:
-            inputList = [float(i) for i in inputList]
-        except ValueError:
-            flash("Expected Input only accept numeric values; separate each value with ','")
-            return redirect('/code generation(EIEO)')
-        try:
             output = float(request.form["EOinput"])
             inputList.append(output)
-        except ValueError:
+        except ValueError as e:
             flash("Expected Output only accept one numeric value")
             return redirect('/code generation(EIEO)')
 
