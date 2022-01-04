@@ -124,7 +124,7 @@ def codeEIEO():
             return redirect('/code generation(EIEO)')
         
         try:
-            output = float(request.form["EOinput"])
+            output = round(float(request.form["EOinput"]), 2)
             inputList.append(output)
         except ValueError as e:
             flash("Expected Output only accept one numeric value")
