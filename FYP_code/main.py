@@ -55,7 +55,7 @@ def comment():
 
         for i in range(len(linebyline)):
             Comment = linebyline[i]
-            if Comment == "":
+            if Comment.isspace():
                 commentlist.append("")
             else:
                 for key, value in code_to_english.items():
@@ -64,7 +64,7 @@ def comment():
                 commentlist.append(loaded_model.predict(loaded_vectorizer.transform([Comment]))[0])
         finalstring = ''
         for i in range(len(linebyline)):
-            if not linebyline[i] == "":
+            if not linebyline[i].isspace():
                 finalstring = finalstring + linebyline[i] +' # '+ commentlist[i] + '\n'
             else:
                 finalstring = finalstring + linebyline[i] + commentlist[i] + '\n'
