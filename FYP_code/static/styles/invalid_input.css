@@ -58,7 +58,18 @@ input[type="number"] {
   border: 2px solid rgb(210, 19, 228);
 }
 
+#minlength #maxlength #charincluded #charexcluded {
+  font-size: 15px;
+  font-family: Consolas,Menlo,"courier new",monospace;
+}
+
 #output{
   width: 700px;
   resize: none;
+  font-size: 15px;
+  font-family: Consolas,Menlo,"courier new",monospace;
 }
+
+div.alert {
+  text-align: center;
+}  
