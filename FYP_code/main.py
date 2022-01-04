@@ -2,6 +2,7 @@ from flask import Flask,redirect,url_for,render_template, request, flash
 import pickle
 import speech_recognition as sr
 import webbrowser
+import random
 
 app = Flask(__name__)
 app.secret_key = "fyp"  
@@ -186,9 +187,42 @@ def voicebot():
     else:
         return render_template("voicebot.html", command=command)
 
-@app.route("/invalid_input")
+@app.route("/invalid_input", methods=["POST","GET"])
 def invalid_input():
-    return render_template("invalid_input.html")
+    if request.method == "POST" and request.form["minlength"].strip() != '' and request.form["maxlength"].strip() != '' \
+        and request.form["charincluded"].strip() != '':
+        minlength = int(request.form["minlength"])
+        maxlength = int(request.form["maxlength"])
+        includedList = [str(i) for i in request.form["charincluded"].split(' ')]
+        excludedList = [str(i) for i in request.form["charexcluded"].split(' ')]
+        generated_output = ""
+
+        includedList.sort()
+        excludedList.sort()
+        
+        if minlength < 1:
+            flash("Minimum Length cannot be less than 1")
+            return redirect('/invalid_input')
+        if maxlength < minlength:
+            flash("Maximum Length cannot be smaller than Minimum Length")
+            return redirect('/invalid_input')
+        if includedList == excludedList:
+            flash("'Characters to be Included' cannot be identical to 'Characters to be Excluded'")
+            return redirect('/invalid_input')
+
+        randRange = random.randint(minlength, maxlength)
+        for i in range(randRange):
+            value = random.choice(includedList)
+            while value in excludedList:
+                value = random.choice(includedList)
+            generated_output += str(value)
+        return render_template("invalid_input.html", generated_output=generated_output)
+    elif request.method == "POST" and (request.form["minlength"].strip() == '' or request.form["maxlength"].strip() == '' \
+        or request.form["charincluded"].strip() == ''):
+        flash("Fields, except 'Characters to be Excluded', cannot be empty")
+        return redirect('/invalid_input')
+    else:
+        return render_template("invalid_input.html")
     
 if __name__ == "__main__":
     app.run(debug = True)
