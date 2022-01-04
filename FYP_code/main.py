@@ -67,7 +67,7 @@ def comment():
             if not linebyline[i] == "":
                 finalstring = finalstring + linebyline[i] +' # '+ commentlist[i] + '\n'
             else:
-                finalstring = finalstring = finalstring + linebyline[i] + commentlist[i] + '\n'
+                finalstring = finalstring + linebyline[i] + commentlist[i] + '\n'
         return render_template("comments.html", finalstring=finalstring) 
     elif request.method=='POST' and request.form['generatecommentbutton'] == 'Generate' and request.form["codeinput"].strip() == '': 
         flash("Code Input cannot be empty")
