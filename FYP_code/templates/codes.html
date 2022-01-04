@@ -12,12 +12,12 @@
     <form id = codesform method="POST" >
         <div id = textdiv>
             <label id="textlabel">Pseudocode Input</label><br>
-            <textarea id="pseudoinput" name="pseudoinput" placeholder="create a if statement to see if values are the same">{{transcribed_text}}</textarea>
+            <textarea wrap="off" id="pseudoinput" name="pseudoinput" placeholder="create a if statement to see if values are the same">{{transcribed_text}}</textarea>
         </div>
 
         <div id = codediv>
             <label id = codelabel>Code Block Output</label><br>
-            <textarea id="codeoutput" disabled>{{predicted_codeblock}}</textarea>
+            <textarea wrap="off" id="codeoutput" disabled>{{predicted_codeblock}}</textarea>
         </div>
         
         <div id = record>

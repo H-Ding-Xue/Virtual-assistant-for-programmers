@@ -55,13 +55,19 @@ def comment():
 
         for i in range(len(linebyline)):
             Comment = linebyline[i]
-            for key, value in code_to_english.items():
-                if key in Comment:
-                    Comment = Comment.replace(key,value)
-            commentlist.append(loaded_model.predict(loaded_vectorizer.transform([Comment]))[0])
+            if Comment == "":
+                commentlist.append("")
+            else:
+                for key, value in code_to_english.items():
+                    if key in Comment:
+                        Comment = Comment.replace(key,value)
+                commentlist.append(loaded_model.predict(loaded_vectorizer.transform([Comment]))[0])
         finalstring = ''
         for i in range(len(linebyline)):
-            finalstring = finalstring + linebyline[i] +' # '+ commentlist[i] + '\n'
+            if not linebyline[i] == "":
+                finalstring = finalstring + linebyline[i] +' # '+ commentlist[i] + '\n'
+            else:
+                finalstring = finalstring = finalstring + linebyline[i] + commentlist[i] + '\n'
         return render_template("comments.html", finalstring=finalstring) 
     elif request.method=='POST' and request.form['generatecommentbutton'] == 'Generate' and request.form["codeinput"].strip() == '': 
         flash("Code Input cannot be empty")
