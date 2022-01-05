@@ -107,20 +107,20 @@ def code():
 def codeEIEO():
     if request.method == "POST" and request.form["EIinput"].strip() != '' and request.form["EOinput"].strip() != '':
         try:
-            inputList = [float(i) for i in request.form["EIinput"].replace(' ', '').split(',')]
+            inputList = [int(i) for i in request.form["EIinput"].replace(' ', '').split(',')]
         except ValueError as e:
-            flash("Expected Input only accept numeric values; separate each value with ','")
+            flash("Expected Input only accept integer values; separate each value with ','")
             return redirect('/code generation(EIEO)')
 
         if len(inputList) == 3:
             pass
         elif len(inputList) == 2:
-            inputList.append(-0.0)
+            inputList.append(-0)
         elif len(inputList) == 1:
-            inputList.append(-0.0)
-            inputList.append(-0.0)
+            inputList.append(-0)
+            inputList.append(-0)
         else:
-            flash("Expected Input only accept up to three values; separate each value with ','")
+            flash("Expected Input only accept up to three integer values; separate each value with ','")
             return redirect('/code generation(EIEO)')
         
         try:
