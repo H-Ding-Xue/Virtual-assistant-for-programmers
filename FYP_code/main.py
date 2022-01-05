@@ -224,10 +224,10 @@ def invalid_input():
         excludedList.sort()
         
         if minlength < 1:
-            flash("Minimum Length cannot be less than 1")
+            flash("Characters Minimum Length cannot be less than 1")
             return redirect('/invalid_input')
         if maxlength < minlength:
-            flash("Maximum Length cannot be smaller than Minimum Length")
+            flash("'Characters Maximum Length' cannot be smaller than 'Characters Minimum Length'")
             return redirect('/invalid_input')
         if includedList == excludedList:
             flash("'Characters must be Included' cannot be identical to 'Characters must be Excluded'")
@@ -235,12 +235,12 @@ def invalid_input():
         if includedList[0]:
             for included in includedList:
                 if len(included) != 1:
-                    flash("'Characters must be included' only accept single character; separate each character with space ' '")
+                    flash("'Characters must be Included' only accept single character; separate each character with space ' '")
                     return redirect('/invalid_input')
         if excludedList[0]:
             for excluded in excludedList:
                 if len(excluded) != 1:
-                    flash("'Characters must be excluded' only accept single character; separate each character with space ' '")
+                    flash("'Characters must be Excluded' only accept single character; separate each character with space ' '")
                     return redirect('/invalid_input')
         
         # valid string but doesn't meet the minimum length requirements
@@ -287,7 +287,7 @@ def invalid_input():
 
         return render_template("invalid_input.html", generated_output=generated_output)
     elif request.method == "POST" and (request.form["minlength"].strip() == '' or request.form["maxlength"].strip() == ''):
-        flash("Minimum/Maximum Length cannot be empty")
+        flash("Characters Minimum/Maximum Length cannot be empty")
         return redirect('/invalid_input')
     elif request.method == "POST" and request.form["charincluded"].strip() == '' and request.form["charexcluded"].strip() == '':
         flash("You must fill up at least 'Characters must be Included' or 'Characters must be Excluded'")
