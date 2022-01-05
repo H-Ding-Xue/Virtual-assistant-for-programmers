@@ -243,7 +243,8 @@ def invalid_input():
                     flash("'Characters must be Excluded' only accept single character; separate each character with space ' '")
                     return redirect('/invalid_input')
         
-        # valid string but doesn't meet the minimum length requirements
+        # valid string but doesn't meet the minimum length requirement
+        invalidList.append("=== String that doesn't meet the minimum length requirement ===")
         while (len(invalidString) != minlength-1):
             randChar = random.choice(letters)
             if randChar not in excludedList:
@@ -251,7 +252,8 @@ def invalid_input():
         invalidList.append(invalidString)
         invalidString = ""
 
-        # valid string but doesn't meet the maximum length requirements
+        # valid string but doesn't meet the maximum length requirement
+        invalidList.append("=== String that doesn't meet the maximum length requirement ===")
         while (len(invalidString) != maxlength+1):
             randChar = random.choice(letters)
             if randChar not in excludedList:
@@ -261,6 +263,7 @@ def invalid_input():
 
         # invalid string (doesn't contain all the characters in 'Characters must be included')
         if includedList[0]:
+            invalidList.append("=== String that doesn't contain all the characters in 'Characters must be Included' ===")
             for included in includedList:
                 invalidString = included
                 charCount = random.randint(minlength, maxlength)
@@ -271,8 +274,9 @@ def invalid_input():
                             invalidString += randChar
                 invalidList.append(invalidString)
 
-        # invalid string (contains characters inside 'Characters must be excluded')
+        # invalid string (contains characters in 'Characters must be excluded')
         if excludedList[0]:
+            invalidList.append("=== String that contains characters in 'Characters must be Excluded' ===")
             for excluded in excludedList:
                 invalidString = excluded
                 charCount = random.randint(minlength, maxlength)
@@ -283,7 +287,10 @@ def invalid_input():
                 invalidList.append(invalidString)
 
         for invalid in invalidList:
-            generated_output += invalid + "\n"
+            if " ===" in invalid:
+                generated_output += "\n" + invalid + "\n"
+            else:
+                generated_output += invalid + "\n"
 
         return render_template("invalid_input.html", generated_output=generated_output)
     elif request.method == "POST" and (request.form["minlength"].strip() == '' or request.form["maxlength"].strip() == ''):
