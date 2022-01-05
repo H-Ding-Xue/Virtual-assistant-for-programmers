@@ -160,25 +160,36 @@ def voicebot():
         try:
             with sr.Microphone() as source:
                 audio = recognizer.listen(source)
-            transcribed_text = recognizer.recognize_google(audio)
+            transcribed_text = recognizer.recognize_google(audio, language='en-GB')
 
-            if ("google" in transcribed_text.lower()):
-                command = True
-                place = "Google"
-                webbrowser.get('windows-default').open('https://google.com')
-                return render_template("voicebot.html", transcribed_text=transcribed_text, 
-                                                        command = command,
-                                                        place = place)
-            elif (("youtube" in transcribed_text.lower()) or 
-                 ("you" in transcribed_text.lower() and "tube" in transcribed_text.lower())):
-                command = True
-                place = "YouTube"
-                webbrowser.get('windows-default').open('https://youtube.com')
-                return render_template("voicebot.html", transcribed_text=transcribed_text, 
-                                                        command = command,
-                                                        place = place)                               
-            elif (transcribed_text != ""):
-                link = "https://www.google.com/search?q=" + transcribed_text
+            if (("code" in transcribed_text.lower() and 
+                ("text" in transcribed_text.lower() or "test" in transcribed_text.lower())) 
+                and ("text" in transcribed_text.lower() or "test" in transcribed_text.lower())):
+                return redirect('/code generation')
+            elif ("code" in transcribed_text.lower() and "expected" in transcribed_text.lower()):
+                return redirect('/code generation(EIEO)')   
+            elif ("comment" in transcribed_text.lower() or "common" in transcribed_text.lower() or 
+                "," in transcribed_text.lower() or "comma" in transcribed_text.lower() 
+                or "coleman" in transcribed_text.lower() or "command" in transcribed_text.lower()):
+                return redirect('/comment generation')   
+            elif ("invalid" in transcribed_text.lower() or "in valid" in transcribed_text.lower() or
+            "valid" in transcribed_text.lower() or "in valley" in transcribed_text.lower()):
+                return redirect('/invalid_input')   
+            elif ("home" in transcribed_text.lower()):
+                return redirect('/')      
+            elif ("google" in transcribed_text.lower()):
+                if (transcribed_text.lower() == "google"):
+                    command = True
+                    place = "Google"
+                    webbrowser.get('windows-default').open('https://google.com')
+                    return render_template("voicebot.html", transcribed_text=transcribed_text, 
+                                                            command = command,
+                                                            place = place)
+                elif ("search" in transcribed_text.lower() and "google for" in transcribed_text.lower()):
+                    query = transcribed_text.lower()
+                    query = query.replace("search", "")
+                    query = query.replace("google for ", "")                                           
+                link = "https://www.google.com/search?q=" + query
                 command = True
                 webbrowser.get('windows-default').open(link)
                 return render_template("voicebot.html", transcribed_text=transcribed_text, 
