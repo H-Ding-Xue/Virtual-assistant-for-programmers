@@ -3,6 +3,7 @@ import pickle
 import speech_recognition as sr
 import webbrowser
 import random
+import string
 
 app = Flask(__name__)
 app.secret_key = "fyp"  
@@ -107,20 +108,20 @@ def code():
 def codeEIEO():
     if request.method == "POST" and request.form["EIinput"].strip() != '' and request.form["EOinput"].strip() != '':
         try:
-            inputList = [float(i) for i in request.form["EIinput"].replace(' ', '').split(',')]
+            inputList = [int(i) for i in request.form["EIinput"].replace(' ', '').split(',')]
         except ValueError as e:
-            flash("Expected Input only accept numeric values; separate each value with ','")
+            flash("Expected Input only accept integer values; separate each value with ','")
             return redirect('/code generation(EIEO)')
 
         if len(inputList) == 3:
             pass
         elif len(inputList) == 2:
-            inputList.append(-0.0)
+            inputList.append(-0)
         elif len(inputList) == 1:
-            inputList.append(-0.0)
-            inputList.append(-0.0)
+            inputList.append(-0)
+            inputList.append(-0)
         else:
-            flash("Expected Input only accept up to three values; separate each value with ','")
+            flash("Expected Input only accept up to three integer values; separate each value with ','")
             return redirect('/code generation(EIEO)')
         
         try:
@@ -207,36 +208,96 @@ def voicebot():
 @app.route("/invalid_input", methods=["POST","GET"])
 def invalid_input():
     if request.method == "POST" and request.form["minlength"].strip() != '' and request.form["maxlength"].strip() != '' \
-        and request.form["charincluded"].strip() != '':
+        and (request.form["charincluded"].strip() != '' or request.form["charexcluded"].strip() != ''):
         minlength = int(request.form["minlength"])
         maxlength = int(request.form["maxlength"])
-        includedList = [str(i) for i in request.form["charincluded"].split(' ')]
-        excludedList = [str(i) for i in request.form["charexcluded"].split(' ')]
+        includedList = [str(i) for i in request.form["charincluded"].replace('  ', ' ').split(' ')]
+        excludedList = [str(i) for i in request.form["charexcluded"].replace('  ', ' ').split(' ')]
+        print(includedList)
+        print(excludedList)
+        letters = string.ascii_lowercase + string.ascii_uppercase + string.digits + string.punctuation
+        invalidString = ""
+        invalidList = []
         generated_output = ""
 
         includedList.sort()
         excludedList.sort()
         
         if minlength < 1:
-            flash("Minimum Length cannot be less than 1")
+            flash("Characters Minimum Length cannot be less than 1")
             return redirect('/invalid_input')
         if maxlength < minlength:
-            flash("Maximum Length cannot be smaller than Minimum Length")
+            flash("'Characters Maximum Length' cannot be smaller than 'Characters Minimum Length'")
             return redirect('/invalid_input')
         if includedList == excludedList:
-            flash("'Characters to be Included' cannot be identical to 'Characters to be Excluded'")
+            flash("'Characters must be Included' cannot be identical to 'Characters must be Excluded'")
             return redirect('/invalid_input')
+        if includedList[0]:
+            for included in includedList:
+                if len(included) != 1:
+                    flash("'Characters must be Included' only accept single character; separate each character with space ' '")
+                    return redirect('/invalid_input')
+        if excludedList[0]:
+            for excluded in excludedList:
+                if len(excluded) != 1:
+                    flash("'Characters must be Excluded' only accept single character; separate each character with space ' '")
+                    return redirect('/invalid_input')
+        
+        # valid string but doesn't meet the minimum length requirement
+        invalidList.append("=== String that doesn't meet the minimum length requirement ===")
+        while (len(invalidString) != minlength-1):
+            randChar = random.choice(letters)
+            if randChar not in excludedList:
+                invalidString += randChar
+        invalidList.append(invalidString)
+        invalidString = ""
 
-        randRange = random.randint(minlength, maxlength)
-        for i in range(randRange):
-            value = random.choice(includedList)
-            while value in excludedList:
-                value = random.choice(includedList)
-            generated_output += str(value)
+        # valid string but doesn't meet the maximum length requirement
+        invalidList.append("=== String that doesn't meet the maximum length requirement ===")
+        while (len(invalidString) != maxlength+1):
+            randChar = random.choice(letters)
+            if randChar not in excludedList:
+                invalidString += randChar
+        invalidList.append(invalidString)
+        invalidString = ""
+
+        # invalid string (doesn't contain all the characters in 'Characters must be included')
+        if includedList[0]:
+            invalidList.append("=== String that doesn't contain all the characters in 'Characters must be Included' ===")
+            for included in includedList:
+                invalidString = included
+                charCount = random.randint(minlength, maxlength)
+                while(len(invalidString) != charCount):
+                    randChar = random.choice(letters)
+                    if randChar not in includedList:
+                        if randChar not in excludedList:
+                            invalidString += randChar
+                invalidList.append(invalidString)
+
+        # invalid string (contains characters in 'Characters must be excluded')
+        if excludedList[0]:
+            invalidList.append("=== String that contains characters in 'Characters must be Excluded' ===")
+            for excluded in excludedList:
+                invalidString = excluded
+                charCount = random.randint(minlength, maxlength)
+                while(len(invalidString) != charCount):
+                    randChar = random.choice(letters)
+                    if randChar not in excludedList:
+                        invalidString += randChar
+                invalidList.append(invalidString)
+
+        for invalid in invalidList:
+            if " ===" in invalid:
+                generated_output += "\n" + invalid + "\n"
+            else:
+                generated_output += invalid + "\n"
+
         return render_template("invalid_input.html", generated_output=generated_output)
-    elif request.method == "POST" and (request.form["minlength"].strip() == '' or request.form["maxlength"].strip() == '' \
-        or request.form["charincluded"].strip() == ''):
-        flash("Fields, except 'Characters to be Excluded', cannot be empty")
+    elif request.method == "POST" and (request.form["minlength"].strip() == '' or request.form["maxlength"].strip() == ''):
+        flash("Characters Minimum/Maximum Length cannot be empty")
+        return redirect('/invalid_input')
+    elif request.method == "POST" and request.form["charincluded"].strip() == '' and request.form["charexcluded"].strip() == '':
+        flash("You must fill up at least 'Characters must be Included' or 'Characters must be Excluded'")
         return redirect('/invalid_input')
     else:
         return render_template("invalid_input.html")

@@ -14,25 +14,25 @@
       <div id = "content">
         <!-- Minimum Length -->
         <div>
-          <label for="minlength" class="label_details">Minimum Length:</label>
+          <label for="minlength" class="label_details">Characters Minimum Length:</label>
           <input name="minlength" type="number" id="minlength" placeholder="Enter minimum length"/> 
         </div>
 
         <!--Maximum Length -->
         <div>
-          <label for="maxlength" class="label_details">Maximum Length:</label>
+          <label for="maxlength" class="label_details">Characters Maximum Length:</label>
           <input name="maxlength" type="number" id="maxlength" placeholder="Enter maximum length"/> 
         </div>
 
         <!-- Characters to be Included -->
         <div>
-          <label for="charincluded" class="label_details">Characters to be Included:</label>
+          <label for="charincluded" class="label_details">Characters must be Included:</label>
           <input name="charincluded" type="text" id="charincluded" placeholder="Separate each character with space ' '"/> 
         </div>
 
         <!-- Characters to be Excluded -->
         <div>
-          <label for="charexcluded" class="label_details">Characters to be Excluded:</label>
+          <label for="charexcluded" class="label_details">Characters must be Excluded:</label>
           <input name="charexcluded" type="text" id="charexcluded" placeholder="Separate each character with space ' '"/> 
         </div>
 
@@ -42,7 +42,7 @@
         <br><br><br>
         <!-- Output area -->
         <div id = output>
-          <label for="output">Output:</label><br>
+          <label for="output">Violation Output:</label><br>
           <textarea id="output" rows=5 class="output" disabled>{{generated_output}}</textarea>
         </div>
       </div>
