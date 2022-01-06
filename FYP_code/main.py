@@ -213,8 +213,7 @@ def invalid_input():
         maxlength = int(request.form["maxlength"])
         includedList = [str(i) for i in request.form["charincluded"].replace('  ', ' ').split(' ')]
         excludedList = [str(i) for i in request.form["charexcluded"].replace('  ', ' ').split(' ')]
-        print(includedList)
-        print(excludedList)
+        
         letters = string.ascii_lowercase + string.ascii_uppercase + string.digits + string.punctuation
         invalidString = ""
         invalidList = []
@@ -224,13 +223,10 @@ def invalid_input():
         excludedList.sort()
         
         if minlength < 1:
-            flash("Characters Minimum Length cannot be less than 1")
+            flash("Characters Minimum Length cannot be smaller than 1")
             return redirect('/invalid_input')
         if maxlength < minlength:
             flash("'Characters Maximum Length' cannot be smaller than 'Characters Minimum Length'")
-            return redirect('/invalid_input')
-        if includedList == excludedList:
-            flash("'Characters must be Included' cannot be identical to 'Characters must be Excluded'")
             return redirect('/invalid_input')
         if includedList[0]:
             for included in includedList:
@@ -242,49 +238,73 @@ def invalid_input():
                 if len(excluded) != 1:
                     flash("'Characters must be Excluded' only accept single character; separate each character with space ' '")
                     return redirect('/invalid_input')
+        if minlength < len(includedList):
+            flash("'Characters Minimum Length' cannot be less than 'Characters must be Included'")
+            return redirect('/invalid_input')
+        for included in includedList:
+            if included in excludedList:
+                flash("'Characters must be Included' cannot contain characters in 'Characters must be Excluded'")
+                return redirect('/invalid_input')
+        
         
         # valid string but doesn't meet the minimum length requirement
-        invalidList.append("=== String that doesn't meet the minimum length requirement ===")
-        while (len(invalidString) != minlength-1):
-            randChar = random.choice(letters)
-            if randChar not in excludedList:
-                invalidString += randChar
-        invalidList.append(invalidString)
-        invalidString = ""
-
+        if minlength != 1:
+            invalidList.append("=== String that doesn't meet the minimum length requirement ===")
+            for included in includedList:
+                invalidString += included
+            if len(includedList) == minlength:
+                invalidString = invalidString[:-1]
+            while (len(invalidString) != minlength-1):
+                randChar = random.choice(letters)
+                if randChar not in excludedList:
+                    invalidString += randChar
+            invalidList.append(invalidString)
+            invalidString = ""
+        
         # valid string but doesn't meet the maximum length requirement
         invalidList.append("=== String that doesn't meet the maximum length requirement ===")
+        for included in includedList:
+            invalidString += included
         while (len(invalidString) != maxlength+1):
             randChar = random.choice(letters)
             if randChar not in excludedList:
                 invalidString += randChar
         invalidList.append(invalidString)
         invalidString = ""
-
+        
         # invalid string (doesn't contain all the characters in 'Characters must be included')
         if includedList[0]:
             invalidList.append("=== String that doesn't contain all the characters in 'Characters must be Included' ===")
             for included in includedList:
-                invalidString = included
+                if len(includedList) != 1:
+                    invalidString = included
+                else:
+                    invalidString = ""
                 charCount = random.randint(minlength, maxlength)
-                while(len(invalidString) != charCount):
+                while (len(invalidString) != charCount):
                     randChar = random.choice(letters)
                     if randChar not in includedList:
                         if randChar not in excludedList:
                             invalidString += randChar
                 invalidList.append(invalidString)
-
+                invalidString = ""
+        
         # invalid string (contains characters in 'Characters must be excluded')
         if excludedList[0]:
             invalidList.append("=== String that contains characters in 'Characters must be Excluded' ===")
             for excluded in excludedList:
-                invalidString = excluded
+                for included in includedList:
+                    invalidString += included
+                while len(invalidString) == maxlength:
+                    invalidString = invalidString[:-1]
+                invalidString += excluded
                 charCount = random.randint(minlength, maxlength)
-                while(len(invalidString) != charCount):
-                    randChar = random.choice(letters)
-                    if randChar not in excludedList:
+                if len(invalidString) < charCount:
+                    while(len(invalidString) != charCount):
+                        randChar = random.choice(letters)
                         invalidString += randChar
                 invalidList.append(invalidString)
+                invalidString = ""
 
         for invalid in invalidList:
             if " ===" in invalid:
