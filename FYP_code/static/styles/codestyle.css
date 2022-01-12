@@ -1,28 +1,30 @@
-#textdiv{
-    float: left;
-    margin-left: 400px;
+table{
+    width: 90%;
     margin-top: 100px;
-    
+    margin-left:auto;
+    margin-right:auto;
+    text-align:center;
+}
+
+#textdiv{
+    width: 50%
 }
 
 #codediv{
-    float: right;
-    margin-right: 400px;
-    margin-top: 100px;
-    
+    width: 50%
 }
 
 #pseudoinput{
-    width: 450px;
     height: 400px;
+    width: 100%;
     resize: none;
     font-size: 15px;
     font-family: Consolas,Menlo,"courier new",monospace;
 }
 
 #codeoutput{
-    width: 450px;
     height: 400px;
+    width: 100%;
     resize: none;
     font-size: 15px;
     font-family: Consolas,Menlo,"courier new",monospace;
@@ -30,29 +32,18 @@
 
 #textlabel{
     font-size: large;
-    margin-left: 30%;
 }
 
 #codelabel{
     font-size: large;
-    margin-left: 32%;
 }
 
 #generatecodebutton{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 100px;
     height: 80px;
     width: 150px;
     font-size: large;
     font-family: Sans-serif;
     border-radius: 12px;
-}
-
-#record{
-    display: inline-block;
-    margin-left: 575px;
 }
 
 #recbutton {
@@ -67,12 +58,6 @@
 div.alert {
     text-align: center;
 }    
-
-#codesform{
-    min-width: 1920px;
-    max-width: 1920px;
-    margin: 0 auto; 
-}
 
 
 .Rec{

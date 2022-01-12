@@ -10,24 +10,40 @@
     {% endfor %}
 
     <form id = codesform method="POST" >
-        <div id = textdiv>
-            <label id="textlabel">Pseudocode Input</label><br>
-            <textarea wrap="off" id="pseudoinput" name="pseudoinput" placeholder="create a if statement to see if values are the same">{{transcribed_text}}</textarea>
-        </div>
-
-        <div id = codediv>
-            <label id = codelabel>Code Block Output</label><br>
-            <textarea wrap="off" id="codeoutput" disabled>{{predicted_codeblock}}</textarea>
-        </div>
-        
-        <div id = record>
-            <button name="btn" value="get_voice" id="recbutton" title="Click on this button to use voice as input">
-                <i id= "icn" class="fas fa-microphone-alt fa-3x"></i><br>
-                Voice input
-            </button> 
-        </div>
-
-        <input type="submit" name ="btn" id = "generatecodebutton" value="Generate">
+        <table>
+            <tr>
+                <td id = textdiv>
+                    <!-- Pseudocode Input -->
+                    <label id="textlabel">Pseudocode Input</label><br>
+                    <textarea wrap="off" id="pseudoinput" name="pseudoinput" placeholder="create a if statement to see if values are the same">{{transcribed_text}}{{codedesc}}</textarea>
+                </td>
+                <td></td>
+                <td id = codediv>
+                    <!-- Code Block Output -->
+                    <label id = codelabel>Code Block Output</label><br>
+                    <textarea wrap="off" id="codeoutput" disabled>{{predicted_codeblock}}</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td id = record>
+                    <!-- Voice Input Button -->
+                    <button name="btn" value="get_voice" id="recbutton" title="Click on this button to use voice as input">
+                        <i id= "icn" class="fas fa-microphone-alt fa-3x"></i><br>
+                        Voice input
+                    </button> 
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <!-- Generate Button -->
+                    <input type="submit" name ="btn" id = "generatecodebutton" value="Generate">
+                </td>
+                <td></td>
+            </tr>
+        </table>
     </form> 
     
 <script type=text/javascript src="{{url_for('static', filename='js/codes.js') }}"></script> 

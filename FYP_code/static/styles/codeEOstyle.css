@@ -1,68 +1,42 @@
-
-#exINdiv{
-    float: left;
-    margin-left: 400px;
+table{
+    width: 90%;
+    height: 100%;
     margin-top: 100px;
+    margin-left:auto;
+    margin-right:auto;
+    text-align:center;
 }
 
-#exOUTdiv{
-    position: absolute;
-    float: left;
-    clear: left;
-    margin-left: 400px;
-    margin-top: 400px;
-    
+#EIEOtd{
+    width: 50%;
+    height: 90%;
 }
 
-#codeoutdiv{
-    float: right;
-    margin-right: 400px;
-    margin-top: 150px;
-    
+#codeouttd{
+    width: 50%;
 }
 
-#EIinput{
-    width: 450px;
+#EIinput, #EOinput{
     height: 200px;
-    resize: none;
-    font-size: 15px;
-    font-family: Consolas,Menlo,"courier new",monospace;
-}
-
-#EOinput{
-    width: 450px;
-    height: 200px;
+    width: 100%;
     resize: none;
     font-size: 15px;
     font-family: Consolas,Menlo,"courier new",monospace;
 }
 
 #codeoutput{
-    width: 450px;
     height: 400px;
+    width: 100%;
     resize: none;
     font-size: 15px;
     font-family: Consolas,Menlo,"courier new",monospace;
 }
 
-#EIlabel{
+label{
     font-size: large;
-    margin-left: 35%;
-}
-
-#EOlabel{
-    font-size: large;
-    margin-left: 35%;
-}
-
-#codelabel{
-    font-size: large;
-    margin-left: 35%;
 }
 
 #generatecodebutton{
-    margin-top: 420px;
-    margin-left: 46%;
     height: 80px;
     width: 150px;
     font-size: large;
@@ -70,12 +44,10 @@
     border-radius: 12px;
 }
 
-#codeEOform{
-    margin: 0 auto; 
-    min-width: 1920px;
-    max-width: 1920px;
-}
-
 div.alert {
     text-align: center;
-}  
+}
+
+#space{
+    padding: 20px;
+}

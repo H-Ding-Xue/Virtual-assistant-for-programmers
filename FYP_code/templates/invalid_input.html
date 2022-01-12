@@ -9,31 +9,31 @@
       <strong>{{error}}</strong>
     </div>
     {% endfor %}
-    
+
     <form id = invalidform method="POST">
       <div id = "content">
         <!-- Minimum Length -->
         <div>
           <label for="minlength" class="label_details">Characters Minimum Length:</label>
-          <input name="minlength" type="number" id="minlength" placeholder="Enter minimum length"/> 
+          <input name="minlength" type="number" id="minlength" value="{{minlength}}" placeholder="Enter minimum length"/> 
         </div>
 
         <!--Maximum Length -->
         <div>
           <label for="maxlength" class="label_details">Characters Maximum Length:</label>
-          <input name="maxlength" type="number" id="maxlength" placeholder="Enter maximum length"/> 
+          <input name="maxlength" type="number" id="maxlength" value="{{maxlength}}" placeholder="Enter maximum length"/> 
         </div>
 
         <!-- Characters to be Included -->
         <div>
           <label for="charincluded" class="label_details">Characters must be Included:</label>
-          <input name="charincluded" type="text" id="charincluded" placeholder="Separate each character with space ' '"/> 
+          <input name="charincluded" type="text" id="charincluded" value="{{charincluded}}" placeholder="Separate each character with space ' '" /> 
         </div>
 
         <!-- Characters to be Excluded -->
         <div>
           <label for="charexcluded" class="label_details">Characters must be Excluded:</label>
-          <input name="charexcluded" type="text" id="charexcluded" placeholder="Separate each character with space ' '"/> 
+          <input name="charexcluded" type="text" id="charexcluded" placeholder="Separate each character with space ' '" value="{{charexcluded}}"/> 
         </div>
 
         <!-- Submit Button -->
@@ -41,9 +41,9 @@
 
         <br><br><br>
         <!-- Output area -->
-        <div id = output>
+        <div class = output>
           <label for="output">Violation Output:</label><br>
-          <textarea id="output" rows=5 class="output" disabled>{{generated_output}}</textarea>
+          <textarea id="output" rows=15 class="output" disabled>{{generated_output}}</textarea>
         </div>
       </div>
     </form>

@@ -1,5 +1,4 @@
 #div1 {
-  min-width: 1920px;
   background-color: grey;
   height: 50px;
   width: 100%; 
@@ -23,7 +22,6 @@ css for nav bar
 --------------------------------------------------------------*/
 
 ul.topnav {
-  min-width: 1920px;
   list-style-type: none;
   margin: 0;
   padding: 0;
