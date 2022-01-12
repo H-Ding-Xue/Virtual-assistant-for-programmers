@@ -69,7 +69,7 @@ def comment():
                 finalstring = finalstring + linebyline[i] +' # '+ commentlist[i] + '\n'
             else:
                 finalstring = finalstring + linebyline[i] + commentlist[i] + '\n'
-        return render_template("comments.html", finalstring=finalstring) 
+        return render_template("comments.html", codeblock=codeblock, finalstring=finalstring) 
     elif request.method=='POST' and request.form['generatecommentbutton'] == 'Generate' and request.form["codeinput"].strip() == '': 
         flash("Code Input cannot be empty")
         return redirect('/comment generation')
@@ -84,6 +84,7 @@ def code():
         try:
             with sr.Microphone() as source:
                 audio = recognizer.listen(source)
+            #transcribe speech to text    
             transcribed_text = recognizer.recognize_google(audio)
             return render_template("codes.html", transcribed_text=transcribed_text)
         except Exception as e:
@@ -97,7 +98,7 @@ def code():
         predicted_codeblock = loaded_model.predict(loaded_vectorizer.transform([codedesc]))
         predicted_codeblock = predicted_codeblock[0]
         predicted_codeblock = predicted_codeblock.replace(r'\n', '\n')
-        return render_template("codes.html",predicted_codeblock=predicted_codeblock)
+        return render_template("codes.html",codedesc=codedesc,predicted_codeblock=predicted_codeblock)
     elif request.method == "POST" and request.form['btn'] == 'Generate' and request.form["pseudoinput"].strip() == '': 
         flash("Pseudocode Input cannot be empty")
         return redirect('/code generation')   
@@ -144,7 +145,7 @@ def codeEIEO():
         if predicted_output == "":
             predicted_output = "Unable to obtain the result"
 
-        return render_template("codesEO.html", predicted_output=predicted_output)
+        return render_template("codesEO.html", inputList=request.form["EIinput"], output=request.form["EOinput"], predicted_output=predicted_output)
     elif request.method == "POST" and (request.form["EIinput"].strip() == '' or request.form["EOinput"].strip() == ''):
         flash("Expected Input/Output cannot be empty")
         return redirect('/code generation(EIEO)')
@@ -161,8 +162,9 @@ def voicebot():
         try:
             with sr.Microphone() as source:
                 audio = recognizer.listen(source)
+            #transcribe speech to text     
             transcribed_text = recognizer.recognize_google(audio, language='en-GB')
-
+            #redirecting to various pages if keyword found in transcribed text
             if (("code" in transcribed_text.lower() and 
                 ("text" in transcribed_text.lower() or "test" in transcribed_text.lower())) 
                 and ("text" in transcribed_text.lower() or "test" in transcribed_text.lower())):
@@ -312,7 +314,11 @@ def invalid_input():
             else:
                 generated_output += invalid + "\n"
 
-        return render_template("invalid_input.html", generated_output=generated_output)
+        return render_template("invalid_input.html", minlength=request.form["minlength"],
+                                maxlength=request.form["maxlength"],
+                                charincluded=request.form["charincluded"],
+                                charexcluded=request.form["charexcluded"], 
+                                generated_output=generated_output)
     elif request.method == "POST" and (request.form["minlength"].strip() == '' or request.form["maxlength"].strip() == ''):
         flash("Characters Minimum/Maximum Length cannot be empty")
         return redirect('/invalid_input')
