@@ -117,10 +117,10 @@ def codeEIEO():
         if len(inputList) == 3:
             pass
         elif len(inputList) == 2:
-            inputList.append(-0)
+            inputList.append(0)
         elif len(inputList) == 1:
-            inputList.append(-0)
-            inputList.append(-0)
+            inputList.append(0)
+            inputList.append(0)
         else:
             flash("Expected Input only accept up to three integer values; separate each value with ','")
             return redirect('/code generation(EIEO)')
@@ -133,17 +133,19 @@ def codeEIEO():
             return redirect('/code generation(EIEO)')
 
         model = pickle.load(open('saved_codeEO_model', 'rb'))
+        print(inputList)
         prediction = model.predict([inputList])
+        print(prediction)
         with open('saved_codeEO_method', 'rb') as f:
             df = pickle.load(f)
         
-        for i in range(len(df)):
-            if prediction[0] == df['Method'][i]:
-                predicted_output = df['Result'][i]
-                predicted_output = predicted_output.replace(r'\n', '\n')
-        
-        if predicted_output == "":
-            predicted_output = "Unable to obtain the result"
+        result = df[(df[['Addition', 'Division', 'Multiplication', 'Subtraction', 'Equals']] == prediction[0]).all(1)]
+        print(result)
+        predicted_output = ""
+        for i in range(len(result.index)):
+            temp = df['Result'][result.index[i]]
+            predicted_output += temp.replace(r'\n', '\n')
+            predicted_output += "\n\n"
 
         return render_template("codesEO.html", inputList=request.form["EIinput"], output=request.form["EOinput"], predicted_output=predicted_output)
     elif request.method == "POST" and (request.form["EIinput"].strip() == '' or request.form["EOinput"].strip() == ''):
