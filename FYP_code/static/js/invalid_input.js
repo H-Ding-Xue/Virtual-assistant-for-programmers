@@ -1,6 +1,4 @@
 $( document ).ready(function() {
-    $("form").submit(function(){
-       event.preventDefault();
-       $('#output').prop("disabled", false); // enable text area
-});
+    // set alerts to display for only 3s if any
+    setInterval(function(){ $(".alert").fadeOut(); }, 3000);
 })

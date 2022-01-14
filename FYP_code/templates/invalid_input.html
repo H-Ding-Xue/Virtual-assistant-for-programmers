@@ -1,45 +1,51 @@
 {% extends "base.html" %}
 {% block title %}Invalid Input{% endblock %}
 {% block content %}
-  <link rel="stylesheet" href="{{url_for('static', filename = 'styles/invalid_input.css')}}">
-  <script type=text/javascript src="{{url_for('static', filename='js/invalid_input.js') }}"></script>
-    
-  <div id = "content">
-    <form>
-      <!-- Minimum Length -->
-      <div>
-        <label for="min_length" class="label_details">Minimum Length:</label>
-        <input name="minlength" type="number" id="minlength" required /> 
-      </div>
+<link rel="stylesheet" href="{{url_for('static', filename = 'styles/invalid_input.css')}}">
+<script type=text/javascript src="{{url_for('static', filename='js/invalid_input.js') }}"></script>
 
-      <!--Maximum Length -->
-      <div>
-        <label for="max_length" class="label_details">Maximum Length:</label>
-        <input name="maxlength" type="text" id="maxlength" required /> 
-      </div>
-
-      <!-- Characters to be Included -->
-      <div>
-        <label for="char_included" class="label_details">Characters to be Included:</label>
-        <input name="charincluded" type="text" id="charincluded" required /> 
-      </div>
-
-      <!-- Characters to be Excluded -->
-      <div>
-        <label for="char_excluded" class="label_details">Characters to be Excluded:</label>
-        <input name="charexcluded" type="text" id="charexcluded" required /> 
-      </div>
-
-      <!-- Submit Button -->
-      <input type="submit" class="submit_button"/>
-    </form>
-    
-    <br/><br/>
-    
-    <!-- Output area -->
-    <div class="output">
-      <label for="output">Output:</label>
-      <textarea class="form-control" rows="5" id="output" disabled></textarea>
+    {% for error in get_flashed_messages() %}
+    <div class="alert alert-danger">
+      <strong>{{error}}</strong>
     </div>
-  </div>
+    {% endfor %}
+
+    <form id = invalidform method="POST">
+      <div id = "content">
+        <!-- Minimum Length -->
+        <div>
+          <label for="minlength" class="label_details">Characters Minimum Length:</label>
+          <input name="minlength" type="number" id="minlength" value="{{minlength}}" placeholder="Enter minimum length"/> 
+        </div>
+
+        <!--Maximum Length -->
+        <div>
+          <label for="maxlength" class="label_details">Characters Maximum Length:</label>
+          <input name="maxlength" type="number" id="maxlength" value="{{maxlength}}" placeholder="Enter maximum length"/> 
+        </div>
+
+        <!-- Characters to be Included -->
+        <div>
+          <label for="charincluded" class="label_details">Characters must be Included:</label>
+          <input name="charincluded" type="text" id="charincluded" value="{{charincluded}}" placeholder="Separate each character with space ' '" /> 
+        </div>
+
+        <!-- Characters to be Excluded -->
+        <div>
+          <label for="charexcluded" class="label_details">Characters must be Excluded:</label>
+          <input name="charexcluded" type="text" id="charexcluded" placeholder="Separate each character with space ' '" value="{{charexcluded}}"/> 
+        </div>
+
+        <!-- Submit Button -->
+        <input type="submit" class="submit_button"/>
+
+        <br><br><br>
+        <!-- Output area -->
+        <div class = output>
+          <label for="output">Violation Output:</label><br>
+          <textarea id="output" rows=15 class="output" disabled>{{generated_output}}</textarea>
+        </div>
+      </div>
+    </form>
+
 {% endblock %}

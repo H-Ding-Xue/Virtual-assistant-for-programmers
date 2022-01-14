@@ -10,17 +10,30 @@
     {% endfor %}
 
     <form id = commentfor method="POST">
-        <div id = codediv>
-            <label for="codeinput" id="codelabel">Code Input</label><br>
-            <textarea id="codeinput" name="codeinput" placeholder="if a > b:&#10;  #do something"></textarea>
-        </div>
-
-        
-        <div id = commentdiv>
-            <label for="commentoutput" id = commentlabel>Comments Output</label><br>
-            <textarea id="commentoutput" disabled>{{finalstring}}</textarea>
-        </div>
-        <input type="submit" id = generatecommentbutton name = generatecommentbutton value="Generate">
+        <table>
+            <tr>
+                <td id = codetd>
+                    <!-- Code Input -->
+                    <label for="codeinput" id="codelabel">Code Input</label><br>
+                    <textarea wrap="off" id="codeinput" name="codeinput" placeholder="if a > b:&#10;  #do something">{{codeblock}}</textarea>
+                </td>
+                <td></td>
+                <td id = commenttd>
+                    <!-- Comments Output -->
+                    <label for="commentoutput" id = commentlabel>Comments Output</label><br>
+                    <textarea wrap="off" id="commentoutput" disabled>{{finalstring}}</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <div id=space></div>
+                    <!-- Generate Button -->
+                    <input type="submit" id = generatecommentbutton name = generatecommentbutton value="Generate">
+                </td>
+                <td></td>
+            </tr>
+        </table>
     </form>
     
 <script type=text/javascript src="{{url_for('static', filename='js/comments.js') }}"></script>
