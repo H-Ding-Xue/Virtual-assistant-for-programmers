@@ -328,7 +328,6 @@ def invalid_input():
         flash("You must fill up at least 'Characters must be Included' or 'Characters must be Excluded'")
         return redirect('/invalid_input')
     else:
-        print ("hi")
         return render_template("invalid_input.html")
     
 if __name__ == "__main__":
