@@ -2,15 +2,19 @@
 {% block title %}Code Block Generation (EIO){% endblock %}
 {% block content %}
 <link rel="stylesheet" href="{{url_for('static', filename = 'styles/codeEOstyle.css')}}">
-    
-    {% for error in get_flashed_messages() %}
-    <div class="alert alert-danger">
-      <strong>{{error}}</strong>
-    </div>
-    {% endfor %}
 
     <form id = codeEOform method="POST">
-        <table>
+        <!-- voice assistant button -->
+        <table class="bot" cellspacing="0" cellpadding="0">
+            <tr>
+                <td>
+                    <button type="button" class="btn btn-secondary" id="voicebot"><i id= "icn" class="fas fa-microphone-alt fa-3x"></i><br/>
+                        <span id="spantext">Voice Bot Assistant</span>
+                    </button><br/><br/>
+                </td>
+            </tr>
+        </table>
+        <table class="form">
             <tr>
               <td id = EIEOtd>
                   <!-- Expected Input -->
@@ -36,7 +40,7 @@
                 <td>
                     <div id=space></div>
                     <!-- Generate Button -->
-                    <input type="submit" id = generatecodebutton value="Generate">
+                    <input type="submit" class="btn btn-outline-dark btn-lg" id = generatecodebutton value="Generate">
                 </td>
                 <td></td>
             </tr>

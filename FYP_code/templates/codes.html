@@ -1,16 +1,21 @@
 {% extends "base.html" %}
 {% block title %}Code Block Generation{% endblock %}
 {% block content %}
-<link rel="stylesheet" href="{{url_for('static', filename = 'styles/codestyle.css')}}">
-
-    {% for error in get_flashed_messages() %}
-    <div class="alert alert-danger">
-      <strong>{{error}}</strong>
-    </div>
-    {% endfor %}
+<link rel="stylesheet" href="{{url_for('static', filename = 'styles/codestyle.css')}}"> 
 
     <form id = codesform method="POST" >
-        <table>
+        <!-- voice assistant button -->
+        <table class="bot" cellspacing="0" cellpadding="0">
+            <tr>
+                <td>
+                    <button type="button" class="btn btn-secondary" id="voicebot"><i id= "icn" class="fas fa-microphone-alt fa-3x"></i><br/>
+                        <span id="spantext">Voice Bot Assistant</span>
+                    </button><br/><br/>
+                </td>
+            </tr>
+        </table>
+        <!-- codes form section -->
+        <table class="form">
             <tr>
                 <td id = textdiv>
                     <!-- Pseudocode Input -->
@@ -27,9 +32,9 @@
             <tr>
                 <td id = record>
                     <!-- Voice Input Button -->
-                    <button name="btn" value="get_voice" id="recbutton" title="Click on this button to use voice as input">
+                    <button name="btn" value="get_voice" id="recbutton"  class="btn btn-outline-danger" title="Click on this button to use voice as input">
                         <i id= "icn" class="fas fa-microphone-alt fa-3x"></i><br>
-                        Voice input
+                        Voice Input
                     </button> 
                 </td>
                 <td></td>
@@ -39,12 +44,10 @@
                 <td></td>
                 <td>
                     <!-- Generate Button -->
-                    <input type="submit" name ="btn" id = "generatecodebutton" value="Generate">
+                    <input type="submit" class="btn btn-outline-dark btn-lg" name ="btn" id = "generatecodebutton" value="Generate">
                 </td>
                 <td></td>
             </tr>
         </table>
     </form> 
-    
-<script type=text/javascript src="{{url_for('static', filename='js/codes.js') }}"></script> 
 {% endblock %}

@@ -1,11 +1,3 @@
-table{
-    width: 90%;
-    margin-top: 100px;
-    margin-left:auto;
-    margin-right:auto;
-    text-align:center;
-}
-
 #textdiv{
     width: 50%
 }
@@ -47,17 +39,12 @@ table{
 }
 
 #recbutton {
-	height: 100px;
-	width: 100px;
-	background-color: red;
-	border-radius: 200px;
+	height: 120px;
+	width: 120px;
+	border-radius: 120px;
 	display: inline-block;
 	outline: none;
 }
-
-div.alert {
-    text-align: center;
-}    
 
 
 .Rec{
