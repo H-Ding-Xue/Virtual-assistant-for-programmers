@@ -159,6 +159,9 @@ def voicebot():
     transcribed_text = ""
     command = False
     #get voice input
+    
+    print ('this is a voice bot')
+    
     if request.method == "POST":
         recognizer = sr.Recognizer()
         try:
