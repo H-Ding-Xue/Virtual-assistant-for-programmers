@@ -1,5 +1,5 @@
 #button {
-	margin-top: 150px;
+	margin-top: 5%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -12,13 +12,12 @@
   }
   
   #recButton {
-	  height: 200px;
-	  width: 200px;
-	  background-color: red;
-	  border-radius: 100px;
-	  display: block;
-	  outline: none;
-  }
+    width: 200px;
+    height: 200px;
+    border-radius: 100px;
+    font-size: 24px;
+    line-height: 1.33;
+}
 
 
 .Rec{
@@ -41,13 +40,10 @@
 }
 
 #overlay {
-	margin: auto;
 	position: absolute;
-	top: 250px; 
-	left: 50px;
-	bottom: 50px; 
-	right: 50px;
-	z-index:5;
+  	left: 50%;
+  	top: 50%;
+  	transform: translate(-50%, -50%);
 }
 
 .text {
@@ -64,6 +60,3 @@
 	opacity: 1;
 }
 
-div.alert {
-    text-align: center;
-}    
