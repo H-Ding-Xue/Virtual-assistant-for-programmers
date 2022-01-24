@@ -5,7 +5,8 @@
   <link rel="stylesheet" href="{{url_for('static', filename = 'styles/base_template.css')}}">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://kit.fontawesome.com/944f3cb790.js" crossorigin="anonymous"></script>
   <script type=text/javascript src="{{url_for('static', filename='js/base.js') }}"></script>
@@ -27,12 +28,6 @@
       <li id="l5"><a href="/invalid_input"><i class="far fa-window-close"></i>&nbsp;Invalid Input Generator</a></li>
     </ul>
 
-    {% for error in get_flashed_messages() %}
-    <div class="alert alert-danger">
-      <strong>{{error}}</strong>
-    </div>
-    {% endfor %}
-    
     {% block content %}
     {% endblock %}  
 </body>

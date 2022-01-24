@@ -1,11 +1,9 @@
 from flask import Flask,redirect,render_template, request, flash
 import pickle
 import speech_recognition as sr
+import webbrowser
 import random
 import string
-from comment import comment_execution
-from codetxt import code_execution
-import voicebot as v
 
 app = Flask(__name__)
 app.secret_key = "fyp"  
@@ -16,12 +14,96 @@ def home():
 
 @app.route("/comment generation", methods=["POST","GET"])
 def comment():
-    return comment_execution()
+    code_to_english = {
+        "+=": " assign add ",
+        "/=": " assign divide ",
+        "*=": " assign multiply ",
+        "-=": " assign minus ",
+        "==": " same ",
+        "!=": " not same ",
+        "<=": " smaller or equal ",
+        ">=": " bigger or equal ",
+        "<": " lesser ",
+        ">": " greater ",
+        "elif": " else if ",
+        "=": " assign ",
+        "+": " add ",
+        "-": " minus ",
+        "*": " multiply ",
+        "/": " divide ",
+        "range": " range ",
+        "while": " while ",
+        "if": " if ",
+        "else": " else ",
+        "print": " print ",
+        "try": " try ",
+        "except": " except ",
+        "NameError": " name error ",
+        "TypeError": " type error ",
+        "ValueError": " value error ",
+        "KeyError": " lookup error ",
+        "IndexError": " lookup error ",
+        "input": " input ",
+    }
+    if request.method=='POST' and request.form['generatecommentbutton'] == 'Generate' and request.form["codeinput"].strip() != '':
+        codeblock = request.form["codeinput"]
+        linebyline = codeblock.split('\n')
+        commentlist = []
+        loaded_vectorizer = pickle.load(open('saved_comgen_vectorizer', 'rb'))
+        loaded_model = pickle.load(open('saved_comgen_model', 'rb'))
+        for i in range(len(linebyline)):
+            linebyline[i] = linebyline[i].replace('\r','')
+
+        for i in range(len(linebyline)):
+            Comment = linebyline[i]
+            if Comment.isspace() or Comment=='\r'or Comment=='\n'or Comment=='':
+                commentlist.append("")
+            else:
+                for key, value in code_to_english.items():
+                    if key in Comment:
+                        Comment = Comment.replace(key,value)
+                commentlist.append(loaded_model.predict(loaded_vectorizer.transform([Comment]))[0])
+        finalstring = ''
+        for i in range(len(linebyline)):
+            if not linebyline[i].isspace() and linebyline[i]!='' and linebyline[i]!='\r' and linebyline[i]!='\n':
+                finalstring = finalstring + linebyline[i] +' # '+ commentlist[i] + '\n'
+            else:
+                finalstring = finalstring + linebyline[i] + commentlist[i] + '\n'
+        return render_template("comments.html", codeblock=codeblock, finalstring=finalstring) 
+    elif request.method=='POST' and request.form['generatecommentbutton'] == 'Generate' and request.form["codeinput"].strip() == '': 
+        flash("Code Input cannot be empty")
+        return redirect('/comment generation')
+    else:
+        return render_template("comments.html") 
 
 @app.route("/code generation", methods=["POST","GET"])
 def code():
-    return code_execution()
-   
+    #get voice input
+    if request.method == "POST" and request.form['btn'] == 'get_voice':
+        recognizer = sr.Recognizer()
+        try:
+            with sr.Microphone() as source:
+                audio = recognizer.listen(source)
+            #transcribe speech to text    
+            transcribed_text = recognizer.recognize_google(audio)
+            return render_template("codes.html", transcribed_text=transcribed_text)
+        except Exception as e:
+            flash("Unable to process voice input - No microphone or voice detected")
+            return redirect('/code generation')
+    #generate code block        
+    elif request.method == "POST" and request.form['btn'] == 'Generate' and request.form["pseudoinput"].strip() != '':
+        loaded_vectorizer = pickle.load(open('saved_codegen_vectorizer', 'rb'))
+        loaded_model = pickle.load(open('saved_codegen_model', 'rb'))
+        codedesc = request.form["pseudoinput"]
+        predicted_codeblock = loaded_model.predict(loaded_vectorizer.transform([codedesc]))
+        predicted_codeblock = predicted_codeblock[0]
+        predicted_codeblock = predicted_codeblock.replace(r'\n', '\n')
+        return render_template("codes.html",codedesc=codedesc,predicted_codeblock=predicted_codeblock)
+    elif request.method == "POST" and request.form['btn'] == 'Generate' and request.form["pseudoinput"].strip() == '': 
+        flash("Pseudocode Input cannot be empty")
+        return redirect('/code generation')   
+    else:
+        return render_template("codes.html")
 
 @app.route("/code generation(EIEO)", methods=["POST","GET"])
 def codeEIEO():
@@ -74,10 +156,58 @@ def codeEIEO():
 
 @app.route("/voicebot", methods=["POST","GET"])
 def voicebot():
+    transcribed_text = ""
+    command = False
+    #get voice input
     if request.method == "POST":
-        return v.voice_assitant("voicebot.html", "/voicebot")
+        recognizer = sr.Recognizer()
+        try:
+            with sr.Microphone() as source:
+                audio = recognizer.listen(source)
+            #transcribe speech to text     
+            transcribed_text = recognizer.recognize_google(audio, language='en-GB')
+            #redirecting to various pages if keyword found in transcribed text
+            if (("code" in transcribed_text.lower() and 
+                ("text" in transcribed_text.lower() or "test" in transcribed_text.lower())) 
+                and ("text" in transcribed_text.lower() or "test" in transcribed_text.lower())):
+                return redirect('/code generation')
+            elif ("code" in transcribed_text.lower() and "expected" in transcribed_text.lower()):
+                return redirect('/code generation(EIEO)')   
+            elif ("comment" in transcribed_text.lower() or "common" in transcribed_text.lower() or 
+                "," in transcribed_text.lower() or "comma" in transcribed_text.lower() 
+                or "coleman" in transcribed_text.lower() or "command" in transcribed_text.lower()):
+                return redirect('/comment generation')   
+            elif ("invalid" in transcribed_text.lower() or "in valid" in transcribed_text.lower() or
+            "valid" in transcribed_text.lower() or "in valley" in transcribed_text.lower()):
+                return redirect('/invalid_input')   
+            elif ("home" in transcribed_text.lower()):
+                return redirect('/')      
+            elif ("google" in transcribed_text.lower()):
+                if (transcribed_text.lower() == "google"):
+                    command = True
+                    place = "Google"
+                    webbrowser.get('windows-default').open('https://google.com')
+                    return render_template("voicebot.html", transcribed_text=transcribed_text, 
+                                                            command = command,
+                                                            place = place)
+                elif ("search" in transcribed_text.lower() and "google for" in transcribed_text.lower()):
+                    query = transcribed_text.lower()
+                    query = query.replace("search", "")
+                    query = query.replace("google for ", "")                                           
+                link = "https://www.google.com/search?q=" + query
+                command = True
+                webbrowser.get('windows-default').open(link)
+                return render_template("voicebot.html", transcribed_text=transcribed_text, 
+                                                        command = command,
+                                                        place="Google search")
+            else:
+                flash("Unable to process command")
+                return redirect('/voicebot')
+        except Exception as e:
+            flash("No voice or microphone detected")
+            return redirect('/voicebot')
     else:
-        return render_template("voicebot.html")
+        return render_template("voicebot.html", command=command)
 
 @app.route("/invalid_input", methods=["POST","GET"])
 def invalid_input():

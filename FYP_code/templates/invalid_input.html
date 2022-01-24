@@ -2,18 +2,15 @@
 {% block title %}Invalid Input{% endblock %}
 {% block content %}
 <link rel="stylesheet" href="{{url_for('static', filename = 'styles/invalid_input.css')}}">
+<script type=text/javascript src="{{url_for('static', filename='js/invalid_input.js') }}"></script>
+
+    {% for error in get_flashed_messages() %}
+    <div class="alert alert-danger">
+      <strong>{{error}}</strong>
+    </div>
+    {% endfor %}
 
     <form id = invalidform method="POST">
-        <!-- voice assistant button -->
-        <table class="bot" cellspacing="0" cellpadding="0">
-          <tr>
-              <td>
-                <button type="button" class="btn btn-secondary" id="voicebot"><i id= "icn" class="fas fa-microphone-alt fa-3x"></i><br/>
-                    <span id="spantext">Voice Bot Assistant</span>
-                </button><br/><br/>
-              </td>
-          </tr>
-      </table>
       <div id = "content">
         <!-- Minimum Length -->
         <div>
@@ -38,9 +35,9 @@
           <label for="charexcluded" class="label_details">Characters must be Excluded:</label>
           <input name="charexcluded" type="text" id="charexcluded" placeholder="Separate each character with space ' '" value="{{charexcluded}}"/> 
         </div>
-        
+
         <!-- Submit Button -->
-        <input type="submit" class="btn btn-outline-dark" id = "generatebutton"/>
+        <input type="submit" class="submit_button"/>
 
         <br><br><br>
         <!-- Output area -->

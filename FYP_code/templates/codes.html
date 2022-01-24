@@ -1,22 +1,16 @@
 {% extends "base.html" %}
 {% block title %}Code Block Generation{% endblock %}
 {% block content %}
-<link rel="stylesheet" href="{{url_for('static', filename = 'styles/codestyle.css')}}"> 
+<link rel="stylesheet" href="{{url_for('static', filename = 'styles/codestyle.css')}}">
+
+    {% for error in get_flashed_messages() %}
+    <div class="alert alert-danger">
+      <strong>{{error}}</strong>
+    </div>
+    {% endfor %}
 
     <form id = codesform method="POST" >
-        <!-- voice assistant button -->
-        <table class="bot" cellspacing="0" cellpadding="0">
-            <tr>
-                <td>
-                    <button id="voicebot" name="btn" value="voice_assist" class="btn btn-secondary" title="Click on this button to use voice as input">
-                        <i id= "icn" class="fas fa-microphone-alt fa-3x"></i><br>
-                        <span id="spantext">Voice Bot Assistant</span>
-                    </button> <br/><br/>
-                </td>
-            </tr>
-        </table>
-        <!-- codes form section -->
-        <table class="form">
+        <table>
             <tr>
                 <td id = textdiv>
                     <!-- Pseudocode Input -->
@@ -28,15 +22,14 @@
                     <!-- Code Block Output -->
                     <label id = codelabel>Code Block Output</label><br>
                     <textarea wrap="off" id="codeoutput" disabled>{{predicted_codeblock}}</textarea>
-                    <input type="hidden" name="hidden" value="{{predicted_codeblock}}">
                 </td>
             </tr>
             <tr>
                 <td id = record>
                     <!-- Voice Input Button -->
-                    <button name="btn" value="get_voice" id="recbutton"  class="btn btn-outline-danger" title="Click on this button to use voice as input">
+                    <button name="btn" value="get_voice" id="recbutton" title="Click on this button to use voice as input">
                         <i id= "icn" class="fas fa-microphone-alt fa-3x"></i><br>
-                        Voice Input
+                        Voice input
                     </button> 
                 </td>
                 <td></td>
@@ -46,10 +39,12 @@
                 <td></td>
                 <td>
                     <!-- Generate Button -->
-                    <input type="submit" class="btn btn-outline-dark btn-lg" name ="btn" id = "generatecodebutton" value="Generate">
+                    <input type="submit" name ="btn" id = "generatecodebutton" value="Generate">
                 </td>
                 <td></td>
             </tr>
         </table>
     </form> 
+    
+<script type=text/javascript src="{{url_for('static', filename='js/codes.js') }}"></script> 
 {% endblock %}

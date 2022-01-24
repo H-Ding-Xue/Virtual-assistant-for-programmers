@@ -3,18 +3,14 @@
 {% block content %}
 <link rel="stylesheet" href="{{url_for('static', filename = 'styles/commentstyle.css')}}">
 
+    {% for error in get_flashed_messages() %}
+    <div class="alert alert-danger">
+      <strong>{{error}}</strong>
+    </div>
+    {% endfor %}
+
     <form id = commentfor method="POST">
-        <!-- voice assistant button -->
-        <table class="bot" cellspacing="0" cellpadding="0">
-            <tr>
-                <td>
-                    <button type="button" class="btn btn-secondary" id="voicebot"><i id= "icn" class="fas fa-microphone-alt fa-3x"></i><br/>
-                        <span id="spantext">Voice Bot Assistant</span>
-                    </button><br/><br/>
-                </td>
-            </tr>
-        </table>
-        <table class="form">
+        <table>
             <tr>
                 <td id = codetd>
                     <!-- Code Input -->
@@ -33,7 +29,7 @@
                 <td>
                     <div id=space></div>
                     <!-- Generate Button -->
-                    <input class="btn btn-outline-dark btn-lg" type="submit" id = generatecommentbutton name = generatecommentbutton value="Generate">
+                    <input type="submit" id = generatecommentbutton name = generatecommentbutton value="Generate">
                 </td>
                 <td></td>
             </tr>

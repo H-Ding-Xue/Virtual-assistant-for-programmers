@@ -16,25 +16,7 @@ body{
   color:white;
 }
 
-#table_top_padding{
-  padding: 20px;
-}
 
-label{
-  font-size: large;
-  font-weight: bold;
-}
-
-div.alert {
-  text-align: center;
-}
-
-.form{
-  width: 90%;
-  margin-left:auto;
-  margin-right:auto;
-  text-align:center;
-}
 /*--------------------------------------------------------------
 css for nav bar
 --------------------------------------------------------------*/
@@ -87,10 +69,3 @@ ul.topnav li.right {
   ul.topnav li {float: none;}
 }
 /*--------------------------------------------------------------*/
-/* css for voice assistant button */
-.bot{
-  width: 100%;
-  text-align: right;
-  border: none;
-}
-
