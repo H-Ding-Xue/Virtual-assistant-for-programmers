@@ -1,5 +1,5 @@
 #button {
-	margin-top: 150px;
+	margin-top: 5%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -14,7 +14,6 @@
   #recButton {
     width: 200px;
     height: 200px;
-    padding: 10px 16px;
     border-radius: 100px;
     font-size: 24px;
     line-height: 1.33;

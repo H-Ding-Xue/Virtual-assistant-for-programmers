@@ -8,9 +8,10 @@
         <table class="bot" cellspacing="0" cellpadding="0">
             <tr>
                 <td>
-                    <button type="button" class="btn btn-secondary" id="voicebot"><i id= "icn" class="fas fa-microphone-alt fa-3x"></i><br/>
+                    <button id="voicebot" name="btn" value="voice_assist" class="btn btn-secondary" title="Click on this button to use voice as input">
+                        <i id= "icn" class="fas fa-microphone-alt fa-3x"></i><br>
                         <span id="spantext">Voice Bot Assistant</span>
-                    </button><br/><br/>
+                    </button> <br/><br/>
                 </td>
             </tr>
         </table>
@@ -27,6 +28,7 @@
                     <!-- Code Block Output -->
                     <label id = codelabel>Code Block Output</label><br>
                     <textarea wrap="off" id="codeoutput" disabled>{{predicted_codeblock}}</textarea>
+                    <input type="hidden" name="hidden" value="{{predicted_codeblock}}">
                 </td>
             </tr>
             <tr>
