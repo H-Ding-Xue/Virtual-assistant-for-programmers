@@ -4,6 +4,7 @@ import webbrowser
 import datetime
 import subprocess
 
+# similar sounding words with target words
 similar_sounding_words = {
     "no pet": "notepad",
     "not pet": "notepad",
@@ -37,6 +38,7 @@ similar_sounding_words = {
     "date time": "datetime"
 }
 
+#keywords and corresponding w3school links
 w3_links ={
     "syntax" : "https://www.w3schools.com/python/python_syntax.asp",
     "comments": "https://www.w3schools.com/python/python_comments.asp",
@@ -92,6 +94,8 @@ w3_links ={
     "read": "https://www.w3schools.com/python/python_file_open.asp",
     "write": "https://www.w3schools.com/python/python_file_write.asp"
 }
+
+# get voice and convert to text
 def get_text_from_speech():
     recognizer = sr.Recognizer()
     mic = sr.Microphone()
@@ -100,6 +104,7 @@ def get_text_from_speech():
     transcribed_text = recognizer.recognize_google(audio, language='en-GB')
     return transcribed_text
 
+# redirect to pages within the app
 def redirect_to_app_page(transcribed_text):
     within_page= True
     page = ""
@@ -126,11 +131,13 @@ def redirect_to_app_page(transcribed_text):
         within_page = False        
     return within_page, page
 
+#redirect to google
 def redirect_to_google(transcribed_text):
     if (transcribed_text.lower() == "google"):
         command = True
         place = "Google"
         webbrowser.get('windows-default').open("https://www.google.com/")
+    #if keywords contain google for get the keywords accordingly
     elif ("search" in transcribed_text.lower() and "google for" in transcribed_text.lower()):
         query = transcribed_text.lower()
         query = query.replace("search", "")
@@ -144,19 +151,24 @@ def redirect_to_google(transcribed_text):
         place = "Google" 
     return command, place
 
+#redirect to w3schools
 def redirect_to_w3schools(transcribed_text):
     command = True
+    #if keyword contains only w3schools open w3schools python page 
     if (transcribed_text.lower() == "w3schools"):
         place = "w3schools Python Tutorial"
         webbrowser.get('windows-default').open("https://www.w3schools.com/python/default.asp")
     else:
         link = ""
+        #search if text is found in the w3_links dictionary
         for key, value in w3_links.items():
             if key in transcribed_text:
                 link = value
+        # if found, direct to the page        
         if link != "":
             webbrowser.get('windows-default').open(link)
             place = "w3schools"
+        # if not found, redirect to google to search for the page    
         else:    
             query = transcribed_text.lower()
             query = query.replace("w3schools ", "")
@@ -165,6 +177,7 @@ def redirect_to_w3schools(transcribed_text):
             place = "Google" 
     return command, place
 
+# check if there are any similar sounding words and convert it
 def convert_word():
     transcribed_text = get_text_from_speech()
     for key, value in similar_sounding_words.items():
@@ -172,6 +185,7 @@ def convert_word():
             transcribed_text = transcribed_text.replace(key,value)
     return transcribed_text    
 
+# call the redirect_to_google and redirect_to_w3schools in one function
 def redirect_to_webpages(transcribed_text):
     if ("google" in transcribed_text.lower()):
         command, place = redirect_to_google(transcribed_text) 
@@ -182,15 +196,18 @@ def redirect_to_webpages(transcribed_text):
         place = None                                      
     return command, place
 
+#generate file name based on current datetime
 def get_filename():
     current_datetime = datetime.datetime.now()
     format_datetime = current_datetime.strftime("%d%m%y_%H%I%M%S")
     filename = "va_" + format_datetime + ".py"
     return filename
 
+# open notepad
 def open_notepad():
     subprocess.Popen("notepad.exe")
 
+#write output to notepad file
 def copy_to_notepad(output):
     filename = get_filename()
     with open(filename, 'w') as out_file:
@@ -198,7 +215,7 @@ def copy_to_notepad(output):
     out_file.close()
     subprocess.Popen(["notepad.exe", filename])
 
-
+#calling this function from main if no output is available
 def voice_assitant(current_page, path):
     try:
         #get voice and fix similar sounding words
@@ -231,6 +248,7 @@ def voice_assitant(current_page, path):
             statement = redirect(path)
     return statement   
 
+#calling this function from main if output is available
 def voice_assitant_with_output(current_page, output, renderpage):
     try:
         #get voice and fix similar sounding words
@@ -240,7 +258,7 @@ def voice_assitant_with_output(current_page, output, renderpage):
         #return directed page if true
         if within_page == True:
             statement = redirect(page)
-        #open notepad if notepad 
+        #write output notepad if notepad or copy word is found 
         elif ("notepad" in text.lower() or "copy" in text.lower()):
             copy_to_notepad(output)
             statement = renderpage

@@ -79,7 +79,7 @@ def comment():
 
 @app.route("/code generation", methods=["POST","GET"])
 def code():
-    #get voice input
+    #get text from voice input
     if request.method == "POST" and request.form['btn'] == 'get_voice':
         try:
             text = v.convert_word()
@@ -96,6 +96,7 @@ def code():
         predicted_codeblock = predicted_codeblock[0]
         predicted_codeblock = predicted_codeblock.replace(r'\n', '\n')
         return render_template("codes.html",codedesc=codedesc,predicted_codeblock=predicted_codeblock)
+    # voice assistant button
     elif request.method=='POST' and request.form['btn'] =='voice_assist':
         input = request.values.get("pseudoinput")
         output = request.values.get("hidden")
