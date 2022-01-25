@@ -2,16 +2,8 @@ from flask import Flask,redirect,render_template, request, flash
 import pickle
 import voicebot as v
 def code_execution():
-    #get text from voice input
-    if request.method == "POST" and request.form['btn'] == 'get_voice':
-        try:
-            text = v.convert_word()
-            return render_template("codes.html", transcribed_text=text)
-        except Exception as e:
-            flash("Unable to process voice input - No microphone or voice detected")
-            return redirect('/code generation')
     #generate code block        
-    elif request.method == "POST" and request.form['btn'] == 'Generate' and request.form["pseudoinput"].strip() != '':
+    if request.method == "POST" and request.form['btn'] == 'Generate' and request.form["pseudoinput"].strip() != '':
         loaded_vectorizer = pickle.load(open('saved_codegen_vectorizer', 'rb'))
         loaded_model = pickle.load(open('saved_codegen_model', 'rb'))
         codedesc = request.form["pseudoinput"]
