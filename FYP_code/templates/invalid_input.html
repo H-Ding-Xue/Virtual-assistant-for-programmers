@@ -8,9 +8,10 @@
         <table class="bot" cellspacing="0" cellpadding="0">
           <tr>
               <td>
-                <button type="button" class="btn btn-secondary" id="voicebot"><i id= "icn" class="fas fa-microphone-alt fa-3x"></i><br/>
-                    <span id="spantext">Voice Bot Assistant</span>
-                </button><br/><br/>
+                <button id="voicebot" name="btn" value="voice_assist" class="btn btn-secondary" title="Click on this button to use voice bot assistant">
+                  <i id= "icn" class="fas fa-microphone-alt fa-3x"></i><br>
+                  <span id="spantext">Voice Bot Assistant</span>
+              </button> <br/><br/>
               </td>
           </tr>
       </table>
@@ -40,13 +41,14 @@
         </div>
         
         <!-- Submit Button -->
-        <input type="submit" class="btn btn-outline-dark" id = "generatebutton"/>
+        <input type="submit" class="btn btn-outline-dark" id = "generatebutton" name = "btn" value="Generate"/>
 
         <br><br><br>
         <!-- Output area -->
         <div class = output>
           <label for="output">Violation Output:</label><br>
           <textarea id="output" rows=15 class="output" disabled>{{generated_output}}</textarea>
+          <input type="hidden" name="hidden" value="{{generated_output}}">
         </div>
       </div>
     </form>

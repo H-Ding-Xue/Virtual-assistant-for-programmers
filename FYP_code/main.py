@@ -25,7 +25,7 @@ def code():
 
 @app.route("/code generation(EIEO)", methods=["POST","GET"])
 def codeEIEO():
-    if request.method == "POST" and request.form["EIinput"].strip() != '' and request.form["EOinput"].strip() != '':
+    if request.method == "POST" and request.form["btn"] == "Generate" and request.form["EIinput"].strip() != '' and request.form["EOinput"].strip() != '':
         try:
             inputList = [int(i) for i in request.form["EIinput"].replace(' ', '').split(',')]
         except ValueError as e:
@@ -66,7 +66,17 @@ def codeEIEO():
             predicted_output += "\n\n"
 
         return render_template("codesEO.html", inputList=request.form["EIinput"], output=request.form["EOinput"], predicted_output=predicted_output)
-    elif request.method == "POST" and (request.form["EIinput"].strip() == '' or request.form["EOinput"].strip() == ''):
+        # voice assistant button
+    elif request.method=='POST' and request.form['btn'] =='voice_assist':
+        EIinput = request.values.get("EIinput")
+        EOinput = request.values.get("EOinput")
+        output = request.values.get("hidden")
+        if output == '':
+            return v.voice_assitant("codesEO.html", "/code generation(EIEO)") 
+        else:
+            statement = render_template("codesEO.html",inputList=EIinput,output=EOinput, predicted_output = output)
+            return v.voice_assitant_with_output("codesEO.html", output, statement) 
+    elif request.method == "POST" and request.form["btn"] == "Generate" and (request.form["EIinput"].strip() == '' or request.form["EOinput"].strip() == ''):
         flash("Expected Input/Output cannot be empty")
         return redirect('/code generation(EIEO)')
     else:
@@ -81,7 +91,7 @@ def voicebot():
 
 @app.route("/invalid_input", methods=["POST","GET"])
 def invalid_input():
-    if request.method == "POST" and request.form["minlength"].strip() != '' and request.form["maxlength"].strip() != '' \
+    if request.method == "POST" and request.form['btn'] =='Generate' and request.form["minlength"].strip() != '' and request.form["maxlength"].strip() != '' \
         and (request.form["charincluded"].strip() != '' or request.form["charexcluded"].strip() != ''):
         minlength = int(request.form["minlength"])
         maxlength = int(request.form["maxlength"])
@@ -191,10 +201,24 @@ def invalid_input():
                                 charincluded=request.form["charincluded"],
                                 charexcluded=request.form["charexcluded"], 
                                 generated_output=generated_output)
-    elif request.method == "POST" and (request.form["minlength"].strip() == '' or request.form["maxlength"].strip() == ''):
+    # voice assistant button
+    elif request.method=='POST' and request.form['btn'] =='voice_assist':
+        output = request.values.get("hidden")
+        if output == '':
+            return v.voice_assitant("invalid_input.html", "/invalid_input") 
+        else:
+            minlength=request.values.get("minlength")
+            maxlength=request.values.get("maxlength")
+            charincluded=request.values.get("charincluded")
+            charexcluded=request.values.get("charexcluded")
+            statement = render_template("invalid_input.html", minlength=minlength,maxlength=maxlength,
+                                        charincluded=charincluded,charexcluded=charexcluded,
+                                        generated_output=output)
+            return v.voice_assitant_with_output("invalid_input.html", output, statement)                              
+    elif request.method == "POST" and request.form['btn'] =='Generate' and (request.form["minlength"].strip() == '' or request.form["maxlength"].strip() == ''):
         flash("Characters Minimum/Maximum Length cannot be empty")
         return redirect('/invalid_input')
-    elif request.method == "POST" and request.form["charincluded"].strip() == '' and request.form["charexcluded"].strip() == '':
+    elif request.method == "POST" and request.form['btn'] =='Generate' and request.form["charincluded"].strip() == '' and request.form["charexcluded"].strip() == '':
         flash("You must fill up at least 'Characters must be Included' or 'Characters must be Excluded'")
         return redirect('/invalid_input')
     else:
