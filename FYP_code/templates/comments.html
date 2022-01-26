@@ -8,9 +8,10 @@
         <table class="bot" cellspacing="0" cellpadding="0">
             <tr>
                 <td>
-                    <button type="button" class="btn btn-secondary" id="voicebot"><i id= "icn" class="fas fa-microphone-alt fa-3x"></i><br/>
+                    <button id="voicebot" name="btn" value="voice_assist" class="btn btn-secondary" title="Click on this button to use voice bot assistant">
+                        <i id= "icn" class="fas fa-microphone-alt fa-3x"></i><br>
                         <span id="spantext">Voice Bot Assistant</span>
-                    </button><br/><br/>
+                    </button> <br/><br/>
                 </td>
             </tr>
         </table>
@@ -26,6 +27,7 @@
                     <!-- Comments Output -->
                     <label for="commentoutput" id = commentlabel>Comments Output</label><br>
                     <textarea wrap="off" id="commentoutput" disabled>{{finalstring}}</textarea>
+                    <input type="hidden" name="hidden" value="{{finalstring}}">
                 </td>
             </tr>
             <tr>
@@ -33,7 +35,7 @@
                 <td>
                     <div id=space></div>
                     <!-- Generate Button -->
-                    <input class="btn btn-outline-dark btn-lg" type="submit" id = generatecommentbutton name = generatecommentbutton value="Generate">
+                    <input class="btn btn-outline-dark btn-lg" type="submit" id = generatecommentbutton name = btn value="Generate">
                 </td>
                 <td></td>
             </tr>

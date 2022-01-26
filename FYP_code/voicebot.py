@@ -1,4 +1,4 @@
-from flask import redirect,render_template, flash
+from flask import redirect,render_template, flash, request
 import speech_recognition as sr
 import webbrowser
 import datetime
@@ -136,7 +136,7 @@ def redirect_to_google(transcribed_text):
     if (transcribed_text.lower() == "google"):
         command = True
         place = "Google"
-        webbrowser.get('windows-default').open("https://www.google.com/")
+        webbrowser.open("https://www.google.com/")
     #if keywords contain google for get the keywords accordingly
     elif ("search" in transcribed_text.lower() and "google for" in transcribed_text.lower()):
         query = transcribed_text.lower()
@@ -145,7 +145,7 @@ def redirect_to_google(transcribed_text):
         link = "https://www.google.com/search?q=" + query
         command = True
         place="Google search"
-        webbrowser.get('windows-default').open(link)
+        webbrowser.open(link)
     else:
         command = False
         place = "Google" 
@@ -157,7 +157,7 @@ def redirect_to_w3schools(transcribed_text):
     #if keyword contains only w3schools open w3schools python page 
     if (transcribed_text.lower() == "w3schools"):
         place = "w3schools Python Tutorial"
-        webbrowser.get('windows-default').open("https://www.w3schools.com/python/default.asp")
+        webbrowser.open("https://www.w3schools.com/python/default.asp")
     else:
         link = ""
         #search if text is found in the w3_links dictionary
@@ -166,14 +166,14 @@ def redirect_to_w3schools(transcribed_text):
                 link = value
         # if found, direct to the page        
         if link != "":
-            webbrowser.get('windows-default').open(link)
+            webbrowser.open(link)
             place = "w3schools"
         # if not found, redirect to google to search for the page    
         else:    
             query = transcribed_text.lower()
             query = query.replace("w3schools ", "")
             link = "https://www.google.com/search?q=" + "site:https://www.w3schools.com/python/ " + query
-            webbrowser.get('windows-default').open(link)
+            webbrowser.open(link)
             place = "Google" 
     return command, place
 
@@ -200,12 +200,15 @@ def redirect_to_webpages(transcribed_text):
 def get_filename():
     current_datetime = datetime.datetime.now()
     format_datetime = current_datetime.strftime("%d%m%y_%H%I%M%S")
-    filename = "va_" + format_datetime + ".py"
+    filename = "va_" + format_datetime + ".txt"
     return filename
 
 # open notepad
 def open_notepad():
-    subprocess.Popen("notepad.exe")
+    filename = get_filename()
+    f = open(filename, "w")
+    f.close()
+    webbrowser.open(filename)
 
 #write output to notepad file
 def copy_to_notepad(output):
@@ -213,7 +216,7 @@ def copy_to_notepad(output):
     with open(filename, 'w') as out_file:
         out_file.write(output)
     out_file.close()
-    subprocess.Popen(["notepad.exe", filename])
+    webbrowser.open(filename)
 
 #calling this function from main if no output is available
 def voice_assitant(current_page, path):

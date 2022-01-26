@@ -8,9 +8,10 @@
         <table class="bot" cellspacing="0" cellpadding="0">
             <tr>
                 <td>
-                    <button type="button" class="btn btn-secondary" id="voicebot"><i id= "icn" class="fas fa-microphone-alt fa-3x"></i><br/>
+                    <button id="voicebot" name="btn" value="voice_assist" class="btn btn-secondary" title="Click on this button to use voice bot assistant">
+                        <i id= "icn" class="fas fa-microphone-alt fa-3x"></i><br>
                         <span id="spantext">Voice Bot Assistant</span>
-                    </button><br/><br/>
+                    </button> <br/><br/>
                 </td>
             </tr>
         </table>
@@ -33,6 +34,7 @@
                   <!-- Codes Output -->
                   <label for="codeoutput" id = codelabel>Codes Output</label><br>
                   <textarea id="codeoutput" disabled>{{predicted_output}}</textarea>
+                  <input type="hidden" name="hidden" value="{{predicted_output}}">
               </td>
             </tr>
             <tr>
@@ -40,7 +42,7 @@
                 <td>
                     <div id=space></div>
                     <!-- Generate Button -->
-                    <input type="submit" class="btn btn-outline-dark btn-lg" id = generatecodebutton value="Generate">
+                    <input type="submit" class="btn btn-outline-dark btn-lg" id = generatecodebutton name = 'btn' value="Generate">
                 </td>
                 <td></td>
             </tr>

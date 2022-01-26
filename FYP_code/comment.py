@@ -1,5 +1,7 @@
 from flask import Flask,redirect,render_template, request, flash
 import pickle
+import voicebot as v
+
 def comment_execution():
     code_to_english = {
         "+=": " assign add ",
@@ -32,7 +34,7 @@ def comment_execution():
         "IndexError": " lookup error ",
         "input": " input ",
     }
-    if request.method=='POST' and request.form['generatecommentbutton'] == 'Generate' and request.form["codeinput"].strip() != '':
+    if request.method=='POST' and request.form['btn'] == 'Generate' and request.form["codeinput"].strip() != '':
         codeblock = request.form["codeinput"]
         linebyline = codeblock.split('\n')
         commentlist = []
@@ -57,7 +59,16 @@ def comment_execution():
             else:
                 finalstring = finalstring + linebyline[i] + commentlist[i] + '\n'
         return render_template("comments.html", codeblock=codeblock, finalstring=finalstring) 
-    elif request.method=='POST' and request.form['generatecommentbutton'] == 'Generate' and request.form["codeinput"].strip() == '': 
+    # voice assistant button
+    elif request.method=='POST' and request.form['btn'] =='voice_assist':
+        codeblock = request.values.get("codeinput")
+        finalstring = request.values.get("hidden")
+        if finalstring == '':
+            return v.voice_assitant("comments.html", "/comment generation") 
+        else:
+            statement = render_template("comments.html",codeblock=codeblock, finalstring=finalstring)
+            return v.voice_assitant_with_output("comments.html", finalstring, statement)         
+    elif request.method=='POST' and request.form['btn'] == 'Generate' and request.form["codeinput"].strip() == '': 
         flash("Code Input cannot be empty")
         return redirect('/comment generation')
     else:
