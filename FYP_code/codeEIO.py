@@ -28,14 +28,14 @@ def codeEIO_execution():
             flash("Expected Output only accept one numeric value")
             return redirect('/code generation(EIEO)')
 
-        model = pickle.load(open('saved_codeEO_model', 'rb'))
+        model = pickle.load(open('saved_codeEIO_model', 'rb'))
         print(inputList)
         prediction = model.predict([inputList])
         print(prediction)
-        with open('saved_codeEO_method', 'rb') as f:
+        with open('saved_codeEIO_method', 'rb') as f:
             df = pickle.load(f)
         
-        result = df[(df[['Addition', 'Division', 'Multiplication', 'Subtraction', 'Equals']] == prediction[0]).all(1)]
+        result = df[(df[['Addition', 'Subtraction', 'Multiplication', 'Division', 'Equals']] == prediction[0]).all(1)]
         print(result)
         predicted_output = ""
         for i in range(len(result.index)):
