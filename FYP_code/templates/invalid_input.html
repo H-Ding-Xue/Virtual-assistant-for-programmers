@@ -19,25 +19,43 @@
         <!-- Minimum Length -->
         <div>
           <label for="minlength" class="label_details">Characters Minimum Length:</label>
-          <input name="minlength" type="number" id="minlength" value="{{minlength}}" placeholder="Enter minimum length"/> 
+          <input class = "fields" name="minlength" type="number" id="minlength" value="{{minlength}}" placeholder="Enter minimum length"/> 
         </div>
 
         <!--Maximum Length -->
         <div>
           <label for="maxlength" class="label_details">Characters Maximum Length:</label>
-          <input name="maxlength" type="number" id="maxlength" value="{{maxlength}}" placeholder="Enter maximum length"/> 
+          <input class = "fields" name="maxlength" type="number" id="maxlength" value="{{maxlength}}" placeholder="Enter maximum length"/> 
         </div>
 
         <!-- Characters to be Included -->
         <div>
           <label for="charincluded" class="label_details">Characters must be Included:</label>
-          <input name="charincluded" type="text" id="charincluded" value="{{charincluded}}" placeholder="Separate each character with space ' '" /> 
+          <input class = "fields" name="charincluded" type="text" id="charincluded" value="{{charincluded}}" placeholder="Separate each character with space ' '" /> <br>
+          <label class="label_details"></label>
+          <input type="checkbox" id="uppercase" name="uppercase" value="Uppercase">
+          <label for="uppercase" class="checkbox">Uppercase &nbsp;</label>
+          <input type="checkbox" id="lowercase" name="lowercase" value="Lowercase">
+          <label for="lowercase" class="checkbox">Lowercase &nbsp;</label> 
+          <input type="checkbox" id="symbols" name="symbols" value="symbols">
+          <label for="symbols" class="checkbox">Symbols &nbsp;</label> 
+          <input type="checkbox" id="numbers" name="numbers" value="Numbers">
+          <label for="numbers" class="checkbox">Numbers</label> 
         </div>
 
         <!-- Characters to be Excluded -->
         <div>
           <label for="charexcluded" class="label_details">Characters must be Excluded:</label>
-          <input name="charexcluded" type="text" id="charexcluded" placeholder="Separate each character with space ' '" value="{{charexcluded}}"/> 
+          <input class = "fields" name="charexcluded" type="text" id="charexcluded" placeholder="Separate each character with space ' '" value="{{charexcluded}}"/> <br>
+          <label class="label_details"></label>
+          <input type="checkbox" id="uppercase" name="uppercase" value="Uppercase">
+          <label for="uppercase" class="checkbox">Uppercase &nbsp;</label>
+          <input type="checkbox" id="lowercase" name="lowercase" value="Lowercase">
+          <label for="lowercase" class="checkbox">Lowercase &nbsp;</label> 
+          <input type="checkbox" id="symbols" name="symbols" value="symbols">
+          <label for="symbols" class="checkbox">Symbols &nbsp;</label> 
+          <input type="checkbox" id="numbers" name="numbers" value="Numbers">
+          <label for="numbers" class="checkbox">Numbers</label> 
         </div>
         
         <!-- Submit Button -->

@@ -1,5 +1,6 @@
 #content {
     margin-left: 60px;
+    min-width: 830px;
 }
 
 /*Display labels as blocks and adjust its width*/
@@ -14,13 +15,19 @@
 	white-space: pre-line;
 }
 
-/* Adjust width of all input */
-input {
+/* Adjust width of input fields*/
+.fields {
     font-size: large;
-    width: 30%;
+    width: 32%;
     height: 50px;
 }
 
+/* checkbox css*/
+label.checkbox{
+  font-size: large;
+  font-weight: normal;
+  display: inline-block;
+}
 
 /* Hides the step in input number */
 input::-webkit-outer-spin-button,
