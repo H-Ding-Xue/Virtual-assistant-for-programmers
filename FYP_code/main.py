@@ -1,6 +1,4 @@
 from flask import Flask,redirect,render_template, request, flash
-import pickle
-import speech_recognition as sr
 import random
 import string
 from comment import comment_execution
