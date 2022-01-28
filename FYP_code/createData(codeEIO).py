@@ -140,8 +140,8 @@ def generator(min, max, count):
     randTwo(min, max, count)
     randOne(min, max, count)
 
-# generate range 0 to 1000 with 2 millions data
-generator(0, 1001, 2000000)
+# generate range 0 to 1000 with 2.5 millions raw data
+generator(0, 1001, 2500000)
 
 data = {'Value1': value1,
         'Value2': value2,
