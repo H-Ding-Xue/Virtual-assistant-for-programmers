@@ -243,7 +243,7 @@ def voice_assitant(current_page, path):
         #open notepad if notepad 
         elif ("notepad" in text.lower()):
             open_empty_success = open_notepad()
-            statement = render_page_with_blank_editor(current_page, open_empty_success, *args)
+            statement = render_template(current_page, open_empty_success=open_empty_success, *args)
         else:
             #redirect to google/w3school
             command, place = redirect_to_webpages(text)
