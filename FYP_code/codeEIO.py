@@ -16,8 +16,14 @@ def codeEIO_execution():
             # check if the expected input textbox contains only int values
             inputList = [int(i) for i in request.form["EIinput"].replace(' ', '').split(',')]
         except ValueError as e:
-            flash("Expected Input only accept integer values; separate each value with ','")
+            flash("Expected Input only accept positive integer values; separate each value with ','")
             return redirect('/code generation(EIEO)')
+
+        # check if value is within 0 to 1000
+        for value in inputList:
+            if value < 0 or value > 1000:
+                flash("Expected Input only accept positive integer values between 0 to 1000")
+                return redirect('/code generation(EIEO)')
 
         if len(inputList) == 3:
             pass
@@ -30,7 +36,7 @@ def codeEIO_execution():
             inputList.append(0)
         # expected input contains more than 3 values
         else:
-            flash("Expected Input only accept up to three integer values; separate each value with ','")
+            flash("Expected Input only accept up to three positive integer values")
             return redirect('/code generation(EIEO)')
         
         try:
@@ -103,12 +109,6 @@ def codeEIO_execution():
         else:
             predicted_output += method['Result'][result.index[0]]
             predicted_output = predicted_output.replace(r'\n', '\n')
-        """
-        for i in range(len(result.index)):
-            temp = method['Result'][result.index[i]]
-            predicted_output += temp.replace(r'\n', '\n')
-            predicted_output += "\n\n"
-        """
 
         return render_template("codesEO.html", inputList=request.form["EIinput"], output=request.form["EOinput"], predicted_output=predicted_output)
     # voice assistant button
