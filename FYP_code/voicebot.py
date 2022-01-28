@@ -35,7 +35,8 @@ similar_sounding_words = {
     "funshion" : "function",
     "a ray" : "array",
     "w3school" : "w3schools",
-    "date time": "datetime"
+    "date time": "datetime",
+    "test editor": "text editor"
 }
 
 #keywords and corresponding w3school links
@@ -208,12 +209,7 @@ def open_notepad():
     filename = get_filename()
     f = open(filename, "w")
     f.close()
-    try:
-        webbrowser.open(filename)
-        open_empty_success = True
-    except Exception:
-        open_empty_success = False
-    return open_empty_success    
+    webbrowser.open(filename)  
 
 
 #write output to notepad file
@@ -222,12 +218,7 @@ def copy_to_notepad(output):
     with open(filename, 'w') as out_file:
         out_file.write(output)
     out_file.close()
-    try:
-        webbrowser.open(filename)
-        open_success = True
-    except Exception:
-        open_success = False
-    return open_success
+    webbrowser.open(filename)
 
 
 #calling this function from main if no output is available
@@ -241,9 +232,9 @@ def voice_assitant(current_page, path):
         if within_page == True:
             statement = redirect(page)
         #open notepad if notepad 
-        elif ("notepad" in text.lower()):
-            open_empty_success = open_notepad()
-            statement = render_template(current_page, open_empty_success=open_empty_success)
+        elif ("notepad" in text.lower() or "text editor" in text.lower() or "editor" in text.lower()):
+            open_notepad()
+            statement = render_template(current_page, open_empty_success=True)
         else:
             #redirect to google/w3school
             command, place = redirect_to_webpages(text)
@@ -274,9 +265,10 @@ def voice_assitant_with_output(current_page, *args):
         if within_page == True:
             statement = redirect(page)
         #write output notepad if notepad or copy word is found 
-        elif ("notepad" in text.lower() or "copy" in text.lower()):
-            write_success = copy_to_notepad(*args[-1])
-            statement = render_page_with_output_in_editor(current_page, write_success, *args)
+        elif ("notepad" in text.lower() or "copy" in text.lower() or "text editor" in text.lower() or "editor" in text.lower()):
+            copy_to_notepad(args[-1])
+            statement = render_page_with_output_in_editor(current_page, True, *args)
+
         else:
             #redirect to google/w3school
             command, place = redirect_to_webpages(text)
@@ -293,23 +285,6 @@ def voice_assitant_with_output(current_page, *args):
             flash("No voice or microphone detected")
             statement = render_correct_page(current_page, *args)
     return statement   
-
-
-def render_page_with_output_in_editor(current_page, write_success, *args):
-    if current_page == "invalid_input.html":
-        return render_template(current_page, minlength=args[0],maxlength=args[1],
-                         charincluded=args[2],charexcluded=args[3],
-                         generated_output=args[-1], write_output=write_success)
-    elif current_page == "comments.html":
-        return render_template(current_page, codeblock=args[0],finalstring=args[1],
-                               write_output=write_success)
-    elif current_page == "codesEO.html":
-        return render_template(current_page, inputList=args[0],output=args[1], predicted_output=args[2],
-                               write_output=write_success)
-    else:
-        return render_template(current_page, codedesc=args[0],predicted_codeblock=args[1],
-                               write_output=write_success)
-
 
 def render_page_with_popup(current_page, transcribed_text, command, place, *args):
     if current_page == "invalid_input.html":
@@ -340,3 +315,19 @@ def render_correct_page(current_page, *args):
         return render_template(current_page, inputList=args[0],output=args[1], predicted_output=args[2])
     else:
         return render_template(current_page, codedesc=args[0],predicted_codeblock=args[1])        
+
+
+def render_page_with_output_in_editor(current_page, write_success, *args):
+    if current_page == "invalid_input.html":
+        return render_template(current_page, minlength=args[0],maxlength=args[1],
+                         charincluded=args[2],charexcluded=args[3],
+                         generated_output=args[-1], write_output=write_success)
+    elif current_page == "comments.html":
+        return render_template(current_page, codeblock=args[0],finalstring=args[1],
+                               write_output=write_success)
+    elif current_page == "codesEO.html":
+        return render_template(current_page, inputList=args[0],output=args[1], predicted_output=args[2],
+                               write_output=write_success)
+    else:
+        return render_template(current_page, codedesc=args[0],predicted_codeblock=args[1],
+                               write_output=write_success)
