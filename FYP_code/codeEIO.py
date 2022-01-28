@@ -26,9 +26,21 @@ def codeEIO_execution():
                 return redirect('/code generation(EIEO)')
 
         if len(inputList) == 3:
-            pass
+            # reorder the sequence if the value is 0
+            if inputList[0] == 0 and inputList[1] == 0:
+                inputList[0], inputList[2] = inputList[2], inputList[0]
+            elif inputList[0] == 0 and inputList[2] == 0:
+                inputList[0], inputList[1] = inputList[1], inputList[0]
+            elif inputList[0] == 0:
+                inputList[0], inputList[1], inputList[2] = inputList[1], inputList[2], inputList[0]
+            elif inputList[1] == 0:
+                inputList[1], inputList[2] = inputList[2], inputList[1]
+
         # expected input contains only 2 values, add one 0 to the list
         elif len(inputList) == 2:
+            # reorder the sequence if the value is 0
+            if inputList[0] == 0 and inputList[1] != 0:
+                inputList[0], inputList[1] = inputList[1], inputList[0]
             inputList.append(0)
         # expected input contains only 1 value, add two 0 to the list
         elif len(inputList) == 1:
