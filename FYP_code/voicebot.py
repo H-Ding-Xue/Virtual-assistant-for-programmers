@@ -208,7 +208,13 @@ def open_notepad():
     filename = get_filename()
     f = open(filename, "w")
     f.close()
-    webbrowser.open(filename)
+    try:
+        webbrowser.open(filename)
+        open_empty_success = True
+    except Exception:
+        open_empty_success = False
+    return open_empty_success    
+
 
 #write output to notepad file
 def copy_to_notepad(output):
@@ -216,7 +222,13 @@ def copy_to_notepad(output):
     with open(filename, 'w') as out_file:
         out_file.write(output)
     out_file.close()
-    webbrowser.open(filename)
+    try:
+        webbrowser.open(filename)
+        open_success = True
+    except Exception:
+        open_success = False
+    return open_success
+
 
 #calling this function from main if no output is available
 def voice_assitant(current_page, path):
@@ -230,8 +242,8 @@ def voice_assitant(current_page, path):
             statement = redirect(page)
         #open notepad if notepad 
         elif ("notepad" in text.lower()):
-            open_notepad()
-            statement = render_template(current_page) 
+            open_empty_success = open_notepad()
+            statement = render_page_with_blank_editor(current_page, open_empty_success, *args)
         else:
             #redirect to google/w3school
             command, place = redirect_to_webpages(text)
@@ -252,7 +264,7 @@ def voice_assitant(current_page, path):
     return statement   
 
 #calling this function from main if output is available
-def voice_assitant_with_output(current_page, output, renderpage):
+def voice_assitant_with_output(current_page, *args):
     try:
         #get voice and fix similar sounding words
         text = convert_word()
@@ -263,23 +275,68 @@ def voice_assitant_with_output(current_page, output, renderpage):
             statement = redirect(page)
         #write output notepad if notepad or copy word is found 
         elif ("notepad" in text.lower() or "copy" in text.lower()):
-            copy_to_notepad(output)
-            statement = renderpage
+            write_success = copy_to_notepad(*args[-1])
+            statement = render_page_with_output_in_editor(current_page, write_success, *args)
         else:
             #redirect to google/w3school
             command, place = redirect_to_webpages(text)
             if command == True:
-                statement = render_template(current_page, transcribed_text=text, 
-                                                        command = command,
-                                                        place = place)
+                statement = render_page_with_popup(current_page, text,command,place, *args)
             #if keyword contains google but wrong commands
             elif command == False and page == "Google":
                 flash("Start command with 'Google For' to search google with query results displayed")
-                statement = renderpage
+                statement = render_correct_page(current_page, *args)
             else:
                 flash("Unable to process command")
-                statement = renderpage
+                statement = render_correct_page(current_page, *args)
     except Exception as e:
             flash("No voice or microphone detected")
-            statement = renderpage
+            statement = render_correct_page(current_page, *args)
     return statement   
+
+
+def render_page_with_output_in_editor(current_page, write_success, *args):
+    if current_page == "invalid_input.html":
+        return render_template(current_page, minlength=args[0],maxlength=args[1],
+                         charincluded=args[2],charexcluded=args[3],
+                         generated_output=args[-1], write_output=write_success)
+    elif current_page == "comments.html":
+        return render_template(current_page, codeblock=args[0],finalstring=args[1],
+                               write_output=write_success)
+    elif current_page == "codesEO.html":
+        return render_template(current_page, inputList=args[0],output=args[1], predicted_output=args[2],
+                               write_output=write_success)
+    else:
+        return render_template(current_page, codedesc=args[0],predicted_codeblock=args[1],
+                               write_output=write_success)
+
+
+def render_page_with_popup(current_page, transcribed_text, command, place, *args):
+    if current_page == "invalid_input.html":
+        return render_template(current_page, minlength=args[0],maxlength=args[1],
+                         charincluded=args[2],charexcluded=args[3],
+                         generated_output=args[-1], transcribed_text=transcribed_text,
+                         command=command, place= place)
+    elif current_page == "comments.html":
+        return render_template(current_page, codeblock=args[0],finalstring=args[1],
+                               transcribed_text=transcribed_text, command=command, 
+                               place= place)
+    elif current_page == "codesEO.html":
+        return render_template(current_page, inputList=args[0],output=args[1], predicted_output=args[2],
+                               transcribed_text=transcribed_text, command=command, place= place)
+    else:
+        return render_template(current_page, codedesc=args[0],predicted_codeblock=args[1],
+                               transcribed_text=transcribed_text, command=command, 
+                               place= place)
+
+def render_correct_page(current_page, *args):
+    if current_page == "invalid_input.html":
+        return render_template(current_page, minlength=args[0],maxlength=args[1],
+                         charincluded=args[2],charexcluded=args[3],
+                         generated_output=args[-1])
+    elif current_page == "comments.html":
+        return render_template(current_page, codeblock=args[0],finalstring=args[1])
+    elif current_page == "codesEO.html":
+        return render_template(current_page, inputList=args[0],output=args[1], predicted_output=args[2])
+    else:
+        return render_template(current_page, codedesc=args[0],predicted_codeblock=args[1])        
