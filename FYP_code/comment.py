@@ -66,8 +66,7 @@ def comment_execution():
         if finalstring == '':
             return v.voice_assitant("comments.html", "/comment generation") 
         else:
-            statement = render_template("comments.html",codeblock=codeblock, finalstring=finalstring)
-            return v.voice_assitant_with_output("comments.html", finalstring, statement)         
+            return v.voice_assitant_with_output("comments.html", codeblock, finalstring)         
     elif request.method=='POST' and request.form['btn'] == 'Generate' and request.form["codeinput"].strip() == '': 
         flash("Code Input cannot be empty")
         return redirect('/comment generation')

@@ -18,8 +18,7 @@ def code_execution():
         if output == '':
             return v.voice_assitant("codes.html", "/code generation") 
         else:
-            statement = render_template("codes.html",codedesc=input,predicted_codeblock=output)
-            return v.voice_assitant_with_output("codes.html", output, statement)           
+            return v.voice_assitant_with_output("codes.html", input, output)           
     elif request.method == "POST" and request.form['btn'] == 'Generate' and request.form["pseudoinput"].strip() == '': 
         flash("Pseudocode Input cannot be empty")
         return redirect('/code generation')   

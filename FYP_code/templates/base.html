@@ -32,7 +32,42 @@
       <strong>{{error}}</strong>
     </div>
     {% endfor %}
+  
+    {% if write_output %}
+    <div class="alert alert-success">
+      <strong>Output has been copied into a text file</strong>
+    </div>
+    {% endif %}
+
+    {% if open_empty_success %}
+    <div class="alert alert-success">
+      <strong>A text editor has opened</strong>
+    </div>
+    {% endif %}
     
+    {% if command %}  
+    <div id="overlay">
+        <!-- Modal content-->
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2>Processing Voice</h2>
+              <a href=""><button type="button" class="close close-danger" data-dismiss="modal">&times;</button></a>
+            </div>
+            <div class="modal-body">
+              <p class="text">
+                You said: {{transcribed_text}} <br/>
+                Redirecting you to {{place}}
+              </p>
+            </div>
+            <div class="modal-footer">
+              <a href=""><button type="button" class="btn btn-danger" data-dismiss="modal">Close</button></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %} 
+
     {% block content %}
     {% endblock %}  
 </body>
