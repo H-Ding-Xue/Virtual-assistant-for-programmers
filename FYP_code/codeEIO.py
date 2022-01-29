@@ -131,8 +131,7 @@ def codeEIO_execution():
         if output == '':
             return v.voice_assitant("codesEO.html", "/code generation(EIEO)") 
         else:
-            statement = render_template("codesEO.html",inputList=EIinput,output=EOinput, predicted_output = output)
-            return v.voice_assitant_with_output("codesEO.html", output, statement) 
+            return v.voice_assitant_with_output("codesEO.html", EIinput, EOinput, output) 
     elif request.method == "POST" and request.form["btn"] == "Generate" and (request.form["EIinput"].strip() == '' or request.form["EOinput"].strip() == ''):
         flash("Expected Input/Output cannot be empty")
         return redirect('/code generation(EIEO)')

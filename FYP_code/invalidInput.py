@@ -124,10 +124,7 @@ def invalid_input():
             maxlength=request.values.get("maxlength")
             charincluded=request.values.get("charincluded")
             charexcluded=request.values.get("charexcluded")
-            statement = render_template("invalid_input.html", minlength=minlength,maxlength=maxlength,
-                                        charincluded=charincluded,charexcluded=charexcluded,
-                                        generated_output=output)
-            return v.voice_assitant_with_output("invalid_input.html", output, statement)                              
+            return v.voice_assitant_with_output("invalid_input.html", minlength, maxlength, charincluded, charexcluded, output)                              
     elif request.method == "POST" and request.form['btn'] =='Generate' and (request.form["minlength"].strip() == '' or request.form["maxlength"].strip() == ''):
         flash("Characters Minimum/Maximum Length cannot be empty")
         return redirect('/invalid_input')
