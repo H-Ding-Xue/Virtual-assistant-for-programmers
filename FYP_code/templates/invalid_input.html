@@ -18,19 +18,19 @@
       <div id = "content">
         <!-- Minimum Length -->
         <div>
-          <label for="minlength" class="label_details">Characters Minimum Length:</label>
+          <label for="minlength" class="label_details">Minimum Character Length:</label>
           <input class = "fields" name="minlength" type="number" id="minlength" value="{{minlength}}" placeholder="Enter minimum length"/> 
         </div>
 
         <!--Maximum Length -->
         <div>
-          <label for="maxlength" class="label_details">Characters Maximum Length:</label>
+          <label for="maxlength" class="label_details">Maximum Character Length:</label>
           <input class = "fields" name="maxlength" type="number" id="maxlength" value="{{maxlength}}" placeholder="Enter maximum length"/> 
         </div>
 
         <!-- Characters to be Included -->
         <div>
-          <label for="charincluded" class="label_details">Characters must be Included:</label>
+          <label for="charincluded" class="label_details">Character(s) be Included:</label>
           <input class = "fields" name="charincluded" type="text" id="charincluded" value="{{charincluded}}" placeholder="Separate each character with space ' '" /> <br>
           <label class="label_details"></label>
           <input type="checkbox" id="uppercase" name="uppercase" value="Uppercase">
@@ -45,7 +45,7 @@
 
         <!-- Characters to be Excluded -->
         <div>
-          <label for="charexcluded" class="label_details">Characters must be Excluded:</label>
+          <label for="charexcluded" class="label_details">Character(s) to be Excluded:</label>
           <input class = "fields" name="charexcluded" type="text" id="charexcluded" placeholder="Separate each character with space ' '" value="{{charexcluded}}"/> <br>
           <label class="label_details"></label>
           <input type="checkbox" id="uppercase" name="uppercase" value="Uppercase">
@@ -64,7 +64,7 @@
         <br><br><br>
         <!-- Output area -->
         <div class = output>
-          <label for="output">Violation Output:</label><br>
+          <label for="output">Example of Invalid Input:</label><br>
           <textarea id="output" rows=15 class="output" disabled>{{generated_output}}</textarea>
           <input type="hidden" name="hidden" value="{{generated_output}}">
         </div>
