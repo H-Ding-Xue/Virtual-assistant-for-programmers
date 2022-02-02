@@ -24,7 +24,6 @@ def code_execution():
                     if not element.isspace():
                         break
                     leadingSpaces = leadingSpaces + element
-                codelist[i] = codelist[i].replace(r'\n', '\n')
                 predicted_codeblock = predicted_codeblock +leadingSpaces+  codelist[i] + '\n'
             else:
                 predicted_codeblock = predicted_codeblock + '\n'
