@@ -11,7 +11,7 @@ def code_execution():
         loaded_model = pickle.load(open('saved_codegen_model', 'rb'))
 
         for i in range(len(linebyline)):
-            pseudocode = linebyline[i]
+            pseudocode = linebyline[i].lower()
             if pseudocode.isspace() or pseudocode=='\r'or pseudocode=='\n'or pseudocode=='':
                 codelist.append("")
             else:
