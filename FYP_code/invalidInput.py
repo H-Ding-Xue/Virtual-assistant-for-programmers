@@ -114,6 +114,13 @@ def invalid_input():
                                 charincluded=request.form["charincluded"],
                                 charexcluded=request.form["charexcluded"], 
                                 generated_output=generated_output)
+                                
+        # #defaults for included and excluded list
+        # uppercaseI = request.form.get('uppercaseI')
+        # if uppercaseI:
+            # includedList = ['A B C']                          
+                                
+                                
     # voice assistant button
     elif request.method=='POST' and request.form['btn'] =='voice_assist':
         output = request.values.get("hidden")
