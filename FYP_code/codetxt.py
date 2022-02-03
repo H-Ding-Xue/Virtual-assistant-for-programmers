@@ -9,12 +9,9 @@ def code_execution():
         codelist = []
         loaded_vectorizer = pickle.load(open('saved_codegen_vectorizer', 'rb'))
         loaded_model = pickle.load(open('saved_codegen_model', 'rb'))
-        for i in range(len(linebyline)):
-            linebyline[i] = linebyline[i].replace('\r','')
-            
 
         for i in range(len(linebyline)):
-            pseudocode = linebyline[i]
+            pseudocode = linebyline[i].lower()
             if pseudocode.isspace() or pseudocode=='\r'or pseudocode=='\n'or pseudocode=='':
                 codelist.append("")
             else:
@@ -27,6 +24,7 @@ def code_execution():
                     if not element.isspace():
                         break
                     leadingSpaces = leadingSpaces + element
+                codelist[i] = codelist[i].replace(r'\n','\n')
                 predicted_codeblock = predicted_codeblock +leadingSpaces+  codelist[i] + '\n'
             else:
                 predicted_codeblock = predicted_codeblock + '\n'

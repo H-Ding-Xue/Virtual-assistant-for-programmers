@@ -112,11 +112,11 @@ def codeEIO_execution():
                 predicted_output += method['Result'][result.index[1]]
                 predicted_output = predicted_output.replace(r'\n', '\n')
             # ML cannot get accurate result
+            # display first result
             else:
-                for i in range(len(result.index)):
-                    temp = method['Result'][result.index[i]]
-                    predicted_output += temp.replace(r'\n', '\n')
-                    predicted_output += "\n\n"
+                temp = method['Result'][result.index[0]]
+                predicted_output += temp.replace(r'\n', '\n')
+                predicted_output += "\n\n"
         # if one-hot-encoding contains only one 1
         else:
             predicted_output += method['Result'][result.index[0]]

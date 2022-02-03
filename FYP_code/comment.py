@@ -4,6 +4,8 @@ import voicebot as v
 
 def comment_execution():
     code_to_english = {
+        '"r+"': " read and write ",
+        "'r+'": " read and write ",
         "+=": " assign add ",
         "/=": " assign divide ",
         "*=": " assign multiply ",
@@ -33,6 +35,22 @@ def comment_execution():
         "KeyError": " lookup error ",
         "IndexError": " lookup error ",
         "input": " input ",
+        "def": " method ",
+        "__init__": " construct ",
+        'open': " open ",
+        'close': " close ",
+        "readlines": " read lines ",
+        "readline": " read line ",
+        "read": " read ",
+        "self": " self ",
+        '"a"': " append ",
+        '"r"': " read ",
+        '"w"': " write ",
+        "'r'": " read ",
+        "'w'": " write ",
+        "'a'": " append ",
+        ".": " dot ",
+        "write": " write "
     }
     if request.method=='POST' and request.form['btn'] == 'Generate' and request.form["codeinput"].strip() != '':
         codeblock = request.form["codeinput"]
