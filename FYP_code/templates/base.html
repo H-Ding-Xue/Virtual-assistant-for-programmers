@@ -27,24 +27,28 @@
       <li id="l5"><a href="/invalid_input"><i class="far fa-window-close"></i>&nbsp;Invalid Input Generator</a></li>
     </ul>
 
+    <!-- Display error messages -->
     {% for error in get_flashed_messages() %}
     <div class="alert alert-danger">
       <strong>{{error}}</strong>
     </div>
     {% endfor %}
-  
+    
+    <!-- Display open notepad success message -->
     {% if write_output %}
     <div class="alert alert-success">
       <strong>Output has been copied into a text file</strong>
     </div>
     {% endif %}
 
+    <!-- Display open notepad success (with output) message -->
     {% if open_empty_success %}
     <div class="alert alert-success">
       <strong>A text editor has opened</strong>
     </div>
     {% endif %}
     
+    <!-- Display pop up if redirection to web pages successful -->
     {% if command %}  
     <div id="overlay">
         <!-- Modal content-->
@@ -67,7 +71,56 @@
         </div>
       </div>
     {% endif %} 
+    
+    <!-- User manual button for help -->
+    <div class="help">
+        <button type="button" id="helpButton" title="Click to view the guide on how to use voicebot assistant">
+          <p class="helpIcon">
+            <i class="fas fa-question-circle fa-3x"></i><br/>
+          </p>
+        </button>
+    </div>
 
+    <!-- The Modal -->
+    <div id="helpModal" class="modal2">
+
+      <!-- Modal content -->
+      <div class="modal2-content">
+        <span class="close">&times;</span>
+        <h4><u>Guide to Use Voice Assistant Bot</u></h4>
+        <p>
+          The voice bot assistant in this web application allows you to navigate between
+          the pages, search google/w3schools, opening up the notepad/text editor with or without
+          output depending on whether you have any output generated.
+        </p>
+        
+        <p>
+          Before you begin, please ensure that you have a working microphone and 
+          it has been set as your default microphone in your device in order for it to work.<br/>
+        </p>
+
+        <p>
+          To <b>navigate within this web application</b>, start your command with <i class="command">redirect to <code>[any page in our virtual assistant]</code></i>.<br/>
+          For example, if you want to go to the comment generator page, you can say <i class="command">"redirect to comment generator"</i>.
+        </p>
+
+        <p>
+          To use it to <b>search google</b>, start your command with <i class="command">search google for <code>[what you want to search]</code></i>.<br/>
+          For example, if you want to search google, you can say <i class="command">"search google for python inheritance"</i>.<br/>
+        </p>
+
+        <p>
+          To use it to <b>open w3schools pages related to python</b>, start your command with <i class="command">open w3schools for <code>[page you want to open]</code></i>.<br/>
+          For example, if you want to go to w3schools python inheritance page, you can say <i class="command">"open w3schools inheritance"</i>.<br/>
+        </p>
+
+        <p>
+          To use it to <b>open notepad</b>, you just need to say <i class="command">open notepad</i> or <i class="command">open text editor</i>.<br/>
+          If output is availbe and you say <i class="command">"open notepad"</i> or <i class="command">"copy to notepad"</i>, a text file containing the output will be generated for you.<br/>
+        </p>
+      </div>
+    </div>
+        
     {% block content %}
     {% endblock %}  
 </body>
