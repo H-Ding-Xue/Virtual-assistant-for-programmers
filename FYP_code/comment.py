@@ -4,6 +4,8 @@ import voicebot as v
 
 def comment_execution():
     code_to_english = {
+        '++': " increment ",
+        '--': " decrement ",
         '"r+"': " read and write ",
         "'r+'": " read and write ",
         "+=": " assign add ",
@@ -52,7 +54,7 @@ def comment_execution():
         ".": " dot ",
         "write": " write "
     }
-    if request.method=='POST' and request.form['btn'] == 'Generate' and request.form["codeinput"].strip() != '':
+    if request.method=='POST' and request.form['btn'] == 'Generate' and request.form["codeinput"].strip() != '' and request.form["Mode"]=='lbl':
         codeblock = request.form["codeinput"]
         linebyline = codeblock.split('\n')
         commentlist = []
@@ -88,5 +90,17 @@ def comment_execution():
     elif request.method=='POST' and request.form['btn'] == 'Generate' and request.form["codeinput"].strip() == '': 
         flash("Code Input cannot be empty")
         return redirect('/comment generation')
+    elif request.method=='POST' and request.form['btn'] == 'Generate' and request.form["codeinput"].strip() != '' and request.form["Mode"]=='all':
+        codeblock = request.form["codeinput"]
+        codeblock2 = codeblock
+        for key, value in code_to_english.items():
+                    if key in codeblock2:
+                        codeblock2 = codeblock2.replace(key,value)
+        loaded_vectorizer = pickle.load(open('saved_comgen_vectorizer2', 'rb'))
+        loaded_model = pickle.load(open('saved_comgen_model2', 'rb'))
+        finalstring = loaded_model.predict(loaded_vectorizer.transform([codeblock2]))[0]
+        
+        
+        return render_template("comments.html", codeblock=codeblock, finalstring=finalstring)
     else:
         return render_template("comments.html")

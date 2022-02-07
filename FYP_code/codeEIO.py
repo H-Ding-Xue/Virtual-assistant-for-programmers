@@ -7,8 +7,7 @@ def codeEIO_execution():
         "+": "Addition",
         "-": "Subtraction",
         "*": "Multiplication",
-        "/": "Division",
-        "=": "Equals"
+        "/": "Division"
     }
 
     if request.method == "POST" and request.form["btn"] == "Generate" and request.form["EIinput"].strip() != '' and request.form["EOinput"].strip() != '':
@@ -19,36 +18,20 @@ def codeEIO_execution():
             flash("Expected Input only accept positive integer values; separate each value with ','")
             return redirect('/code generation(EIEO)')
 
-        # check if value is within 0 to 1000
+        # check if value is within 1 to 1000
         for value in inputList:
-            if value < 0 or value > 1000:
-                flash("Expected Input only accept positive integer values between 0 to 1000")
+            if value < 1 or value > 1000:
+                flash("Expected Input only accept positive integer values between 1 to 1000")
                 return redirect('/code generation(EIEO)')
 
         if len(inputList) == 3:
-            # reorder the sequence if the value is 0
-            if inputList[0] == 0 and inputList[1] == 0:
-                inputList[0], inputList[2] = inputList[2], inputList[0]
-            elif inputList[0] == 0 and inputList[2] == 0:
-                inputList[0], inputList[1] = inputList[1], inputList[0]
-            elif inputList[0] == 0:
-                inputList[0], inputList[1], inputList[2] = inputList[1], inputList[2], inputList[0]
-            elif inputList[1] == 0:
-                inputList[1], inputList[2] = inputList[2], inputList[1]
-
+            pass
         # expected input contains only 2 values, add one 0 to the list
         elif len(inputList) == 2:
-            # reorder the sequence if the value is 0
-            if inputList[0] == 0 and inputList[1] != 0:
-                inputList[0], inputList[1] = inputList[1], inputList[0]
             inputList.append(0)
-        # expected input contains only 1 value, add two 0 to the list
-        elif len(inputList) == 1:
-            inputList.append(0)
-            inputList.append(0)
-        # expected input contains more than 3 values
+        # expected input contains 1 or more than 3 values
         else:
-            flash("Expected Input only accept up to three positive integer values")
+            flash("Expected Input only accept between two to three positive integer values")
             return redirect('/code generation(EIEO)')
         
         try:
@@ -65,7 +48,7 @@ def codeEIO_execution():
         # load pre-defined methods
         method = pickle.load(open('saved_codeEIO_method', 'rb'))
         
-        result = method[(method[['Addition', 'Subtraction', 'Multiplication', 'Division', 'Equals']] == prediction[0]).all(1)]
+        result = method[(method[['Addition', 'Subtraction', 'Multiplication', 'Division']] == prediction[0]).all(1)]
         
         predicted_output = ""
         equation = []
@@ -73,6 +56,7 @@ def codeEIO_execution():
         answer2 = ""
         prediction = prediction[0]
         predictionList = prediction.tolist()
+        print(prediction)
 
         # if one-hot-encoding contains more than one 1
         if (prediction == 1).sum() > 1:
