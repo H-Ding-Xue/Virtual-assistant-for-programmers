@@ -72,11 +72,18 @@
         <input type="submit" class="btn btn-outline-dark" id = "generatebutton" name = "btn" value="Generate"/>
 
         <br><br><br>
-        <!-- Output area -->
+        <!-- Invalid input area -->
         <div class = output>
           <label for="output">Examples of Invalid Input:</label><br>
-          <textarea id="output" rows=15 class="output" disabled>{{generated_output}}</textarea>
-          <input type="hidden" name="hidden" value="{{generated_output}}">
+          <textarea id="output" rows=15 class="output" disabled>{{invalid_output}}</textarea>
+          <input type="hidden" name="hidden" value="{{invalid_output}}">
+        </div>
+
+        <!-- Valid input area -->
+        <div class = output>
+          <label for="output">Examples of Valid Input:</label><br>
+          <textarea id="output" rows=15 class="output" disabled>{{valid_output}}</textarea>
+          <input type="hidden" name="hidden" value="{{valid_output}}">
         </div>
       </div>
     </form>

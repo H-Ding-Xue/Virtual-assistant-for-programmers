@@ -14,7 +14,7 @@ def invalid_input():
         letters = string.ascii_lowercase + string.ascii_uppercase + string.digits + string.punctuation
         invalidString = ""
         invalidList = []
-        generated_output = ""
+        invalid_output = ""
 
         includedList.sort()
         excludedList.sort()
@@ -105,15 +105,16 @@ def invalid_input():
 
         for invalid in invalidList:
             if " ===" in invalid:
-                generated_output += "\n" + invalid + "\n"
+                invalid_output += "\n" + invalid + "\n"
             else:
-                generated_output += invalid + "\n"
+                invalid_output += invalid + "\n"
 
         return render_template("invalid_input.html", minlength=request.form["minlength"],
                                 maxlength=request.form["maxlength"],
                                 charincluded=request.form["charincluded"],
                                 charexcluded=request.form["charexcluded"], 
-                                generated_output=generated_output)
+                                invalid_output=invalid_output,
+                                valid_output = "")
                                 
         # #defaults for included and excluded list
         # uppercaseI = request.form.get('uppercaseI')
