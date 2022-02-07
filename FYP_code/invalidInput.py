@@ -8,8 +8,8 @@ def invalid_input():
         and (request.form["charincluded"].strip() != '' or request.form["charexcluded"].strip() != ''):
         minlength = int(request.form["minlength"])
         maxlength = int(request.form["maxlength"])
-        includedList = [str(i) for i in request.form["charincluded"].replace('  ', ' ').split(' ')]
-        excludedList = [str(i) for i in request.form["charexcluded"].replace('  ', ' ').split(' ')]
+        includedList = [str(i) for i in request.form["charincluded"].strip().replace('  ', ' ').split(' ')]
+        excludedList = [str(i) for i in request.form["charexcluded"].strip().replace('  ', ' ').split(' ')]
         
         letters = string.ascii_lowercase + string.ascii_uppercase + string.digits + string.punctuation
         invalidString = ""
@@ -18,6 +18,9 @@ def invalid_input():
         validString = ""
         validList = []
         valid_output = ""
+
+        includeCount = 0
+        excludeCount = 0
 
         includedList.sort()
         excludedList.sort()
@@ -49,10 +52,21 @@ def invalid_input():
             if included not in letters:
                 flash("'Characters must be Included' can only accept ASCII characters")
                 return redirect('/invalid_input')
+            if included in letters:
+                includeCount += 1
+            if includeCount == len(letters):
+                flash("'Characters must be Included' cannot contain all ASCII characters")
+                return redirect('/invalid_input')
         for excluded in excludedList:
             if excluded not in letters:
                 flash("'Characters must be Excluded' can only accept ASCII characters")
                 return redirect('/invalid_input')
+            if excluded in letters:
+                excludeCount += 1
+            if excludeCount == len(letters):
+                flash("'Characters must be Excluded' cannot contain all ASCII characters")
+                return redirect('/invalid_input')
+        
         
         
         # valid string but doesn't meet the minimum length requirement
@@ -66,6 +80,7 @@ def invalid_input():
                 randChar = random.choice(letters)
                 if randChar not in excludedList:
                     invalidString += randChar
+            print("invalid min length: " + invalidString)
             invalidList.append(invalidString)
             invalidString = ""
         
@@ -77,6 +92,7 @@ def invalid_input():
             randChar = random.choice(letters)
             if randChar not in excludedList:
                 invalidString += randChar
+        print("invalid max length: " + invalidString)
         invalidList.append(invalidString)
         invalidString = ""
         
@@ -90,10 +106,18 @@ def invalid_input():
                     invalidString = ""
                 charCount = random.randint(minlength, maxlength)
                 while (len(invalidString) != charCount):
-                    randChar = random.choice(letters)
-                    if randChar not in includedList:
+                    if includeCount + excludeCount == len(letters):
+                        randChar = random.choice(letters[:-1])
+                        print(randChar)
                         if randChar not in excludedList:
                             invalidString += randChar
+                    else:
+                        randChar = random.choice(letters)
+                        print(randChar)
+                        if randChar not in includedList:
+                            if randChar not in excludedList:
+                                invalidString += randChar
+                print("invalid charI: " + invalidString)
                 invalidList.append(invalidString)
                 invalidString = ""
         
@@ -111,6 +135,7 @@ def invalid_input():
                     while(len(invalidString) != charCount):
                         randChar = random.choice(letters)
                         invalidString += randChar
+                print("invalid charE: " + invalidString)
                 invalidList.append(invalidString)
                 invalidString = ""
 
@@ -129,12 +154,8 @@ def invalid_input():
                 randChar = random.choice(letters)
                 if randChar not in excludedList:
                     validString += randChar
-            tempList = list(validString)
-            random.shuffle(tempList)
-            validString = ''.join(tempList)
             validList.append(validString)
             validString = ""
-            tempList.clear()
 
         for valid in validList:
             valid_output += valid + "\n"
