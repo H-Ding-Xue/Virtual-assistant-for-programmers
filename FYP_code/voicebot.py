@@ -213,12 +213,13 @@ def open_notepad():
 
 
 #write output to notepad file
-def copy_to_notepad(output):
-    filename = get_filename()
-    with open(filename, 'w') as out_file:
-        out_file.write(output)
-    out_file.close()
-    webbrowser.open(filename)
+def copy_to_notepad(*outputs):
+    for output in outputs:
+        filename = get_filename()
+        with open(filename, 'w') as out_file:
+            out_file.write(output)
+        out_file.close()
+        webbrowser.open(filename)
 
 
 #calling this function from main if no output is available
@@ -266,7 +267,10 @@ def voice_assitant_with_output(current_page, *args):
             statement = redirect(page)
         #write output notepad if notepad or copy word is found 
         elif ("notepad" in text.lower() or "copy" in text.lower() or "text editor" in text.lower() or "editor" in text.lower()):
-            copy_to_notepad(args[-1])
+            if current_page == "invalid_input.html":
+                copy_to_notepad(args[-2], args[-1])
+            else:    
+                copy_to_notepad(args[-1])
             statement = render_page_with_output_in_editor(current_page, True, *args)
 
         else:
@@ -290,7 +294,7 @@ def render_page_with_popup(current_page, transcribed_text, command, place, *args
     if current_page == "invalid_input.html":
         return render_template(current_page, minlength=args[0],maxlength=args[1],
                          charincluded=args[2],charexcluded=args[3],
-                         generated_output=args[-1], transcribed_text=transcribed_text,
+                         invalid_output=args[4], valid_output=args[5], transcribed_text=transcribed_text,
                          command=command, place= place)
     elif current_page == "comments.html":
         return render_template(current_page, codeblock=args[0],finalstring=args[1],
@@ -308,7 +312,7 @@ def render_correct_page(current_page, *args):
     if current_page == "invalid_input.html":
         return render_template(current_page, minlength=args[0],maxlength=args[1],
                          charincluded=args[2],charexcluded=args[3],
-                         generated_output=args[-1])
+                         invalid_output=args[4], valid_output=args[5])
     elif current_page == "comments.html":
         return render_template(current_page, codeblock=args[0],finalstring=args[1])
     elif current_page == "codesEO.html":
@@ -321,7 +325,7 @@ def render_page_with_output_in_editor(current_page, write_success, *args):
     if current_page == "invalid_input.html":
         return render_template(current_page, minlength=args[0],maxlength=args[1],
                          charincluded=args[2],charexcluded=args[3],
-                         generated_output=args[-1], write_output=write_success)
+                         invalid_output=args[4], valid_output=args[5], write_output=write_success)
     elif current_page == "comments.html":
         return render_template(current_page, codeblock=args[0],finalstring=args[1],
                                write_output=write_success)

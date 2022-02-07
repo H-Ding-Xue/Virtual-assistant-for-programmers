@@ -169,15 +169,16 @@ def invalid_input():
                                 
     # voice assistant button
     elif request.method=='POST' and request.form['btn'] =='voice_assist':
-        output = request.values.get("hidden")
-        if output == '':
+        invalid_output = request.values.get("hidden_iv")
+        if invalid_output == '':
             return v.voice_assitant("invalid_input.html", "/invalid_input") 
         else:
+            valid_output = request.values.get("hidden_v")
             minlength=request.values.get("minlength")
             maxlength=request.values.get("maxlength")
             charincluded=request.values.get("charincluded")
             charexcluded=request.values.get("charexcluded")
-            return v.voice_assitant_with_output("invalid_input.html", minlength, maxlength, charincluded, charexcluded, output)                              
+            return v.voice_assitant_with_output("invalid_input.html", minlength, maxlength, charincluded, charexcluded, invalid_output, valid_output)                              
     elif request.method == "POST" and request.form['btn'] =='Generate' and (request.form["minlength"].strip() == '' or request.form["maxlength"].strip() == ''):
         flash("Characters Minimum/Maximum Length cannot be empty")
         return redirect('/invalid_input')
