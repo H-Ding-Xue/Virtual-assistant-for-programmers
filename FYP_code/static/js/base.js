@@ -17,6 +17,22 @@ $(document).ready(function() {
             //animation effect
         $('#voicebot').removeClass("btn btn-secondary").addClass("btn btn-danger");  
         $('#spantext').html("<b>Recording voice...");
+    });
 
+    //show modal
+    $("#helpButton").click(function(){
+        $("#helpModal").show();
+    });
+
+    //hide modal
+    $("span").click(function(){
+        $("#helpModal").hide();
+    });
+
+    //hide modal if clicked outside the modal
+    $(window).click(function(e) {
+        if (e.target.id == "helpModal"){
+            $("#helpModal").hide();
+        }
     });
 });

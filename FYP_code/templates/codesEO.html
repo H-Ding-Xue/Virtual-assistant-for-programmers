@@ -20,7 +20,7 @@
               <td id = EIEOtd>
                   <!-- Expected Input -->
                   <label for="EIinput" id="EIlabel">Expected Input</label><br>
-                  <textarea id="EIinput" name="EIinput" placeholder="Enter up to three positive integer values; separate each value with comma ','">{{inputList}}</textarea>
+                  <textarea id="EIinput" name="EIinput" placeholder="Enter two to three positive integer values between 1 to 1000 &#13;&#10;Separate each value with comma ','">{{inputList}}</textarea>
                   
                   <!-- Space in between EI and EO  -->
                   <div id=space></div>
@@ -33,7 +33,8 @@
               <td id=codeouttd>
                   <!-- Codes Output -->
                   <label for="codeoutput" id = codelabel>Codes Output</label><br>
-                  <textarea id="codeoutput" disabled>{{predicted_output}}</textarea>
+                  <textarea id="codeoutput" placeholder="Methods will be generated here. &#13;&#10;Up to two methods will be generated if the conditions are met." 
+                  disabled>{{predicted_output}}</textarea>
                   <input type="hidden" name="hidden" value="{{predicted_output}}">
               </td>
             </tr>
