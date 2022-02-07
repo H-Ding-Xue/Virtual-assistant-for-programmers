@@ -16,7 +16,7 @@ asciiUpper = ascii.splice(22,26).join(" ")
 asciiLower = ascii.splice(28,26).join(" ")
 asciiSymbol = ascii.join(" ")
 
-function inUppercase() {
+$("#uppercaseI").click(function(){
     var checkBox = document.getElementById("uppercaseI");
     var charIncluded = document.getElementById("charincluded");
     if (checkBox.checked == true) {
@@ -27,9 +27,9 @@ function inUppercase() {
     }
     else
         charIncluded.value = charIncluded.value.replace(asciiUpper, "").trim()
-}
+});
 
-function inLowercase() {
+$("#lowercaseI").click(function(){
     var checkBox = document.getElementById("lowercaseI");
     var charIncluded = document.getElementById("charincluded");
     if (checkBox.checked == true) {
@@ -40,9 +40,9 @@ function inLowercase() {
     }
     else
         charIncluded.value = charIncluded.value.replace(asciiLower, "").trim()
-}
+});
 
-function inSymbols() {
+$("#symbolsI").click(function(){
     var checkBox = document.getElementById("symbolsI");
     var charIncluded = document.getElementById("charincluded");
     if (checkBox.checked == true) {
@@ -53,9 +53,9 @@ function inSymbols() {
     }
     else
         charIncluded.value = charIncluded.value.replace(asciiSymbol, "").trim()
-}
+});
 
-function inNumbers() {
+$("#numbersI").click(function(){
     var checkBox = document.getElementById("numbersI");
     var charIncluded = document.getElementById("charincluded");
     if (checkBox.checked == true) {
@@ -66,9 +66,9 @@ function inNumbers() {
     }
     else
         charIncluded.value = charIncluded.value.replace(asciiNumber, "").trim()
-}
+});
   
-function exUppercase() {
+$("#uppercaseE").click(function(){
     var checkBox = document.getElementById("uppercaseE");
     var charExcluded = document.getElementById("charexcluded");
     if (checkBox.checked == true) {
@@ -79,9 +79,9 @@ function exUppercase() {
     }
     else
         charExcluded.value = charExcluded.value.replace(asciiUpper, "").trim()
-}
+});
 
-function exLowercase() {
+$("#lowercaseE").click(function(){
     var checkBox = document.getElementById("lowercaseE");
     var charExcluded = document.getElementById("charexcluded");
     if (checkBox.checked == true) {
@@ -92,9 +92,9 @@ function exLowercase() {
     }
     else
         charExcluded.value = charExcluded.value.replace(asciiLower, "").trim()
-}
+});
 
-function exSymbols() {
+$("#symbolsE").click(function(){
     var checkBox = document.getElementById("symbolsE");
     var charExcluded = document.getElementById("charexcluded");
     if (checkBox.checked == true) {
@@ -105,9 +105,9 @@ function exSymbols() {
     }
     else
         charExcluded.value = charExcluded.value.replace(asciiSymbol, "").trim()
-}
+});
 
-function exNumbers() {
+$("#numbersE").click(function(){
     var checkBox = document.getElementById("numbersE");
     var charExcluded = document.getElementById("charexcluded");
     if (checkBox.checked == true) {
@@ -118,4 +118,4 @@ function exNumbers() {
     }
     else
         charExcluded.value = charExcluded.value.replace(asciiNumber, "").trim()
-}
+});
