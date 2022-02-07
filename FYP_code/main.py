@@ -1,6 +1,4 @@
 from flask import Flask,redirect,render_template, request, flash
-import random
-import string
 from comment import comment_execution
 from codetxt import code_execution
 from codeEIO import codeEIO_execution
