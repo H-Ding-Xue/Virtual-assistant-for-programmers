@@ -165,7 +165,7 @@ def trainModel(df, createCSV):
 minValue = 1
 maxValue = 1000
 # no. of raw data to generate (may include duplicates)
-count = 50000000
+count = 60000000
 # set True to create csv file
 createCSV = True
 
