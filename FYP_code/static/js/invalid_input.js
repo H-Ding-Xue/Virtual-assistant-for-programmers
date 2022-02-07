@@ -1,4 +1,4 @@
-$("textarea").keydown(function(e){
+$(window).keydown(function(e){
     // Enter pressed
     if (e.keyCode == 13)
     {

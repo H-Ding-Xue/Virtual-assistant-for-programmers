@@ -1,4 +1,4 @@
-from flask import Flask,redirect,render_template, request, flash
+from flask import redirect,render_template, request, flash
 import random
 import string
 import voicebot as v
@@ -15,6 +15,9 @@ def invalid_input():
         invalidString = ""
         invalidList = []
         invalid_output = ""
+        validString = ""
+        validList = []
+        valid_output = ""
 
         includedList.sort()
         excludedList.sort()
@@ -41,6 +44,14 @@ def invalid_input():
         for included in includedList:
             if included in excludedList:
                 flash("'Characters must be Included' cannot contain characters in 'Characters must be Excluded'")
+                return redirect('/invalid_input')
+        for included in includedList:
+            if included not in letters:
+                flash("'Characters must be Included' can only accept ASCII characters")
+                return redirect('/invalid_input')
+        for excluded in excludedList:
+            if excluded not in letters:
+                flash("'Characters must be Excluded' can only accept ASCII characters")
                 return redirect('/invalid_input')
         
         
@@ -108,19 +119,32 @@ def invalid_input():
                 invalid_output += "\n" + invalid + "\n"
             else:
                 invalid_output += invalid + "\n"
+        
+        # valid input
+        validList.append("=== String that satisfy all the requirements ===")
+        for i in range(minlength, maxlength+1):
+            for included in includedList:
+                validString += included
+            while (len(validString) != i):
+                randChar = random.choice(letters)
+                if randChar not in excludedList:
+                    validString += randChar
+            tempList = list(validString)
+            random.shuffle(tempList)
+            validString = ''.join(tempList)
+            validList.append(validString)
+            validString = ""
+            tempList.clear()
+
+        for valid in validList:
+            valid_output += valid + "\n"
 
         return render_template("invalid_input.html", minlength=request.form["minlength"],
                                 maxlength=request.form["maxlength"],
                                 charincluded=request.form["charincluded"],
                                 charexcluded=request.form["charexcluded"], 
                                 invalid_output=invalid_output,
-                                valid_output = "")
-                                
-        # #defaults for included and excluded list
-        # uppercaseI = request.form.get('uppercaseI')
-        # if uppercaseI:
-            # includedList = ['A B C']                          
-                                
+                                valid_output = valid_output)                        
                                 
     # voice assistant button
     elif request.method=='POST' and request.form['btn'] =='voice_assist':
