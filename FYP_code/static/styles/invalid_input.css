@@ -60,3 +60,13 @@ input[type="number"] {
   font-size: 15px;
   font-family: Consolas,Menlo,"courier new",monospace;
 }
+
+/* textarea */
+textarea.fields {
+  font-size: large;
+  width: 32%;
+  height: 50px;
+  white-space: nowrap;
+  overflow-y: hidden;
+  resize: none;
+}

@@ -25,49 +25,47 @@
         <!--Maximum Length -->
         <div>
           <label for="maxlength" class="label_details">Maximum Character Length:</label>
-          <input class = "fields" name="maxlength" type="number" id="maxlength" value="{{maxlength}}" placeholder="Enter maximum length"/> 
+          <input class = "fields" name="maxlength" type="number" id="maxlength" value="{{maxlength}}" placeholder="Enter maximum length"/>
         </div>
+        <br>
 
         <!-- Characters to be Included -->
         <div>
-<<<<<<< Updated upstream
-          <label for="charincluded" class="label_details">Character(s) be Included:</label>
-=======
-          <label for="charincluded" class="label_details">Character(s) to be Included:</label>
->>>>>>> Stashed changes
-          <input class = "fields" name="charincluded" type="text" id="charincluded" value="{{charincluded}}" placeholder="Separate each character with space ' '" /> <br>
+          <label for="charincluded" class="label_details">Character(s) must be Included:</label>
+          <textarea class="fields" name="charincluded" id="charincluded" placeholder="Separate each character with space ' '">{{charincluded}}</textarea> <br>
           <label class="label_details"></label>
           
-		  <input type="checkbox" id="uppercaseI" name="uppercaseI" value="Uppercase" onclick="inUppercase()">
-          <label for="uppercase" class="checkbox">Uppercase &nbsp;</label>
-          
-		  <input type="checkbox" id="lowercaseI" name="lowercaseI" value="Lowercase" onclick="inLowercase()">
-          <label for="lowercase" class="checkbox">Lowercase &nbsp;</label> 
-          
-		  <input type="checkbox" id="symbolsI" name="symbolsI" value="symbols" onclick="inSymbols()">
-          <label for="symbols" class="checkbox">Symbols &nbsp;</label> 
-          
-		  <input type="checkbox" id="numbersI" name="numbersI" value="Numbers" onclick="inNumbers()">
-          <label for="numbers" class="checkbox">Numbers</label> 
+          <input type="checkbox" id="uppercaseI" name="uppercaseI" value="Uppercase" onclick="inUppercase()">
+              <label for="uppercase" class="checkbox">Uppercase &nbsp;</label>
+              
+          <input type="checkbox" id="lowercaseI" name="lowercaseI" value="Lowercase" onclick="inLowercase()">
+              <label for="lowercase" class="checkbox">Lowercase &nbsp;</label> 
+              
+          <input type="checkbox" id="symbolsI" name="symbolsI" value="symbols" onclick="inSymbols()">
+              <label for="symbols" class="checkbox">Symbols &nbsp;</label> 
+              
+          <input type="checkbox" id="numbersI" name="numbersI" value="Numbers" onclick="inNumbers()">
+              <label for="numbers" class="checkbox">Numbers</label> 
         </div>
-
+        
+        <br>
         <!-- Characters to be Excluded -->
         <div>
-          <label for="charexcluded" class="label_details">Character(s) to be Excluded:</label>
-          <input class = "fields" name="charexcluded" type="text" id="charexcluded" placeholder="Separate each character with space ' '" value="{{charexcluded}}"/> <br>
+          <label for="charexcluded" class="label_details">Character(s) must be Excluded:</label>
+          <textarea class="fields" name="charexcluded" id="charexcluded" placeholder="Separate each character with space ' '">{{charexcluded}}</textarea> <br>
           <label class="label_details"></label>
           
-		  <input type="checkbox" id="uppercaseE" name="uppercaseE" value="Uppercase" onclick="exUppercase()">
-          <label for="uppercase" class="checkbox">Uppercase &nbsp;</label>
-          
-		  <input type="checkbox" id="lowercaseE" name="lowercaseE" value="Lowercase" onclick="exLowercase()">
-          <label for="lowercase" class="checkbox">Lowercase &nbsp;</label> 
-          
-		  <input type="checkbox" id="symbolsE" name="symbolsE" value="symbols" onclick="exSymbols()">
-          <label for="symbols" class="checkbox">Symbols &nbsp;</label> 
-          
-		  <input type="checkbox" id="numbersE" name="numbersE" value="Numbers" onclick="exNumbers()">
-          <label for="numbers" class="checkbox">Numbers</label> 
+          <input type="checkbox" id="uppercaseE" name="uppercaseE" value="Uppercase" onchange="exUppercase()">
+              <label for="uppercase" class="checkbox">Uppercase &nbsp;</label>
+              
+          <input type="checkbox" id="lowercaseE" name="lowercaseE" value="Lowercase" onchange="exLowercase()">
+              <label for="lowercase" class="checkbox">Lowercase &nbsp;</label> 
+              
+          <input type="checkbox" id="symbolsE" name="symbolsE" value="symbols" onchange="exSymbols()">
+              <label for="symbols" class="checkbox">Symbols &nbsp;</label> 
+              
+          <input type="checkbox" id="numbersE" name="numbersE" value="Numbers" onchange="exNumbers()">
+              <label for="numbers" class="checkbox">Numbers</label> 
         </div>
         
         <!-- Submit Button -->
@@ -76,59 +74,13 @@
         <br><br><br>
         <!-- Output area -->
         <div class = output>
-<<<<<<< Updated upstream
-          <label for="output">Example of Invalid Input:</label><br>
-=======
           <label for="output">Examples of Invalid Input:</label><br>
->>>>>>> Stashed changes
           <textarea id="output" rows=15 class="output" disabled>{{generated_output}}</textarea>
           <input type="hidden" name="hidden" value="{{generated_output}}">
         </div>
       </div>
     </form>
 	<p id="run" style="display:none">Checkbox checked</p>
-
-<script>
-	function inUppercase() {
-	  var checkBox = document.getElementById("uppercaseI");
-	  if (checkBox.checked == true)
-		run.style.display = "block";
-	}
-	function inLowercase() {
-	  var checkBox = document.getElementById("lowercaseI");
-	  if (checkBox.checked == true)
-		run.style.display = "block";
-	}
-	function inSymbols() {
-	  var checkBox = document.getElementById("symbolsI");
-	  if (checkBox.checked == true)
-		run.style.display = "block";
-	}
-	function inNumbers() {
-	  var checkBox = document.getElementById("numbersI");
-	  if (checkBox.checked == true)
-		run.style.display = "block";
-	}
-	
-	function exUppercase() {
-	  var checkBox = document.getElementById("uppercaseE");
-	  if (checkBox.checked == true)
-		run.style.display = "block";
-	}
-	function exLowercase() {
-	  var checkBox = document.getElementById("lowercaseE");
-	  if (checkBox.checked == true)
-		run.style.display = "block";
-	}
-	function exSymbols() {
-	  var checkBox = document.getElementById("symbolsE");
-	  if (checkBox.checked == true)
-		run.style.display = "block";
-	}
-	function exNumbers() {
-	  var checkBox = document.getElementById("numbersE");
-	  if (checkBox.checked == true)
-		run.style.display = "block";
-	}
-</script>
+  
+  <script type=text/javascript src="{{url_for('static', filename='js/invalid_input.js') }}"></script>
 {% endblock %}
