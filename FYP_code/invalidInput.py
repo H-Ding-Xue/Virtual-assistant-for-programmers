@@ -57,7 +57,7 @@ def invalid_input():
         
         # valid string but doesn't meet the minimum length requirement
         if minlength != 1:
-            invalidList.append("=== String that doesn't meet the minimum length requirement ===")
+            invalidList.append("=== Input that doesn't meet the minimum length requirement ===")
             for included in includedList:
                 invalidString += included
             if len(includedList) == minlength:
@@ -70,7 +70,7 @@ def invalid_input():
             invalidString = ""
         
         # valid string but doesn't meet the maximum length requirement
-        invalidList.append("=== String that doesn't meet the maximum length requirement ===")
+        invalidList.append("=== Input that doesn't meet the maximum length requirement ===")
         for included in includedList:
             invalidString += included
         while (len(invalidString) != maxlength+1):
@@ -82,7 +82,7 @@ def invalid_input():
         
         # invalid string (doesn't contain all the characters in 'Characters must be included')
         if includedList[0]:
-            invalidList.append("=== String that doesn't contain all the characters in 'Characters must be Included' ===")
+            invalidList.append("=== Input that doesn't contain all the characters in 'Characters must be Included' ===")
             for included in includedList:
                 if len(includedList) != 1:
                     invalidString = included
@@ -99,7 +99,7 @@ def invalid_input():
         
         # invalid string (contains characters in 'Characters must be excluded')
         if excludedList[0]:
-            invalidList.append("=== String that contains characters in 'Characters must be Excluded' ===")
+            invalidList.append("=== Input that contains characters in 'Characters must be Excluded' ===")
             for excluded in excludedList:
                 for included in includedList:
                     invalidString += included
@@ -121,7 +121,7 @@ def invalid_input():
                 invalid_output += invalid + "\n"
         
         # valid input
-        validList.append("=== String that satisfy all the requirements ===")
+        validList.append("=== Input that satisfy all the requirements ===")
         for i in range(minlength, maxlength+1):
             for included in includedList:
                 validString += included
