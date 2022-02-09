@@ -15,6 +15,7 @@
               </td>
           </tr>
       </table>
+
       <div id = "content">
         <!-- Minimum Length -->
         <div>
@@ -31,7 +32,7 @@
         <!-- Characters to be Included -->
         <div>
           <label for="charincluded" class="label_details">Character(s) to be Included:</label>
-          <input class = "fields" name="charincluded" type="text" id="charincluded" value="{{charincluded}}" placeholder="Separate each character with space ' '" /> <br>
+          <input class = "fields" name="charincluded" type="text" id="charincluded" value="{{charincluded}}" placeholder="Separate each character with a space ' '" /> <br>
           <label class="label_details"></label>
           
 		  <input type="checkbox" id="uppercaseI" name="uppercaseI" value="Uppercase" onclick="inUppercase()">
@@ -44,13 +45,13 @@
           <label for="symbols" class="checkbox">Symbols &nbsp;</label> 
           
 		  <input type="checkbox" id="numbersI" name="numbersI" value="Numbers" onclick="inNumbers()">
-          <label for="numbers" class="checkbox">Numbers</label> 
+          <label for="numbers" class="checkbox">Numbers</label>
         </div>
 
         <!-- Characters to be Excluded -->
         <div>
           <label for="charexcluded" class="label_details">Character(s) to be Excluded:</label>
-          <input class = "fields" name="charexcluded" type="text" id="charexcluded" placeholder="Separate each character with space ' '" value="{{charexcluded}}"/> <br>
+          <input class = "fields" name="charexcluded" type="text" id="charexcluded" value="{{charexcluded}}" placeholder="Separate each character with a space ' '" /> <br>
           <label class="label_details"></label>
           
 		  <input type="checkbox" id="uppercaseE" name="uppercaseE" value="Uppercase" onclick="exUppercase()">
@@ -70,57 +71,63 @@
         <input type="submit" class="btn btn-outline-dark" id = "generatebutton" name = "btn" value="Generate"/>
 
         <br><br><br>
-        <!-- Output area -->
+        <!-- Output area (invalid) -->
         <div class = output>
           <label for="output">Examples of Invalid Input:</label><br>
-          <textarea id="output" rows=15 class="output" disabled>{{generated_output}}</textarea>
+          <textarea id="output" rows=20 class="output" disabled>{{generated_output}}</textarea>
           <input type="hidden" name="hidden" value="{{generated_output}}">
+        </div>
+		
+		 <!-- Output area (valid) -->
+        <div class = output>
+          <label for="output">Examples of Valid Input:</label><br>
+          <textarea id="output" rows=15 class="output" disabled>{{generated_output}}</textarea>
+          <!-- <input type="hidden" name="hidden" value="{{generated_output}}"> -->
         </div>
       </div>
     </form>
-	<p id="run" style="display:none">Checkbox checked</p>
-
+	
 <script>
 	function inUppercase() {
 	  var checkBox = document.getElementById("uppercaseI");
 	  if (checkBox.checked == true)
-		run.style.display = "block";
+		document.getElementById('charincluded').value = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z";
 	}
 	function inLowercase() {
 	  var checkBox = document.getElementById("lowercaseI");
 	  if (checkBox.checked == true)
-		run.style.display = "block";
+		document.getElementById('charincluded').value = "a b c d e f g h i j k l m n o p q r s t u v w x y z";
 	}
 	function inSymbols() {
 	  var checkBox = document.getElementById("symbolsI");
 	  if (checkBox.checked == true)
-		run.style.display = "block";
+		document.getElementById('charincluded').value = "! \" # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _ ` { | } ~";
 	}
 	function inNumbers() {
 	  var checkBox = document.getElementById("numbersI");
 	  if (checkBox.checked == true)
-		run.style.display = "block";
+		document.getElementById('charincluded').value = "0 1 2 3 4 5 6 7 8 9";
 	}
 	
 	function exUppercase() {
 	  var checkBox = document.getElementById("uppercaseE");
 	  if (checkBox.checked == true)
-		run.style.display = "block";
+		document.getElementById('charexcluded').value = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z";
 	}
 	function exLowercase() {
 	  var checkBox = document.getElementById("lowercaseE");
 	  if (checkBox.checked == true)
-		run.style.display = "block";
+		document.getElementById('charexcluded').value = "a b c d e f g h i j k l m n o p q r s t u v w x y z";
 	}
 	function exSymbols() {
 	  var checkBox = document.getElementById("symbolsE");
 	  if (checkBox.checked == true)
-		run.style.display = "block";
+		document.getElementById('charexcluded').value = "! \" # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _ ` { | } ~";
 	}
 	function exNumbers() {
 	  var checkBox = document.getElementById("numbersE");
 	  if (checkBox.checked == true)
-		run.style.display = "block";
+		document.getElementById('charexcluded').value = "0 1 2 3 4 5 6 7 8 9";
 	}
 </script>
 {% endblock %}
