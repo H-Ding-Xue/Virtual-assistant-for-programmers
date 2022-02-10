@@ -26,45 +26,45 @@ def invalid_input():
         excludedList.sort()
         
         if minlength < 1:
-            flash("Minimum Character Length cannot be smaller than 1")
+            flash("Character(s) Minimum Length cannot be smaller than 1")
             return redirect('/invalid_input')
         if maxlength < minlength:
-            flash("'Maximum Character Length' cannot be smaller than 'Minimum Character Length'")
+            flash("'Character(s) Maximum Length' cannot be smaller than 'Character(s) Minimum Length'")
             return redirect('/invalid_input')
         if includedList[0]:
             for included in includedList:
                 if len(included) != 1:
-                    flash("'Character(s) to be Included' only accept single character; separate each character with a space, ' '.")
+                    flash("'Character(s) must be Included' only accept single character; separate each character with a space ' '")
                     return redirect('/invalid_input')
         if excludedList[0]:
             for excluded in excludedList:
                 if len(excluded) != 1:
-                    flash("'Character(s) to be Excluded' only accept single character; separate each character with a space, ' '.")
+                    flash("'Character(s) must be Excluded' only accept single character; separate each character with a space ' '")
                     return redirect('/invalid_input')
         if minlength < len(includedList):
-            flash("'Characters Minimum Length' cannot be less than 'Characters must be Included'")
+            flash("'Character(s) Minimum Length' cannot be less than 'Character(s) must be Included'")
             return redirect('/invalid_input')
         for included in includedList:
             if included in excludedList:
-                flash("'Characters must be Included' cannot contain characters in 'Characters must be Excluded'")
+                flash("'Character(s) must be Included' cannot contain characters in 'Character(s) must be Excluded'")
                 return redirect('/invalid_input')
         for included in includedList:
             if included not in letters:
-                flash("'Characters must be Included' can only accept ASCII characters")
+                flash("'Character(s) must be Included' can only accept ASCII characters")
                 return redirect('/invalid_input')
             if included in letters:
                 includeCount += 1
             if includeCount == len(letters):
-                flash("'Characters must be Included' cannot contain all ASCII characters")
+                flash("'Character(s) must be Included' cannot contain all ASCII characters")
                 return redirect('/invalid_input')
         for excluded in excludedList:
             if excluded not in letters:
-                flash("'Characters must be Excluded' can only accept ASCII characters")
+                flash("'Character(s) must be Excluded' can only accept ASCII characters")
                 return redirect('/invalid_input')
             if excluded in letters:
                 excludeCount += 1
             if excludeCount == len(letters):
-                flash("'Characters must be Excluded' cannot contain all ASCII characters")
+                flash("'Character(s) must be Excluded' cannot contain all ASCII characters")
                 return redirect('/invalid_input')
         
         
@@ -98,7 +98,7 @@ def invalid_input():
         
         # invalid string (doesn't contain all the characters in 'Characters must be included')
         if includedList[0]:
-            invalidList.append("=== Input that doesn't contain all the characters in 'Characters must be Included' ===")
+            invalidList.append("=== Input that doesn't contain all the characters in 'Character(s) must be Included' ===")
             for included in includedList:
                 if len(includedList) != 1:
                     invalidString = included
@@ -165,7 +165,7 @@ def invalid_input():
                                 charincluded=request.form["charincluded"],
                                 charexcluded=request.form["charexcluded"], 
                                 invalid_output=invalid_output,
-                                valid_output = valid_output)
+                                valid_output = valid_output)                        
                                 
     # voice assistant button
     elif request.method=='POST' and request.form['btn'] =='voice_assist':
