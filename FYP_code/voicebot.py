@@ -212,13 +212,12 @@ def open_notepad():
 
 
 #write output to notepad file
-def copy_to_notepad(*outputs):
-    for output in outputs:
-        filename = get_filename()
-        with open(filename, 'w') as out_file:
-            out_file.write(output)
-            out_file.close()
-            webbrowser.open(filename)
+def copy_to_notepad(output):
+    filename = get_filename()
+    with open(filename, 'w') as out_file:
+        out_file.write(output)
+        out_file.close()
+    webbrowser.open(filename)
 
 
 #calling this function from main if no output is available
@@ -266,12 +265,8 @@ def voice_assitant_with_output(current_page, *args):
             statement = redirect(page)
         #write output notepad if notepad or copy word is found 
         elif ("notepad" in text.lower() or "copy" in text.lower() or "text editor" in text.lower() or "editor" in text.lower()):
-            if current_page == "invalid_input.html":
-                copy_to_notepad(args[-2], args[-1])
-            else:    
                 copy_to_notepad(args[-1])
-            statement = render_page_with_output_in_editor(current_page, True, *args)
-
+                statement = render_page_with_output_in_editor(current_page, True, *args)
         else:
             #redirect to google/w3school
             command, place = redirect_to_webpages(text)
