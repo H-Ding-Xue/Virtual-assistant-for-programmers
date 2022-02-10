@@ -1,4 +1,4 @@
-from flask import Flask,redirect,render_template, request, flash
+from flask import redirect,render_template, request, flash
 import random
 import string
 import voicebot as v
@@ -14,7 +14,13 @@ def invalid_input():
         letters = string.ascii_lowercase + string.ascii_uppercase + string.digits + string.punctuation
         invalidString = ""
         invalidList = []
-        generated_output = ""
+        invalid_output = ""
+        validString = ""
+        validList = []
+        valid_output = ""
+
+        includeCount = 0
+        excludeCount = 0
 
         includedList.sort()
         excludedList.sort()
@@ -42,11 +48,30 @@ def invalid_input():
             if included in excludedList:
                 flash("'Characters must be Included' cannot contain characters in 'Characters must be Excluded'")
                 return redirect('/invalid_input')
+        for included in includedList:
+            if included not in letters:
+                flash("'Characters must be Included' can only accept ASCII characters")
+                return redirect('/invalid_input')
+            if included in letters:
+                includeCount += 1
+            if includeCount == len(letters):
+                flash("'Characters must be Included' cannot contain all ASCII characters")
+                return redirect('/invalid_input')
+        for excluded in excludedList:
+            if excluded not in letters:
+                flash("'Characters must be Excluded' can only accept ASCII characters")
+                return redirect('/invalid_input')
+            if excluded in letters:
+                excludeCount += 1
+            if excludeCount == len(letters):
+                flash("'Characters must be Excluded' cannot contain all ASCII characters")
+                return redirect('/invalid_input')
+        
         
         
         # valid string but doesn't meet the minimum length requirement
         if minlength != 1:
-            invalidList.append("=== String that doesn't meet the minimum length requirement ===")
+            invalidList.append("=== Input that doesn't meet the minimum length requirement ===")
             for included in includedList:
                 invalidString += included
             if len(includedList) == minlength:
@@ -55,23 +80,25 @@ def invalid_input():
                 randChar = random.choice(letters)
                 if randChar not in excludedList:
                     invalidString += randChar
+            print("invalid min length: " + invalidString)
             invalidList.append(invalidString)
             invalidString = ""
         
         # valid string but doesn't meet the maximum length requirement
-        invalidList.append("=== String that doesn't meet the maximum length requirement ===")
+        invalidList.append("=== Input that doesn't meet the maximum length requirement ===")
         for included in includedList:
             invalidString += included
         while (len(invalidString) != maxlength+1):
             randChar = random.choice(letters)
             if randChar not in excludedList:
                 invalidString += randChar
+        print("invalid max length: " + invalidString)
         invalidList.append(invalidString)
         invalidString = ""
         
         # invalid string (doesn't contain all the characters in 'Characters must be included')
         if includedList[0]:
-            invalidList.append("=== String that doesn't contain all the characters in 'Characters must be Included' ===")
+            invalidList.append("=== Input that doesn't contain all the characters in 'Characters must be Included' ===")
             for included in includedList:
                 if len(includedList) != 1:
                     invalidString = included
@@ -79,16 +106,24 @@ def invalid_input():
                     invalidString = ""
                 charCount = random.randint(minlength, maxlength)
                 while (len(invalidString) != charCount):
-                    randChar = random.choice(letters)
-                    if randChar not in includedList:
+                    if includeCount + excludeCount == len(letters):
+                        randChar = random.choice(letters[:-1])
+                        print(randChar)
                         if randChar not in excludedList:
                             invalidString += randChar
+                    else:
+                        randChar = random.choice(letters)
+                        print(randChar)
+                        if randChar not in includedList:
+                            if randChar not in excludedList:
+                                invalidString += randChar
+                print("invalid charI: " + invalidString)
                 invalidList.append(invalidString)
                 invalidString = ""
         
         # invalid string (contains characters in 'Characters must be excluded')
         if excludedList[0]:
-            invalidList.append("=== String that contains characters in 'Characters must be Excluded' ===")
+            invalidList.append("=== Input that contains characters in 'Characters must be Excluded' ===")
             for excluded in excludedList:
                 for included in includedList:
                     invalidString += included
@@ -100,32 +135,50 @@ def invalid_input():
                     while(len(invalidString) != charCount):
                         randChar = random.choice(letters)
                         invalidString += randChar
+                print("invalid charE: " + invalidString)
                 invalidList.append(invalidString)
                 invalidString = ""
 
         for invalid in invalidList:
             if " ===" in invalid:
-                generated_output += "\n" + invalid + "\n"
+                invalid_output += "\n" + invalid + "\n"
             else:
-                generated_output += invalid + "\n"
+                invalid_output += invalid + "\n"
+        
+        # valid input
+        validList.append("=== Input that satisfy all the requirements ===")
+        for i in range(minlength, maxlength+1):
+            for included in includedList:
+                validString += included
+            while (len(validString) != i):
+                randChar = random.choice(letters)
+                if randChar not in excludedList:
+                    validString += randChar
+            validList.append(validString)
+            validString = ""
+
+        for valid in validList:
+            valid_output += valid + "\n"
 
         return render_template("invalid_input.html", minlength=request.form["minlength"],
                                 maxlength=request.form["maxlength"],
                                 charincluded=request.form["charincluded"],
                                 charexcluded=request.form["charexcluded"], 
-                                generated_output=generated_output)
+                                invalid_output=invalid_output,
+                                valid_output = valid_output)
                                 
     # voice assistant button
     elif request.method=='POST' and request.form['btn'] =='voice_assist':
-        output = request.values.get("hidden")
-        if output == '':
+        invalid_output = request.values.get("hidden_iv")
+        if invalid_output == '':
             return v.voice_assitant("invalid_input.html", "/invalid_input") 
         else:
+            valid_output = request.values.get("hidden_v")
             minlength=request.values.get("minlength")
             maxlength=request.values.get("maxlength")
             charincluded=request.values.get("charincluded")
             charexcluded=request.values.get("charexcluded")
-            return v.voice_assitant_with_output("invalid_input.html", minlength, maxlength, charincluded, charexcluded, output)                              
+            return v.voice_assitant_with_output("invalid_input.html", minlength, maxlength, charincluded, charexcluded, invalid_output, valid_output)                              
     elif request.method == "POST" and request.form['btn'] =='Generate' and (request.form["minlength"].strip() == '' or request.form["maxlength"].strip() == ''):
         flash("Characters Minimum/Maximum Length cannot be empty")
         return redirect('/invalid_input')
