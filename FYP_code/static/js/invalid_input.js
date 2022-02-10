@@ -7,6 +7,57 @@ $(window).keydown(function(e){
     }
 });
 
+$(document).ready(function() {
+    var uppercaseI = document.getElementById("uppercaseI");
+    var lowercaseI = document.getElementById("lowercaseI");
+    var symbolsI = document.getElementById("symbolsI");
+    var numbersI = document.getElementById("numbersI");
+    var uppercaseE = document.getElementById("uppercaseE");
+    var lowercaseE = document.getElementById("lowercaseE");
+    var symbolsE = document.getElementById("symbolsE");
+    var numbersE = document.getElementById("numbersE");
+
+    if (uppercaseI.checked == true)
+        $("#uppercaseE").attr("disabled", true);
+    else
+        $("#uppercaseE").removeAttr("disabled");
+
+    if (lowercaseI.checked == true)
+        $("#lowercaseE").attr("disabled", true);
+    else
+        $("#lowercaseE").removeAttr("disabled");
+    
+    if (symbolsI.checked == true)
+        $("#symbolsE").attr("disabled", true);
+    else
+        $("#symbolsE").removeAttr("disabled");
+
+    if (numbersI.checked == true)
+        $("#numbersE").attr("disabled", true);
+    else
+        $("#numbersE").removeAttr("disabled");
+    
+    if (uppercaseE.checked == true)
+        $("#uppercaseI").attr("disabled", true);
+    else
+        $("#uppercaseI").removeAttr("disabled");
+
+    if (lowercaseE.checked == true)
+        $("#lowercaseI").attr("disabled", true);
+    else
+        $("#lowercaseI").removeAttr("disabled");
+    
+    if (symbolsE.checked == true)
+        $("#symbolsI").attr("disabled", true);
+    else
+        $("#symbolsI").removeAttr("disabled");
+
+    if (numbersE.checked == true)
+        $("#numbersI").attr("disabled", true);
+    else
+        $("#numbersI").removeAttr("disabled");
+})
+
 ascii = []
 for (var i = 33; i < 127; i++)
     ascii.push(String.fromCharCode(i));
