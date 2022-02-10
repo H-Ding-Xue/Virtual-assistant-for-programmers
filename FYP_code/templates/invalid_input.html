@@ -15,6 +15,7 @@
               </td>
           </tr>
       </table>
+
       <div id = "content">
         <!-- Minimum Length -->
         <div>
@@ -67,7 +68,7 @@
           <input type="checkbox" id="numbersE" name="numbersE" value="Numbers">
               <label for="numbers" class="checkbox">Numbers</label> 
         </div>
-        
+
         <!-- Submit Button -->
         <input type="submit" class="btn btn-outline-dark" id = "generatebutton" name = "btn" value="Generate"/>
 
@@ -85,9 +86,17 @@
           <textarea id="output" rows=15 class="output" disabled>{{valid_output}}</textarea>
           <input type="hidden" name="hidden_v" value="{{valid_output}}">
         </div>
+		
+		 <!-- Output area (valid) -->
+        <div class = output>
+          <label for="output">Possible Valid Inputs:</label><br>
+          <textarea id="output" rows=15 class="output" disabled>{{generated_output}}</textarea>
+          <!-- <input type="hidden" name="hidden" value="{{generated_output}}"> -->
+        </div>
       </div>
     </form>
 	<p id="run" style="display:none">Checkbox checked</p>
   
   <script type=text/javascript src="{{url_for('static', filename='js/invalid_input.js') }}"></script>
+
 {% endblock %}
