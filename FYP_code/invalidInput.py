@@ -26,20 +26,20 @@ def invalid_input():
         excludedList.sort()
         
         if minlength < 1:
-            flash("Minimum Character Length cannot be smaller than 1")
+            flash("Characters Minimum Length cannot be smaller than 1")
             return redirect('/invalid_input')
         if maxlength < minlength:
-            flash("'Maximum Character Length' cannot be smaller than 'Minimum Character Length'")
+            flash("'Characters Maximum Length' cannot be smaller than 'Characters Minimum Length'")
             return redirect('/invalid_input')
         if includedList[0]:
             for included in includedList:
                 if len(included) != 1:
-                    flash("'Character(s) to be Included' only accept single character; separate each character with a space, ' '.")
+                    flash("'Characters must be Included' only accept single character; separate each character with space ' '")
                     return redirect('/invalid_input')
         if excludedList[0]:
             for excluded in excludedList:
                 if len(excluded) != 1:
-                    flash("'Character(s) to be Excluded' only accept single character; separate each character with a space, ' '.")
+                    flash("'Characters must be Excluded' only accept single character; separate each character with space ' '")
                     return redirect('/invalid_input')
         if minlength < len(includedList):
             flash("'Characters Minimum Length' cannot be less than 'Characters must be Included'")
@@ -165,7 +165,7 @@ def invalid_input():
                                 charincluded=request.form["charincluded"],
                                 charexcluded=request.form["charexcluded"], 
                                 invalid_output=invalid_output,
-                                valid_output = valid_output)
+                                valid_output = valid_output)                        
                                 
     # voice assistant button
     elif request.method=='POST' and request.form['btn'] =='voice_assist':
