@@ -2,7 +2,6 @@ from flask import redirect,render_template, flash, request
 import speech_recognition as sr
 import webbrowser
 import datetime
-import subprocess
 
 # similar sounding words with target words
 similar_sounding_words = {
@@ -218,8 +217,8 @@ def copy_to_notepad(*outputs):
         filename = get_filename()
         with open(filename, 'w') as out_file:
             out_file.write(output)
-        out_file.close()
-        webbrowser.open(filename)
+            out_file.close()
+            webbrowser.open(filename)
 
 
 #calling this function from main if no output is available
