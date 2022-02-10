@@ -66,9 +66,7 @@
 		  <input type="checkbox" id="numbersE" name="numbersE" value="Numbers" onclick="exNumbers()">
           <label for="numbers" class="checkbox">Numbers</label>
         </div>
-		  
-		<p>Select the checkboxes you wish to add into the text fields. Refresh the page to select again.</p>
-        
+
         <!-- Submit Button -->
         <input type="submit" class="btn btn-outline-dark" id = "generatebutton" name = "btn" value="Generate"/>
 
@@ -76,60 +74,84 @@
         <!-- Output area (invalid) -->
         <div class = output>
           <label for="output">Examples of Invalid Input:</label><br>
-          <textarea id="output" rows=20 class="output" disabled>{{generated_output}}</textarea>
+          <textarea id="output" rows=15 class="output" disabled>{{generated_output}}</textarea>
           <input type="hidden" name="hidden" value="{{generated_output}}">
         </div>
 		
 		 <!-- Output area (valid) -->
         <div class = output>
-          <label for="output">Examples of Valid Input:</label><br>
+          <label for="output">Possible Valid Inputs:</label><br>
           <textarea id="output" rows=15 class="output" disabled>{{generated_output}}</textarea>
           <!-- <input type="hidden" name="hidden" value="{{generated_output}}"> -->
         </div>
       </div>
     </form>
-	
+	<!-- (document.getElementById('charincluded').value). -->
 <script>
 	function inUppercase() {
 	  var checkBox = document.getElementById("uppercaseI");
 	  if (checkBox.checked == true)
-		document.getElementById('charincluded').value += " A B C D E F G H I J K L M N O P Q R S T U V W X Y Z";
+		document.getElementById('charincluded').value += " A B C D E F G H I J K L M N O P Q R S T U V W X Y Z ";
+	  else 
+		document.getElementById('charincluded').value =
+		(document.getElementById('charincluded').value).replace(" A B C D E F G H I J K L M N O P Q R S T U V W X Y Z ", "");
 	}
 	function inLowercase() {
 	  var checkBox = document.getElementById("lowercaseI");
 	  if (checkBox.checked == true)
-		document.getElementById('charincluded').value += " a b c d e f g h i j k l m n o p q r s t u v w x y z";
+		document.getElementById('charincluded').value += " a b c d e f g h i j k l m n o p q r s t u v w x y z ";
+	  else 
+		document.getElementById('charincluded').value = 
+		(document.getElementById('charincluded').value).replace(" a b c d e f g h i j k l m n o p q r s t u v w x y z ", "");
 	}
 	function inSymbols() {
 	  var checkBox = document.getElementById("symbolsI");
 	  if (checkBox.checked == true)
-		document.getElementById('charincluded').value += " ! \" # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _ ` { | } ~";
+		document.getElementById('charincluded').value += " ! \" # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _ ` { | } ~ ";
+	  else 
+		document.getElementById('charincluded').value = 
+		(document.getElementById('charincluded').value).replace(" ! \" # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _ ` { | } ~ ", "");
 	}
 	function inNumbers() {
 	  var checkBox = document.getElementById("numbersI");
 	  if (checkBox.checked == true)
-		document.getElementById('charincluded').value += " 0 1 2 3 4 5 6 7 8 9";
+		document.getElementById('charincluded').value += " 0 1 2 3 4 5 6 7 8 9 ";
+	  else 
+		document.getElementById('charincluded').value = 
+		(document.getElementById('charincluded').value).replace(" 0 1 2 3 4 5 6 7 8 9 ", "");
 	}
 	
 	function exUppercase() {
 	  var checkBox = document.getElementById("uppercaseE");
 	  if (checkBox.checked == true)
-		document.getElementById('charexcluded').value += " A B C D E F G H I J K L M N O P Q R S T U V W X Y Z";
+		document.getElementById('charexcluded').value += " A B C D E F G H I J K L M N O P Q R S T U V W X Y Z ";
+	  else 
+		document.getElementById('charincluded').value = 
+		(document.getElementById('charincluded').value).replace(" A B C D E F G H I J K L M N O P Q R S T U V W X Y Z ", "");
 	}
 	function exLowercase() {
 	  var checkBox = document.getElementById("lowercaseE");
 	  if (checkBox.checked == true)
-		document.getElementById('charexcluded').value += " a b c d e f g h i j k l m n o p q r s t u v w x y z";
+		document.getElementById('charexcluded').value += " a b c d e f g h i j k l m n o p q r s t u v w x y z ";
+	  else 
+		document.getElementById('charincluded').value = 
+		(document.getElementById('charincluded').value).replace(" a b c d e f g h i j k l m n o p q r s t u v w x y z ", "");
 	}
 	function exSymbols() {
 	  var checkBox = document.getElementById("symbolsE");
 	  if (checkBox.checked == true)
-		document.getElementById('charexcluded').value += " ! \" # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _ ` { | } ~";
+		document.getElementById('charexcluded').value += " ! \" # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _ ` { | } ~ ";
+	  else 
+		document.getElementById('charincluded').value = 
+		(document.getElementById('charincluded').value).replace(" ! \" # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _ ` { | } ~ ", "");
 	}
 	function exNumbers() {
 	  var checkBox = document.getElementById("numbersE");
 	  if (checkBox.checked == true)
-		document.getElementById('charexcluded').value += " 0 1 2 3 4 5 6 7 8 9";
+		document.getElementById('charexcluded').value += " 0 1 2 3 4 5 6 7 8 9 ";
+	  else 
+		document.getElementById('charincluded').value = 
+		(document.getElementById('charincluded').value).replace(" 0 1 2 3 4 5 6 7 8 9 ", "");
 	}
 </script>
 {% endblock %}

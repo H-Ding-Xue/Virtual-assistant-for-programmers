@@ -8,8 +8,8 @@ def invalid_input():
         and (request.form["charincluded"].strip() != '' or request.form["charexcluded"].strip() != ''):
         minlength = int(request.form["minlength"])
         maxlength = int(request.form["maxlength"])
-        includedList = [str(i) for i in request.form["charincluded"].replace('  ', ' ').split(' ')]
-        excludedList = [str(i) for i in request.form["charexcluded"].replace('  ', ' ').split(' ')]
+        includedList = [str(i) for i in request.form["charincluded"].strip().replace('  ', ' ').split(' ')]
+        excludedList = [str(i) for i in request.form["charexcluded"].strip().replace('  ', ' ').split(' ')]
         
         letters = string.ascii_lowercase + string.ascii_uppercase + string.digits + string.punctuation
         invalidString = ""
