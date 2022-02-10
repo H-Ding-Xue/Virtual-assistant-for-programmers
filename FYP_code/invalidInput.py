@@ -1,6 +1,7 @@
 from flask import redirect,render_template, request, flash
 import random
 import string
+import re
 import voicebot as v
 
 def invalid_input():
@@ -8,8 +9,8 @@ def invalid_input():
         and (request.form["charincluded"].strip() != '' or request.form["charexcluded"].strip() != ''):
         minlength = int(request.form["minlength"])
         maxlength = int(request.form["maxlength"])
-        includedList = [str(i) for i in request.form["charincluded"].strip().replace('  ', ' ').split(' ')]
-        excludedList = [str(i) for i in request.form["charexcluded"].strip().replace('  ', ' ').split(' ')]
+        includedList = [str(i) for i in re.sub(' +', ' ', request.form["charincluded"].strip()).split(' ')]
+        excludedList = [str(i) for i in re.sub(' +', ' ', request.form["charexcluded"].strip()).split(' ')]
         
         letters = string.ascii_lowercase + string.ascii_uppercase + string.digits + string.punctuation
         invalidString = ""
@@ -52,23 +53,24 @@ def invalid_input():
             if included not in letters:
                 flash("'Character(s) must be Included' can only accept ASCII characters")
                 return redirect('/invalid_input')
-            if included in letters:
-                includeCount += 1
-            if includeCount == len(letters):
-                flash("'Character(s) must be Included' cannot contain all ASCII characters")
-                return redirect('/invalid_input')
         for excluded in excludedList:
             if excluded not in letters:
                 flash("'Character(s) must be Excluded' can only accept ASCII characters")
                 return redirect('/invalid_input')
-            if excluded in letters:
+        
+        fIncludedList = list(set(includedList))
+        for included in fIncludedList:
+            if included in letters and included != '':
+                includeCount += 1
+
+        fExcludedList = list(set(excludedList))
+        for excluded in fExcludedList:
+            if excluded in letters and excluded != '':
                 excludeCount += 1
             if excludeCount == len(letters):
                 flash("'Character(s) must be Excluded' cannot contain all ASCII characters")
                 return redirect('/invalid_input')
-        
-        
-        
+
         # valid string but doesn't meet the minimum length requirement
         if minlength != 1:
             invalidList.append("=== Input that doesn't meet the minimum length requirement ===")
@@ -80,7 +82,6 @@ def invalid_input():
                 randChar = random.choice(letters)
                 if randChar not in excludedList:
                     invalidString += randChar
-            print("invalid min length: " + invalidString)
             invalidList.append(invalidString)
             invalidString = ""
         
@@ -92,34 +93,40 @@ def invalid_input():
             randChar = random.choice(letters)
             if randChar not in excludedList:
                 invalidString += randChar
-        print("invalid max length: " + invalidString)
         invalidList.append(invalidString)
         invalidString = ""
         
-        # invalid string (doesn't contain all the characters in 'Characters must be included')
+        # invalid string (doesn't contain all the characters in 'Characters must be Included')
         if includedList[0]:
             invalidList.append("=== Input that doesn't contain all the characters in 'Character(s) must be Included' ===")
-            for included in includedList:
-                if len(includedList) != 1:
-                    invalidString = included
-                else:
-                    invalidString = ""
-                charCount = random.randint(minlength, maxlength)
-                while (len(invalidString) != charCount):
-                    if includeCount + excludeCount == len(letters):
-                        randChar = random.choice(letters[:-1])
-                        print(randChar)
-                        if randChar not in excludedList:
-                            invalidString += randChar
+            if includeCount + excludeCount == len(letters):
+                for included in includedList:
+                    if len(includedList) != 1:
+                        invalidString = included
                     else:
+                        invalidString = ""
+                    charCount = random.randint(minlength, maxlength)
+                    while (len(invalidString) != charCount):
                         randChar = random.choice(letters)
-                        print(randChar)
+                        if randChar != fIncludedList[-1]:
+                            if randChar not in excludedList:
+                                invalidString += randChar
+                    invalidList.append(invalidString)
+                    invalidString = ""
+            else:
+                for included in includedList:
+                    if len(includedList) != 1:
+                        invalidString = included
+                    else:
+                        invalidString = ""
+                    charCount = random.randint(minlength, maxlength)
+                    while (len(invalidString) != charCount):
+                        randChar = random.choice(letters)
                         if randChar not in includedList:
                             if randChar not in excludedList:
                                 invalidString += randChar
-                print("invalid charI: " + invalidString)
-                invalidList.append(invalidString)
-                invalidString = ""
+                    invalidList.append(invalidString)
+                    invalidString = ""
         
         # invalid string (contains characters in 'Characters must be excluded')
         if excludedList[0]:
@@ -135,7 +142,6 @@ def invalid_input():
                     while(len(invalidString) != charCount):
                         randChar = random.choice(letters)
                         invalidString += randChar
-                print("invalid charE: " + invalidString)
                 invalidList.append(invalidString)
                 invalidString = ""
 
@@ -154,6 +160,9 @@ def invalid_input():
                 randChar = random.choice(letters)
                 if randChar not in excludedList:
                     validString += randChar
+            temp = list(validString)
+            random.shuffle(temp)
+            validString = ''.join(temp)
             validList.append(validString)
             validString = ""
 
