@@ -257,7 +257,10 @@ def invalid_input():
             maxlength=request.values.get("maxlength")
             charincluded=request.values.get("charincluded")
             charexcluded=request.values.get("charexcluded")
-            return v.voice_assitant_with_output("invalid_input.html", minlength, maxlength, charincluded, charexcluded, invalid_output, valid_output)                              
+            combined_outputs = "-"*26 + "\nExamples of Invalid Input |\n" + "-"*26 + invalid_output +\
+                                "-"*24 + "\nExamples of Valid Input |\n" + \
+                                "-"*24 + "\n" + valid_output
+            return v.voice_assitant_with_output("invalid_input.html", minlength, maxlength, charincluded, charexcluded, invalid_output, valid_output, combined_outputs)                              
     elif request.method == "POST" and request.form['btn'] =='Generate' and (request.form["minlength"].strip() == '' or request.form["maxlength"].strip() == ''):
         flash("Characters Minimum/Maximum Length cannot be empty")
         return redirect('/invalid_input')
