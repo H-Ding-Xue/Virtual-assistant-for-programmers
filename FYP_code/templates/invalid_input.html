@@ -18,13 +18,13 @@
       <div id = "content">
         <!-- Minimum Length -->
         <div>
-          <label for="minlength" class="label_details">Minimum Character Length:</label>
+          <label for="minlength" class="label_details">Character(s) Minimum Length:</label>
           <input class = "fields" name="minlength" type="number" id="minlength" value="{{minlength}}" placeholder="Enter minimum length"/> 
         </div>
 
         <!--Maximum Length -->
         <div>
-          <label for="maxlength" class="label_details">Maximum Character Length:</label>
+          <label for="maxlength" class="label_details">Character(s) Maximum Length:</label>
           <input class = "fields" name="maxlength" type="number" id="maxlength" value="{{maxlength}}" placeholder="Enter maximum length"/>
         </div>
         <br>
@@ -32,7 +32,7 @@
         <!-- Characters to be Included -->
         <div>
           <label for="charincluded" class="label_details">Character(s) must be Included:</label>
-          <textarea class="fields" name="charincluded" id="charincluded" placeholder="Separate each character with space ' '">{{charincluded}}</textarea> <br>
+          <textarea class="fields" name="charincluded" id="charincluded" placeholder="Separate each character with a space ' '">{{charincluded}}</textarea> <br>
           <label class="label_details"></label>
           
           <input type="checkbox" id="uppercaseI" name="uppercaseI" value="Uppercase">
@@ -52,7 +52,7 @@
         <!-- Characters to be Excluded -->
         <div>
           <label for="charexcluded" class="label_details">Character(s) must be Excluded:</label>
-          <textarea class="fields" name="charexcluded" id="charexcluded" placeholder="Separate each character with space ' '">{{charexcluded}}</textarea> <br>
+          <textarea class="fields" name="charexcluded" id="charexcluded" placeholder="Separate each character with a space ' '">{{charexcluded}}</textarea> <br>
           <label class="label_details"></label>
           
           <input type="checkbox" id="uppercaseE" name="uppercaseE" value="Uppercase">
