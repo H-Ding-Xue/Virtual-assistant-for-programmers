@@ -40,11 +40,4 @@ $(document).ready(function() {
             $("#helpModal").hide();
         }
     });
-
-    //hide modal if clicked outside the modal
-    $(window).click(function(e) {
-        if (e.target.id == "website-popup"){
-            $("#website-popup").hide();
-        }
-    });
 });
