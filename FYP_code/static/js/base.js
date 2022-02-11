@@ -24,15 +24,27 @@ $(document).ready(function() {
         $("#helpModal").show();
     });
 
-    //hide modal
-    $("span").click(function(){
+    //hide help modal
+    $("#close-help, #close-button2").click(function(){
         $("#helpModal").hide();
+    });
+
+    //hide popup modal
+    $("#close-popup, #close-button").click(function(){
+        $("#website-popup").hide();
     });
 
     //hide modal if clicked outside the modal
     $(window).click(function(e) {
         if (e.target.id == "helpModal"){
             $("#helpModal").hide();
+        }
+    });
+
+    //hide modal if clicked outside the modal
+    $(window).click(function(e) {
+        if (e.target.id == "website-popup"){
+            $("#website-popup").hide();
         }
     });
 });
