@@ -55,6 +55,7 @@ def comment_execution():
         "write": " write "
     }
     if request.method=='POST' and request.form['btn'] == 'Generate' and request.form["codeinput"].strip() != '' and request.form["Mode"]=='lbl':
+        Selected='lbl'
         codeblock = request.form["codeinput"]
         linebyline = codeblock.split('\n')
         commentlist = []
@@ -78,7 +79,7 @@ def comment_execution():
                 finalstring = finalstring + linebyline[i] +' # '+ commentlist[i] + '\n'
             else:
                 finalstring = finalstring + linebyline[i] + commentlist[i] + '\n'
-        return render_template("comments.html", codeblock=codeblock, finalstring=finalstring) 
+        return render_template("comments.html", codeblock=codeblock, finalstring=finalstring, Selected=Selected) 
     # voice assistant button
     elif request.method=='POST' and request.form['btn'] =='voice_assist':
         codeblock = request.values.get("codeinput")
@@ -91,6 +92,7 @@ def comment_execution():
         flash("Code Input cannot be empty")
         return redirect('/comment generation')
     elif request.method=='POST' and request.form['btn'] == 'Generate' and request.form["codeinput"].strip() != '' and request.form["Mode"]=='all':
+        Selected='all'
         codeblock = request.form["codeinput"]
         codeblock2 = codeblock
         for key, value in code_to_english.items():
@@ -101,6 +103,6 @@ def comment_execution():
         finalstring = loaded_model.predict(loaded_vectorizer.transform([codeblock2]))[0]
         
         
-        return render_template("comments.html", codeblock=codeblock, finalstring=finalstring)
+        return render_template("comments.html", codeblock=codeblock, finalstring=finalstring,Selected=Selected)
     else:
         return render_template("comments.html")

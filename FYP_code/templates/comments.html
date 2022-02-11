@@ -26,7 +26,7 @@
                 <td id = commenttd>
                     <!-- Comments Output -->
                     <label for="commentoutput" id = commentlabel>Comments Output</label><br>
-                    <textarea wrap="off" id="commentoutput" disabled>{{finalstring}}</textarea>
+                    <textarea id="commentoutput" disabled {% if Selected =="lbl" %} wrap="off" {% endif %}>{{finalstring}}</textarea>
                     <input type="hidden" name="hidden" value="{{finalstring}}">
                 </td>
             </tr>
@@ -35,8 +35,8 @@
                     <!-- Chose analysis mode -->
                     <label for="Mode" id = Modelabel>Method of code analysis</label>
                     <select name="Mode" id="Mode">
-                        <option value="lbl">Analyze line By line</option>
-                        <option value="all">Analyze entire Codeblock</option>
+                        <option value="lbl" {% if Selected =="lbl" %} selected {% endif %} >Analyze line By line</option>
+                        <option value="all" {% if Selected =="all" %} selected {% endif %}>Analyze entire Codeblock</option>
                     </select>
                 </td>
             </tr>
