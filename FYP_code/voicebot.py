@@ -291,7 +291,7 @@ def render_page_with_popup(current_page, transcribed_text, command, place, *args
                          invalid_output=args[4], valid_output=args[5], transcribed_text=transcribed_text,
                          command=command, place= place)
     elif current_page == "comments.html":
-        return render_template(current_page, codeblock=args[0],finalstring=args[1],
+        return render_template(current_page, Selected=args[0], codeblock=args[1],finalstring=args[2],
                                transcribed_text=transcribed_text, command=command, 
                                place= place)
     elif current_page == "codesEO.html":
@@ -308,7 +308,7 @@ def render_correct_page(current_page, *args):
                          charincluded=args[2],charexcluded=args[3],
                          invalid_output=args[4], valid_output=args[5])
     elif current_page == "comments.html":
-        return render_template(current_page, codeblock=args[0],finalstring=args[1])
+        return render_template(current_page, Selected = args[0], codeblock=args[1],finalstring=args[2])
     elif current_page == "codesEO.html":
         return render_template(current_page, inputList=args[0],output=args[1], predicted_output=args[2])
     else:
@@ -321,7 +321,7 @@ def render_page_with_output_in_editor(current_page, write_success, *args):
                          charincluded=args[2],charexcluded=args[3],
                          invalid_output=args[4], valid_output=args[5], write_output=write_success)
     elif current_page == "comments.html":
-        return render_template(current_page, codeblock=args[0],finalstring=args[1],
+        return render_template(current_page, Selected=args[0], codeblock=args[1],finalstring=args[2],
                                write_output=write_success)
     elif current_page == "codesEO.html":
         return render_template(current_page, inputList=args[0],output=args[1], predicted_output=args[2],

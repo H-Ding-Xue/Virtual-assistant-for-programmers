@@ -82,12 +82,13 @@ def comment_execution():
         return render_template("comments.html", codeblock=codeblock, finalstring=finalstring, Selected=Selected) 
     # voice assistant button
     elif request.method=='POST' and request.form['btn'] =='voice_assist':
+        selected = request.form["Mode"]
         codeblock = request.values.get("codeinput")
         finalstring = request.values.get("hidden")
         if finalstring == '':
             return v.voice_assitant("comments.html", "/comment generation") 
         else:
-            return v.voice_assitant_with_output("comments.html", codeblock, finalstring)         
+            return v.voice_assitant_with_output("comments.html", selected, codeblock, finalstring)         
     elif request.method=='POST' and request.form['btn'] == 'Generate' and request.form["codeinput"].strip() == '': 
         flash("Code Input cannot be empty")
         return redirect('/comment generation')
