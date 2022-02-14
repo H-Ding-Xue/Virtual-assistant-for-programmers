@@ -4,7 +4,7 @@ from sklearn.tree import DecisionTreeClassifier
 import pickle
 
 # generate random data
-def generateData(min, max, count, createCSV):
+def generateData(min, max, count):
     print("Begin generating raw data..")
     value1 = []
     value2 = []
@@ -102,7 +102,7 @@ def generateData(min, max, count, createCSV):
             appendDivision()
         counter += 1
     
-    print("Total raw data count: " + str(counter))
+    print("Total raw data generated: " + str(counter))
     data = {'Value1': value1,
             'Value2': value2,
             'Value3': value3,
@@ -115,22 +115,19 @@ def generateData(min, max, count, createCSV):
     # convert data into dataframe
     print("Converting to dataframe..")
     df = pd.DataFrame(data, columns = ['Value1', 'Value2', 'Value3', 'Result', 'Addition', 'Subtraction', 'Multiplication', 'Division'])
-
-    if createCSV == True:
-        # export raw data into csv
-        # will be stored in a directory above the current folder
-        print("Exporting raw data to csv file..")
-        df.to_csv(r'..\codeEIO-data-raw.csv', index = False, header = True)
     print("Completed generating raw data")
     return df
 
 
 # training ML model
 def trainModel(df, createCSV):
+    if createCSV == True:
+        # export raw data into csv
+        # will be stored in a directory above the current folder
+        print("Exporting raw data to csv file..")
+        df.to_csv(r'..\codeEIO-data-raw.csv', index = False, header = True)
+
     print("Begin training model..")
-    # read csv files
-    CodeMtd = pd.read_csv(r'.\codeEIO-method.csv')
-    
     # remove duplicate data
     print("Original Count: " + str(df.shape[0]))
     duplicates = df.duplicated().sum()
@@ -154,7 +151,6 @@ def trainModel(df, createCSV):
     # export and store the trained model and method
     print("Exporting to pickle file..")
     pickle.dump(model, open(r'.\FYP_code\saved_codeEIO_model', 'wb'))
-    pickle.dump(CodeMtd, open(r'.\FYP_code\saved_codeEIO_method', 'wb'))
     print("Completed training model")
 
 
@@ -165,9 +161,12 @@ def trainModel(df, createCSV):
 minValue = 1
 maxValue = 1000
 # no. of raw data to generate (may include duplicates)
-count = 60000000
+count = 40000000
 # set True to create csv file
 createCSV = True
 
-df = generateData(minValue, maxValue, count, createCSV)
+df1 = generateData(minValue, maxValue, count)
+df2 = generateData(minValue, maxValue, count)
+
+df = df1.append(df2, ignore_index=True)
 trainModel(df, createCSV)
