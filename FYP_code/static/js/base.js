@@ -24,9 +24,14 @@ $(document).ready(function() {
         $("#helpModal").show();
     });
 
-    //hide modal
-    $("span").click(function(){
+    //hide help modal
+    $("#close-help, #close-button2").click(function(){
         $("#helpModal").hide();
+    });
+
+    //hide popup modal
+    $("#close-popup, #close-button").click(function(){
+        $("#website-popup").hide();
     });
 
     //hide modal if clicked outside the modal
