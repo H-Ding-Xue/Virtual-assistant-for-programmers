@@ -114,8 +114,9 @@ def redirect_to_app_page(transcribed_text):
             ("text" in transcribed_text.lower() or "test" in transcribed_text.lower())) 
             and ("text" in transcribed_text.lower() or "test" in transcribed_text.lower())):
             page ='/code generation'
-        elif ("code" in transcribed_text.lower() and "expected" in transcribed_text.lower()):
-            return '/code generation(EIEO)'   
+        elif ("code" in transcribed_text.lower() or "expected" in transcribed_text.lower()
+               or "eieio" in transcribed_text.lower() or "yayo" in transcribed_text.lower()):
+            page = '/code generation(EIEO)'
         elif ("comment" in transcribed_text.lower() or "common" in transcribed_text.lower() or 
             "," in transcribed_text.lower() or "comma" in transcribed_text.lower() 
             or "coleman" in transcribed_text.lower() or "command" in transcribed_text.lower()):
