@@ -57,7 +57,6 @@ def codeEIO_execution():
         answer2 = ""
         prediction = prediction[0]
         predictionList = prediction.tolist()
-        print(prediction)
 
         # if one-hot-encoding contains more than one 1
         if (prediction == 1).sum() > 1:
