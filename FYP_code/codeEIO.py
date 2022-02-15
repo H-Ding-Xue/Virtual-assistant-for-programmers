@@ -1,5 +1,6 @@
 from flask import redirect,render_template, request, flash
 import pickle
+import re
 import voicebot as v
 
 def codeEIO_execution():
@@ -13,7 +14,7 @@ def codeEIO_execution():
     if request.method == "POST" and request.form["btn"] == "Generate" and request.form["EIinput"].strip() != '' and request.form["EOinput"].strip() != '':
         try:
             # check if the expected input textbox contains only int values
-            inputList = [int(i) for i in request.form["EIinput"].replace(' ', '').split(',')]
+            inputList = [int(i) for i in re.sub(' +', ' ', request.form["EIinput"].strip()).split(',')]
         except ValueError as e:
             flash("Expected Input only accept positive integer values; separate each value with ','")
             return redirect('/code generation(EIEO)')
@@ -56,7 +57,6 @@ def codeEIO_execution():
         answer2 = ""
         prediction = prediction[0]
         predictionList = prediction.tolist()
-        print(prediction)
 
         # if one-hot-encoding contains more than one 1
         if (prediction == 1).sum() > 1:
@@ -101,7 +101,7 @@ def codeEIO_execution():
                 temp = method['Result'][result.index[0]]
                 predicted_output += temp.replace(r'\n', '\n')
                 predicted_output += "\n\n"
-        # if one-hot-encoding contains only one 1
+        # if one-hot-encoding contains only one 1 or one 2
         else:
             predicted_output += method['Result'][result.index[0]]
             predicted_output = predicted_output.replace(r'\n', '\n')
