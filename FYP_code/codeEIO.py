@@ -36,8 +36,8 @@ def codeEIO_execution():
             return redirect('/code generation(EIEO)')
         
         try:
-            # convert expected output to float value with 2dp
-            output = round(float(request.form["EOinput"]), 2)
+            # convert expected output to float value with 3dp
+            output = round(float(request.form["EOinput"]), 3)
             inputList.append(output)
         except ValueError as e:
             flash("Expected Output only accept one numeric value")
@@ -72,13 +72,13 @@ def codeEIO_execution():
             # retrieve the answer for the equation
             for value in equation:
                 answer1 += str(value)
-            answer1 = eval(answer1)
+            answer1 = round(eval(answer1), 3)
             # swap the symbols to form second equation
             equation[1], equation[3] = equation[3], equation[1]
             # retrieve the answer for the second equation
             for value in equation:
                 answer2 += str(value)
-            answer2 = eval(answer2)
+            answer2 = round(eval(answer2), 3)
 
             # the answers for the two equations are the same
             # and it matches with the expected output value
