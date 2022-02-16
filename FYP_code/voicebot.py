@@ -35,7 +35,8 @@ similar_sounding_words = {
     "a ray" : "array",
     "w3school" : "w3schools",
     "date time": "datetime",
-    "test editor": "text editor"
+    "test editor": "text editor",
+    "w3schoolss" : "w3schools"
 }
 
 #keywords and corresponding w3school links
@@ -63,8 +64,8 @@ w3_links ={
     "tuples" : "https://www.w3schools.com/python/python_tuples.asp",
     "set" : "https://www.w3schools.com/python/python_sets.asp",
     "sets" : "https://www.w3schools.com/python/python_sets.asp",
-    "dictonary" : "https://www.w3schools.com/python/python_dictionaries.asp",
-    "dictonaries" : "https://www.w3schools.com/python/python_dictionaries.asp",
+    "dictionary" : "https://www.w3schools.com/python/python_dictionaries.asp",
+    "dictionaries" : "https://www.w3schools.com/python/python_dictionaries.asp",
     "if else" : "https://www.w3schools.com/python/python_conditions.asp",
     "while" : "https://www.w3schools.com/python/python_while_loops.asp",
     "for loop" : "https://www.w3schools.com/python/python_for_loops.asp",
@@ -159,11 +160,16 @@ def redirect_to_w3schools(transcribed_text):
     if (transcribed_text.lower() == "w3schools"):
         place = "w3schools Python Tutorial"
         webbrowser.open("https://www.w3schools.com/python/default.asp")
-    else:
+    elif ("open" in transcribed_text.lower() or "w3schools" in transcribed_text.lower()):
         link = ""
+        if ("open" in transcribed_text.lower()):
+            query = transcribed_text.replace("open w3schools ", "")
+        else:
+            query = transcribed_text.lower()
+
         #search if text is found in the w3_links dictionary
         for key, value in w3_links.items():
-            if key in transcribed_text:
+            if key in query:
                 link = value
         # if found, direct to the page        
         if link != "":
@@ -171,11 +177,11 @@ def redirect_to_w3schools(transcribed_text):
             place = "w3schools"
         # if not found, redirect to google to search for the page    
         else:    
-            query = transcribed_text.lower()
-            query = query.replace("w3schools ", "")
             link = "https://www.google.com/search?q=" + "site:https://www.w3schools.com/python/ " + query
             webbrowser.open(link)
             place = "Google" 
+    else:
+        command = False
     return command, place
 
 # check if there are any similar sounding words and convert it
