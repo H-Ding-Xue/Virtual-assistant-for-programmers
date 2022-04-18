@@ -1,25 +1,2 @@
-# FYP
-FYP CODES
-
-## test
-
-test pushes
-
-## pull test 
-test pulls
-
-## Expected Input/Output
-1. Ensure that all the necessary libraries has been installed
-2. Download 'saved_codeEIO_model' and move it into FYP_code
->>> https://drive.google.com/file/d/19DU5Z7cL5E956h00VLC6O8XPR6cAJroE/view?usp=sharing
-
-## Modifying Expected Input/Output Data
-1. Go to the configuration section (bottom of the page) in machineLearning(codeEIO).py
-2. Execute machineLearning(codeEIO).py
-- runtime will vary depending on the number of data to generate
-
->>> The existing 'saved_codeEIO_model' will be updated
-- if createCSV is set to True
->>> 'codeEIO-data-raw.csv' will be stored in a directory above the current folder
-
->>> 'codeEIO-data-clean.csv' will be stored in a directory above the current folder
+A website developed using HTML; CSS; JS; Python Flask and Sci-Kit Learn with the purpose of helping developers code and learn more efficiently
+My role in this project was to train two models. The first model would take in pseudocode as user input and translate it into actual python code. The second model would analyze a block of python code provided as user input and generate comments for that block of code. 
